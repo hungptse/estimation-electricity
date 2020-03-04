@@ -2,41 +2,25 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="EcomartElectric:war exploded" />
+      <artifact name="EcomartElectric" />
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="433d4251-6c0f-4849-8718-b89cd61edaf4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hungpt/crawler/EcoCrawler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hungpt/crawler/EvnCrawler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/WEB-INF/eco-mart/eco-product-detail.xsl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/WEB-INF/eco-mart/eco.input.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/WEB-INF/eco-mart/eco.xsl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/WEB-INF/eco-mart/findMaxPage.xsl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/WEB-INF/schema/eco-mart.xsd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/EcomartElectric_war_exploded.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/EcomartElectric_war_exploded/WEB-INF/classes/hungpt/constant/EntityCharacter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/EcomartElectric_war_exploded/WEB-INF/classes/hungpt/constant/GlobalURL.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/EcomartElectric_war_exploded/WEB-INF/classes/hungpt/constant/State.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/EcomartElectric_war_exploded/WEB-INF/classes/hungpt/crawler/PageCrawler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/EcomartElectric_war_exploded/WEB-INF/classes/hungpt/job/TaskCrawler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/EcomartElectric_war_exploded/WEB-INF/classes/hungpt/resolver/URIResolverFU.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/EcomartElectric_war_exploded/WEB-INF/classes/hungpt/servlet/CrawlServlet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/EcomartElectric_war_exploded/WEB-INF/classes/hungpt/utils/CrawlHelper$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/EcomartElectric_war_exploded/WEB-INF/classes/hungpt/utils/CrawlHelper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/EcomartElectric_war_exploded/WEB-INF/classes/hungpt/utils/HashHepler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/EcomartElectric_war_exploded/WEB-INF/classes/hungpt/utils/HttpHelper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/EcomartElectric_war_exploded/WEB-INF/classes/hungpt/utils/StringHelper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/EcomartElectric_war_exploded/WEB-INF/evn/evn.xsl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/EcomartElectric_war_exploded/WEB-INF/evn/output.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/EcomartElectric_war_exploded/WEB-INF/web.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/EcomartElectric_war_exploded/index.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/EcomartElectric/hungpt/constant/EntityCharacter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/EcomartElectric/hungpt/constant/GlobalURL.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/EcomartElectric/hungpt/constant/State.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/EcomartElectric/hungpt/crawler/PageCrawler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/EcomartElectric/hungpt/job/TaskCrawler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/EcomartElectric/hungpt/resolver/URIResolverFU.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/EcomartElectric/hungpt/servlet/CrawlServlet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/EcomartElectric/hungpt/utils/CrawlHelper$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/EcomartElectric/hungpt/utils/CrawlHelper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/EcomartElectric/hungpt/utils/HashHepler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/EcomartElectric/hungpt/utils/HttpHelper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/EcomartElectric/hungpt/utils/StringHelper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/constant/GlobalURL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/constant/GlobalURL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/crawler/PageCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/crawler/PageCrawler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/job/TaskCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/job/TaskCrawler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/resolver/URIResolverFU.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/servlet/CrawlServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/servlet/CrawlServlet.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -48,8 +32,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin File" />
-        <option value="Class" />
         <option value="XSLT Stylesheet" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -68,15 +52,17 @@
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.Annotations" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.last.edited" value="Facets" />
+    <property name="project.structure.proportion" value="0.15089722" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -94,9 +80,9 @@
     <configuration name="Tomcat 9.0.30" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.30" ALTERNATIVE_JRE_ENABLED="false">
       <option name="OPEN_IN_BROWSER" value="false" />
       <deployment>
-        <artifact name="EcomartElectric:war exploded">
+        <artifact name="EcomartElectric">
           <settings>
-            <option name="CONTEXT_PATH" value="/EcomartElectric_war_exploded" />
+            <option name="CONTEXT_PATH" value="/EcomartElectric" />
           </settings>
         </artifact>
       </deployment>
@@ -159,7 +145,7 @@
       <method v="2">
         <option name="Make" enabled="true" />
         <option name="BuildArtifacts" enabled="true">
-          <artifact name="EcomartElectric:war exploded" />
+          <artifact name="EcomartElectric" />
         </option>
       </method>
     </configuration>
@@ -174,7 +160,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1583253933670</updated>
-      <workItem from="1583253937375" duration="7824000" />
+      <workItem from="1583253937375" duration="8086000" />
+      <workItem from="1583306408759" duration="161000" />
+      <workItem from="1583314951696" duration="22272000" />
     </task>
     <servers />
   </component>
@@ -186,10 +174,22 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="XPathView.XPathProjectComponent">
+    <history>
+      <element expression="//a[@pagefilter]" />
+      <element expression="//product" />
+    </history>
+    <find-history />
   </component>
 </project>

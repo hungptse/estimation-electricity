@@ -1,13 +1,10 @@
 package hungpt.crawler;
 
-import hungpt.resolver.URIResolverFU;
 import hungpt.utils.CrawlHelper;
 import hungpt.utils.HttpHelper;
 
 
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
@@ -17,31 +14,68 @@ public class PageCrawler {
     private String url;
     private String xslPath;
     private String outputPath;
-
-    public PageCrawler(String url, String xslPath, String outputPath) {
+    private String realPath;
+    public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getXslPath() {
+        return xslPath;
+    }
+
+    public String getRealPath() {
+        return realPath;
+    }
+
+    public void setRealPath(String realPath) {
+        this.realPath = realPath;
+    }
+
+    public void setXslPath(String xslPath) {
         this.xslPath = xslPath;
+        this.realPath = realPath;
+    }
+
+    public String getOutputPath() {
+        return outputPath;
+    }
+
+    public void setOutputPath(String outputPath) {
         this.outputPath = outputPath;
     }
 
-    private void sourceToFile(ByteArrayOutputStream byteArrayOutputStream) throws Exception {
-        FileOutputStream fileOutputStream = new FileOutputStream(this.outputPath);
-        byteArrayOutputStream.writeTo(fileOutputStream);
+    public PageCrawler(String url, String realPath) {
+        this.url = url;
+        this.realPath = realPath;
     }
 
-    public ByteArrayOutputStream crawl() throws Exception {
+    protected void sourceToFile() throws Exception {
+        FileOutputStream fileOutputStream = new FileOutputStream(this.outputPath);
+        this.crawl().writeTo(fileOutputStream);
+    }
+
+    protected ByteArrayOutputStream crawl() throws Exception {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
-        String content = CrawlHelper.getWellformHTML(HttpHelper.getContent(url));
-        System.out.println(content);
-        //transfrom HTML(string) -> file XML bằng XSL
-        StreamSource streamSource = new StreamSource(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)));
         TransformerFactory factory = TransformerFactory.newInstance();
-        factory.setURIResolver(new URIResolverFU());
+        factory.setURIResolver((href, base) -> {
+            try{
+                String content = CrawlHelper.getWellformHTML(HttpHelper.getContent(url));
+                return new StreamSource(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)));
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+            return null;
+        });
         Transformer transformer = factory.newTransformer(new StreamSource(xslPath));
-        transformer.transform(streamSource, new StreamResult(os));
-        sourceToFile(os);
+        transformer.transform(factory.getURIResolver().resolve(this.url,""), new StreamResult(os));
         return os;
     }
 
-
+    public void run(){
+        System.out.println("Method not implementation at " + this.url);
+    }
 }
