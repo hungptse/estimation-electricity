@@ -7,4 +7,6 @@ public class GlobalURL {
     public static final String XSL_ECO = "/WEB-INF/eco-mart/eco.xsl";
     public static final String XSL_ECO_MAXPAGE = "/WEB-INF/eco-mart/findMaxPage.xsl";
     public static final String OUTPUT_ECO = "/WEB-INF/eco-mart/eco-output.xml";
+    public static final String SCHEMA_ECO = "/WEB-INF/schema/eco-mart.xsd";
+
 }

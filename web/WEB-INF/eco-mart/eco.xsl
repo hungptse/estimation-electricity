@@ -1,4 +1,4 @@
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="https://eco-mart.com.vn">
     <xsl:output encoding="UTF-8" method="xml" omit-xml-declaration="yes" indent="yes"/>
     <xsl:variable name="domain">https:///eco-mart.com.vn</xsl:variable>
     <!--    <xsl:import href="nutrition-detail.xsl"/>-->
@@ -19,6 +19,8 @@
                         <xsl:value-of select="substring-before($domain,'/')"/><xsl:value-of
                             select="div/a/img/@data-lazyload"/>
                     </image>
+                    <wattage>1</wattage>
+                    <unit>W</unit>
                 </product>
             </xsl:for-each>
         </products>
