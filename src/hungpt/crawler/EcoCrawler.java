@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class EcoCrawler extends PageCrawler {
-
     public EcoCrawler(String url, String realPath) {
         super(url, realPath);
         this.setXslPath(realPath + GlobalURL.XSL_ECO_MAXPAGE);
@@ -36,14 +35,11 @@ public class EcoCrawler extends PageCrawler {
             int maxPage = Integer.parseInt(this.crawl().toString());
             this.setXslPath(this.getRealPath() + GlobalURL.XSL_ECO);
             for (int i = 1; i <= maxPage; i++) {
-                setUrl(baseUrl + "?page=" + i);
+                this.setUrl(baseUrl + "?page=" + i);
                 System.out.println("Crawling page " + getUrl());
-                Products products = (Products) JAXBHepler.unmarshall(Products.class, this.crawl(),this.getRealPath() + GlobalURL.SCHEMA_ECO);
+                Products products = (Products) JAXBHepler.unmarshall(Products.class, this.crawl(), this.getRealPath() + GlobalURL.SCHEMA_ECO);
                 this.listUrlProduct.addAll(products.getProduct().stream().map((product -> product.getUrl())).collect(Collectors.toList()));
-                products.getProduct().stream().forEach(product -> {
-                    System.out.println(product.getTitle());
-                });
-                setUrl(baseUrl);
+                this.setUrl(baseUrl);
             }
             System.out.println("Collect total [" + this.listUrlProduct.size() + "] records");
         } catch (Exception e) {

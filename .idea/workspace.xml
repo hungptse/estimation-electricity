@@ -7,15 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="433d4251-6c0f-4849-8718-b89cd61edaf4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/hungpt/jaxb/eco/ObjectFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hungpt/jaxb/eco/Product.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hungpt/jaxb/eco/Products.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hungpt/jaxb/eco/eco-mart.xsd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hungpt/utils/JAXBHepler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/constant/GlobalURL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/constant/GlobalURL.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hungpt/crawler/EcoCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/crawler/EcoCrawler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/WEB-INF/eco-mart/eco.xsl" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/eco-mart/eco.xsl" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -157,7 +150,7 @@
       <updated>1583253933670</updated>
       <workItem from="1583253937375" duration="8086000" />
       <workItem from="1583306408759" duration="161000" />
-      <workItem from="1583314951696" duration="26321000" />
+      <workItem from="1583314951696" duration="28685000" />
     </task>
     <servers />
   </component>
