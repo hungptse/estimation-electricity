@@ -36,9 +36,6 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </wattage>
-            <!--            <url>-->
-            <!--                <xsl:value-of select="$host"/><xsl:value-of select="@href"/>-->
-            <!--            </url>-->
         </product>
     </xsl:template>
 </xsl:stylesheet>

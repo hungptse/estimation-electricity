@@ -37,7 +37,7 @@ public class CategoryDetailCrawler extends PageCrawler {
                 Arrays.asList(listUrl.split("/")).forEach(url -> {
                     if (!url.equals("")){
                         ProductCrawler productCrawler = new ProductCrawler(url, getRealPath(), this.name);
-                        productCrawler.run();
+                        productCrawler.start();
                     }
                 });
             }

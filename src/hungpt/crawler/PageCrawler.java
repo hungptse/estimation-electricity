@@ -71,7 +71,10 @@ public class PageCrawler {
             return null;
         });
         Transformer transformer = factory.newTransformer(new StreamSource(xslPath));
-        transformer.transform(factory.getURIResolver().resolve(this.url,""), new StreamResult(os));
+        Source source = factory.getURIResolver().resolve(this.url,"");
+        if (source != null){
+            transformer.transform(factory.getURIResolver().resolve(this.url,""), new StreamResult(os));
+        }
         return os;
     }
 

@@ -15,13 +15,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimerTask;
 
-public class TaskCrawler extends TimerTask {
+public class TaskTimer extends TimerTask {
     private String name;
 
     private PageCrawler crawler;
 
 
-    public TaskCrawler(String name, PageCrawler crawler) {
+    public TaskTimer(String name, PageCrawler crawler) {
         this.name = name;
         this.crawler = crawler;
     }

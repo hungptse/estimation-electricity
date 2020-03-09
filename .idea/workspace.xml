@@ -7,37 +7,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="433d4251-6c0f-4849-8718-b89cd61edaf4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/hungpt/crawler/CategoryCrawler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hungpt/crawler/CategoryDetailCrawler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hungpt/crawler/ProductCrawler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hungpt/jaxb/dienmayabc/category/Category.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hungpt/jaxb/dienmayabc/category/ObjectFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/WEB-INF/dienmayabc/category.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/WEB-INF/dienmayabc/product.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/WEB-INF/dienmayabc/productLink.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/WEB-INF/eco-mart/eco-detail.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/WEB-INF/schema/category.xsd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/WEB-INF/schema/product.xsd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hungpt/constant/TimeConst.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EcomartElectric.iml" beforeDir="false" afterPath="$PROJECT_DIR$/EcomartElectric.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/constant/GlobalURL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/constant/GlobalURL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/crawler/EcoCrawler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/crawler/CategoryCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/crawler/CategoryCrawler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/crawler/CategoryDetailCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/crawler/CategoryDetailCrawler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hungpt/crawler/PageCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/crawler/PageCrawler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/crawler/TestCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/crawler/TestCrawler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/jaxb/eco/ObjectFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/jaxb/dienmayabc/product/ObjectFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/jaxb/eco/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/jaxb/dienmayabc/product/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/jaxb/eco/Products.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/jaxb/dienmayabc/category/Categories.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/jaxb/eco/eco-mart.xsd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/crawler/ProductCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/crawler/ProductCrawler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/crawler/TestCrawler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/job/TaskCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/job/TaskTimer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hungpt/servlet/CrawlServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/servlet/CrawlServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/utils/CrawlHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/utils/CrawlHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/utils/HashHepler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/utils/HashHepler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/utils/HttpHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/utils/HttpHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/utils/JAXBHepler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/utils/JAXBHepler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/utils/StringHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/utils/StringHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/WEB-INF/eco-mart/eco.input.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/eco-mart/eco.input.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/WEB-INF/eco-mart/eco.xsl" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/eco-mart/eco.xsl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/WEB-INF/eco-mart/findMaxPage.xsl" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/dienmayabc/findMaxPage.xsl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/WEB-INF/schema/eco-mart.xsd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/WEB-INF/dienmayabc/product.xsl" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/dienmayabc/product.xsl" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -50,8 +29,8 @@
       <list>
         <option value="Kotlin File" />
         <option value="FxmlFile" />
-        <option value="Class" />
         <option value="XSLT Stylesheet" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -194,7 +173,7 @@
       <workItem from="1583571574469" duration="19789000" />
       <workItem from="1583629185113" duration="16496000" />
       <workItem from="1583695398855" duration="2022000" />
-      <workItem from="1583763919466" duration="10895000" />
+      <workItem from="1583763919466" duration="15736000" />
     </task>
     <servers />
   </component>

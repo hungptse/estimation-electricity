@@ -24,10 +24,8 @@ public class CategoryCrawler extends PageCrawler {
                 detailCrawler.run();
                 count = count + detailCrawler.getProductListUrl().size();
             });
-
-//            CategoryDetailCrawler detailCrawler = new CategoryDetailCrawler("https://dienmayabc.com/binh-nuoc-nong.html", this.getRealPath(), "category.getName()");
-//            detailCrawler.run();
             System.out.println("Total : " + count + " records");
+            System.out.println("Product avaliable " + ProductCrawler.getProductList().size());
         } catch (Exception e) {
             e.printStackTrace();
         }
