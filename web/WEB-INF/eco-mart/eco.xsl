@@ -1,7 +1,6 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="https://eco-mart.com.vn">
     <xsl:output encoding="UTF-8" method="xml" omit-xml-declaration="yes" indent="yes"/>
-    <xsl:variable name="domain">https:///eco-mart.com.vn</xsl:variable>
-    <!--    <xsl:import href="nutrition-detail.xsl"/>-->
+    <xsl:variable name="domain">https://eco-mart.com.vn</xsl:variable>
     <xsl:template match="/">
         <products>
             <xsl:for-each select="//div[@class='product clearfix']">

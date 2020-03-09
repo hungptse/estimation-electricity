@@ -63,7 +63,7 @@ public class PageCrawler {
         TransformerFactory factory = TransformerFactory.newInstance();
         factory.setURIResolver((href, base) -> {
             try{
-                String content = CrawlHelper.getWellformHTML(HttpHelper.getContent(url));
+                String content = CrawlHelper.getWellformHTML(HttpHelper.getContent(href));
                 return new StreamSource(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)));
             } catch (Exception e){
                 e.printStackTrace();
@@ -76,6 +76,6 @@ public class PageCrawler {
     }
 
     public void run(){
-        System.out.println("Method not implementation at " + this.url);
+        System.out.println("Method not implementation");
     }
 }

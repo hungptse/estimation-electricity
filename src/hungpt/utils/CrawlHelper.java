@@ -2,6 +2,9 @@ package hungpt.utils;
 
 import hungpt.constant.EntityCharacter;
 import hungpt.constant.State;
+
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,7 +12,7 @@ import java.util.regex.Pattern;
 public class CrawlHelper {
 
     private static Character quote;
-    private static final String[] IGNORE_TAGS = new String[]{"script", "head", "noscript", "style", "iframe"};
+    private static final String[] IGNORE_TAGS = new String[]{"head", "noscript", "style", "iframe", "script"};
     private static final List<String> INLINE_TAGS = Arrays.asList("area", "base", "br", "col", "command",
             "embed", "hr", "img", "input", "keygen",
             "link", "meta", "param", "source", "track", "wbr");
@@ -44,7 +47,7 @@ public class CrawlHelper {
                     if (el == EntityCharacter.LESS_THAN.getCharacter()) {
                         state = State.OPEN_BRACKET;
                         // Ex: Bộ GD&ĐT -> Bộ GD&amp;ĐT -> Wellform XML
-                        writer.append(content.toString().trim().length() > 0 ? content.toString().trim().replaceAll("&", "&amp;") : "");
+                        writer.append(content.toString().trim().length() > 0 ? content.toString().trim().replaceAll("&", "&amp;").replaceAll("\t", "") : "");
                     } else {
                         content.append(el);
                     }
@@ -158,11 +161,7 @@ public class CrawlHelper {
                         state = State.TAG_INNER;
                         attributes.put(attName.toString(), attValue.toString());
                     } else {
-                        if (el == 0x8) {
-                            System.out.println("Fuck this shit");
-                        } else {
-                            attValue.append(el);
-                        }
+                        attValue.append(el);
                     }
                     break;
                 case ATT_VALUE_NQ:
@@ -262,7 +261,6 @@ public class CrawlHelper {
 
         String expression = "<!--.*?-->";
         result = result.replaceAll(expression, "");
-
         expression = "&nbsp;?";
         result = result.replaceAll(expression, "");
         for (String exp : IGNORE_TAGS) {

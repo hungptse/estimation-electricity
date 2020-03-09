@@ -1,5 +1,5 @@
 
-package hungpt.jaxb.eco;
+package hungpt.jaxb.dienmayabc.product;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;
@@ -10,7 +10,7 @@ import javax.xml.namespace.QName;
 /**
  * This object contains factory methods for each 
  * Java content interface and Java element interface 
- * generated in the hungpt.jaxb.eco package. 
+ * generated in the hungpt.jaxb.dienmayabc.product package. 
  * <p>An ObjectFactory allows you to programatically 
  * construct new instances of the Java representation 
  * for XML content. The Java representation of XML 
@@ -24,21 +24,13 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _Products_QNAME = new QName("https://eco-mart.com.vn", "products");
+    private final static QName _Product_QNAME = new QName("https://dienmayabc.com/", "product");
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: hungpt.jaxb.eco
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: hungpt.jaxb.dienmayabc.product
      * 
      */
     public ObjectFactory() {
-    }
-
-    /**
-     * Create an instance of {@link Products }
-     * 
-     */
-    public Products createProducts() {
-        return new Products();
     }
 
     /**
@@ -50,12 +42,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Products }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link Product }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "https://eco-mart.com.vn", name = "products")
-    public JAXBElement<Products> createProducts(Products value) {
-        return new JAXBElement<Products>(_Products_QNAME, Products.class, null, value);
+    @XmlElementDecl(namespace = "https://dienmayabc.com/", name = "product")
+    public JAXBElement<Product> createProduct(Product value) {
+        return new JAXBElement<Product>(_Product_QNAME, Product.class, null, value);
     }
 
 }
