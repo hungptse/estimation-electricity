@@ -20,13 +20,7 @@ public class BaseRepository<T,PK extends Serializable> implements IBaseRepositor
 
     @Override
     public T findById(PK primaryKey) {
-        try {
-            return em.find(classType,primaryKey);
-        } finally {
-            if (em != null){
-                em.close();
-            }
-        }
+        return em.find(classType,primaryKey);
     }
 
     @Override
@@ -52,10 +46,6 @@ public class BaseRepository<T,PK extends Serializable> implements IBaseRepositor
             transaction.commit();
         } catch (Exception e) {
             System.out.println("ERROR in BaseRepository " + e.getMessage());
-        } finally {
-            if (em != null){
-                em.close();
-            }
         }
         return entity;
     }

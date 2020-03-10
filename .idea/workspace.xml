@@ -7,24 +7,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="433d4251-6c0f-4849-8718-b89cd61edaf4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/META-INF/persistence.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/commonj.sdo-2.1.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/eclipselink-2.7.6.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/jakarta.persistence-2.2.3.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/javaee.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/javax.persistence.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hungpt/constant/EntityName.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hungpt/entities/ProductEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hungpt/repositories/BaseRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hungpt/repositories/IBaseRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hungpt/repositories/MainRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hungpt/utils/JPAHelper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EcomartElectric.iml" beforeDir="false" afterPath="$PROJECT_DIR$/EcomartElectric.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/constant/GlobalURL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/constant/GlobalURL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/crawler/EvnCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/crawler/EvnCrawler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hungpt/crawler/ProductCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/crawler/ProductCrawler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/servlet/CrawlServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/servlet/CrawlServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/entities/ProductEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/entities/ProductEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/repositories/BaseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/repositories/BaseRepository.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -204,7 +190,7 @@
       <workItem from="1583629185113" duration="16496000" />
       <workItem from="1583695398855" duration="2022000" />
       <workItem from="1583763919466" duration="16408000" />
-      <workItem from="1583818579863" duration="8770000" />
+      <workItem from="1583818579863" duration="10406000" />
     </task>
     <servers />
   </component>

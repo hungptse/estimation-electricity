@@ -21,9 +21,22 @@ public class ProductEntity {
     private Timestamp updatedAt;
     private Boolean isPrivateProduct;
 
+    public ProductEntity() {
+
+    }
+
+    public ProductEntity(String name, String code, BigDecimal wattage, String hash, String url, String imageLink) {
+        this.name = name;
+        this.code = code;
+        this.wattage = wattage;
+        this.hash = hash;
+        this.url = url;
+        this.imageLink = imageLink;
+    }
+
     @Id
     @Column(name = "ProductId", nullable = false)
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getProductId() {
         return productId;
     }
@@ -33,7 +46,7 @@ public class ProductEntity {
     }
 
     @Basic
-    @Column(name = "Name", nullable = true, length = 50)
+    @Column(name = "Name", nullable = true, length = 500)
     public String getName() {
         return name;
     }
@@ -73,7 +86,7 @@ public class ProductEntity {
     }
 
     @Basic
-    @Column(name = "Hash", nullable = true, length = 10)
+    @Column(name = "Hash", nullable = true, length = 50)
     public String getHash() {
         return hash;
     }
@@ -83,7 +96,7 @@ public class ProductEntity {
     }
 
     @Basic
-    @Column(name = "Url", nullable = true, length = 50)
+    @Column(name = "Url", nullable = true, length = 500)
     public String getUrl() {
         return url;
     }
@@ -93,7 +106,7 @@ public class ProductEntity {
     }
 
     @Basic
-    @Column(name = "ImageLink", nullable = true, length = 50)
+    @Column(name = "ImageLink", nullable = true, length = 500)
     public String getImageLink() {
         return imageLink;
     }
@@ -166,12 +179,4 @@ public class ProductEntity {
         return Objects.hash(name, code, wattage);
     }
 
-    public ProductEntity(String name, String code, BigDecimal wattage, String hash, String url, String imageLink) {
-        this.name = name;
-        this.code = code;
-        this.wattage = wattage;
-        this.hash = hash;
-        this.url = url;
-        this.imageLink = imageLink;
-    }
 }
