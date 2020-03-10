@@ -7,16 +7,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="433d4251-6c0f-4849-8718-b89cd61edaf4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/hungpt/constant/TimeConst.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/META-INF/persistence.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/commonj.sdo-2.1.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/eclipselink-2.7.6.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/jakarta.persistence-2.2.3.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/javaee.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/javax.persistence.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hungpt/constant/EntityName.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hungpt/entities/ProductEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hungpt/repositories/BaseRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hungpt/repositories/IBaseRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hungpt/repositories/MainRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hungpt/utils/JPAHelper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/crawler/CategoryCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/crawler/CategoryCrawler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/crawler/CategoryDetailCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/crawler/CategoryDetailCrawler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/crawler/PageCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/crawler/PageCrawler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EcomartElectric.iml" beforeDir="false" afterPath="$PROJECT_DIR$/EcomartElectric.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/constant/GlobalURL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/constant/GlobalURL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/crawler/EvnCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/crawler/EvnCrawler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hungpt/crawler/ProductCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/crawler/ProductCrawler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/crawler/TestCrawler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/job/TaskCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/job/TaskTimer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hungpt/servlet/CrawlServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/servlet/CrawlServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/WEB-INF/dienmayabc/product.xsl" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/dienmayabc/product.xsl" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,13 +32,29 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin File" />
         <option value="FxmlFile" />
         <option value="XSLT Stylesheet" />
+        <option value="Interface" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -50,19 +74,25 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="DatabaseDriversLRU" value="sqlserver.ms" />
     <property name="Downloaded.Files.Path.Enabled" value="true" />
+    <property name="JPA.DatabaseSchemaImportDialog" value="dea51dbd-ab92-41ee-9a40-9d57a96ef54e" />
     <property name="Repository.Attach.Annotations" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="findjar.last.used.dir" value="$PROJECT_DIR$/lib" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15089722" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
+    <key name="ImportMappingsDialog.RecentPackages">
+      <recent name="" />
+      <recent name="hungpt.entities" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/web/WEB-INF/dienmayabc" />
     </key>
@@ -173,7 +203,8 @@
       <workItem from="1583571574469" duration="19789000" />
       <workItem from="1583629185113" duration="16496000" />
       <workItem from="1583695398855" duration="2022000" />
-      <workItem from="1583763919466" duration="15736000" />
+      <workItem from="1583763919466" duration="16408000" />
+      <workItem from="1583818579863" duration="8770000" />
     </task>
     <servers />
   </component>
@@ -195,6 +226,13 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory">
+        <watch expression="Persistence.createEntityManagerFactory(GlobalURL.PERSISTENT_UNIT)" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="XPathView.XPathProjectComponent">
     <history>

@@ -1,11 +1,15 @@
 package hungpt.crawler;
 
+import hungpt.constant.EntityName;
 import hungpt.constant.GlobalURL;
+import hungpt.entities.ProductEntity;
 import hungpt.jaxb.dienmayabc.product.Product;
+import hungpt.repositories.MainRepository;
 import hungpt.utils.HashHepler;
 import hungpt.utils.JAXBHepler;
 import hungpt.utils.StringHelper;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,9 +30,12 @@ public class ProductCrawler extends PageCrawler implements Runnable {
         try{
             Product product = (Product) JAXBHepler.unmarshall(Product.class, this.crawl(), this.getRealPath() + GlobalURL.SCHEMA_ABC_CATEGORY);
             double validWattage = Math.round(StringHelper.getValidWattage(product.getWattage()));
+
+            ProductEntity productEntity = new ProductEntity(product.getName(),product.getCode(),BigDecimal.valueOf(validWattage),HashHepler.hashMD5(product.toString()),this.getUrl(),product.getImage());
             if (validWattage != 0){
                 this.productList.add(product);
             }
+//            MainRepository.getEntityByName(EntityName.PRODUCT_ENTITY).create(productEntity);
         } catch (Exception e){
             e.printStackTrace();
         }

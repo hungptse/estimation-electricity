@@ -12,6 +12,10 @@ public class EvnCrawler extends PageCrawler {
 
     @Override
     public void run() {
-        super.run();
+        try {
+            System.out.println(this.crawl());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

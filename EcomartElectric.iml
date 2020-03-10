@@ -9,6 +9,23 @@
         <webroots>
           <root url="file://$MODULE_DIR$/web" relative="/" />
         </webroots>
+        <sourceRoots>
+          <root url="file://$MODULE_DIR$/src" />
+        </sourceRoots>
+      </configuration>
+    </facet>
+    <facet type="jpa" name="JPA">
+      <configuration>
+        <setting name="validation-enabled" value="true" />
+        <setting name="provider-name" value="EclipseLink" />
+        <datasource-mapping>
+          <factory-entry name="Entities" value="dea51dbd-ab92-41ee-9a40-9d57a96ef54e" />
+          <factory-entry name="EstimationPU" value="dea51dbd-ab92-41ee-9a40-9d57a96ef54e" />
+        </datasource-mapping>
+        <naming-strategy-map>
+          <unit-entry name="Entities" />
+        </naming-strategy-map>
+        <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/META-INF/persistence.xml" />
       </configuration>
     </facet>
   </component>
@@ -16,10 +33,15 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/lib" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/META-INF" type="java-resource" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 9.0.30" level="application_server_libraries" />
-    <orderEntry type="library" name="org.apache.commons:commons-lang3:3.9" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="JPA 1.0-JPA 1.0" level="project" />
+    <orderEntry type="library" name="JPA 2.0-JPA 2.0" level="project" />
+    <orderEntry type="library" name="org.eclipse.persistence:eclipselink:2.7.6" level="project" />
+    <orderEntry type="library" name="sqljdbc42" level="project" />
   </component>
 </module>

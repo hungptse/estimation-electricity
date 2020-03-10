@@ -1,6 +1,8 @@
 package hungpt.constant;
 
 public class GlobalURL {
+    public static final String PERSISTENT_UNIT = "EstimationPU";
+
     public static final String XSL_EVN = "WEB-INF/evn/evn.xsl";
     public static final String OUTPUT_EVN = "WEB-INF/evn/evn-output.xml";
 
