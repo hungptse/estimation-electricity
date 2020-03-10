@@ -2,15 +2,56 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="EcomartElectric" />
+      <artifact name="EstimationElectricity" />
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="433d4251-6c0f-4849-8718-b89cd61edaf4" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/lib/activation.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/asm-all-repackaged-2.2.0-b21.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/cglib-2.2.0-b21.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/guava-14.0.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/hk2-api-2.2.0-b21.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/hk2-locator-2.2.0-b21.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/hk2-utils-2.2.0-b21.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/javax.annotation-api-1.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/javax.ejb.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/javax.inject-2.2.0-b21.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/javax.jms.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/javax.resource.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/javax.servlet-api-3.0.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/javax.servlet.jsp.jstl.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/javax.transaction.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/javax.ws.rs-api-2.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/jaxb-api-2.2.7.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/jaxb-api.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/jaxb-impl.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/jaxb-xjc.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/jaxb1-impl.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/jersey-client.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/jersey-common.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/jersey-container-servlet-core.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/jersey-container-servlet.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/jersey-entity-filtering-2.5.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/jersey-media-jaxb-2.30.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/jersey-media-moxy-2.5.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/jersey-server.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/jsr173_1.0_api.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/org.eclipse.persistence.jpa.jpql_2.5.2.v20140319-9ad6abd.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/org.osgi.core-4.2.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/osgi-resource-locator-1.0.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/validation-api-1.1.0.Final.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hungpt/ws/ApplicationConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hungpt/ws/ProductWS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/crawler/ProductCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/crawler/ProductCrawler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EcomartElectric.iml" beforeDir="false" afterPath="$PROJECT_DIR$/EstimationElectricity.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/crawler/CategoryCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/crawler/CategoryCrawler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hungpt/entities/ProductEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/entities/ProductEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hungpt/repositories/BaseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/repositories/BaseRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/servlet/CrawlServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/servlet/CrawlServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/index.jsp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -39,8 +80,9 @@
         <option value="FxmlFile" />
         <option value="XSLT Stylesheet" />
         <option value="Interface" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="HTTP Request" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -72,7 +114,7 @@
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15089722" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="ImportMappingsDialog.RecentPackages">
@@ -96,12 +138,59 @@
     </option>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
+      <module name="EstimationElectricity" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType" factoryName="Kotlin script">
+      <module name="EstimationElectricity" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Tomcat 9.0.30" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.30" ALTERNATIVE_JRE_ENABLED="false">
       <option name="OPEN_IN_BROWSER" value="false" />
       <deployment>
-        <artifact name="EcomartElectric">
+        <artifact name="EstimationElectricity">
           <settings>
-            <option name="CONTEXT_PATH" value="/EcomartElectric" />
+            <option name="CONTEXT_PATH" value="/EstimationElectricity" />
           </settings>
         </artifact>
       </deployment>
@@ -164,7 +253,7 @@
       <method v="2">
         <option name="Make" enabled="true" />
         <option name="BuildArtifacts" enabled="true">
-          <artifact name="EcomartElectric" />
+          <artifact name="EstimationElectricity" />
         </option>
       </method>
     </configuration>

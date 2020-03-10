@@ -1,13 +1,16 @@
 package hungpt.entities;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
 @Table(name = "Product", schema = "dbo", catalog = "EstimationElectricity")
-public class ProductEntity {
+@XmlRootElement
+public class ProductEntity implements Serializable {
     private int productId;
     private String name;
     private String code;

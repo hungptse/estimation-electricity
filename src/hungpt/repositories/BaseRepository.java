@@ -30,7 +30,7 @@ public class BaseRepository<T,PK extends Serializable> implements IBaseRepositor
 
     @Override
     public List<T> findMany(String query, Map<String, Object> parameters) {
-        return null;
+        return em.createQuery("SELECT t FROM " + this.classType.getName() + " t").getResultList();
     }
 
     @Override
@@ -38,7 +38,6 @@ public class BaseRepository<T,PK extends Serializable> implements IBaseRepositor
         if (entity == null) {
             return null;
         }
-        em = JPAHelper.getEntityManager();
         EntityTransaction transaction = em.getTransaction();
         try {
             transaction.begin();

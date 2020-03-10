@@ -39,9 +39,28 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 9.0.30" level="application_server_libraries" />
-    <orderEntry type="library" scope="PROVIDED" name="JPA 1.0-JPA 1.0" level="project" />
     <orderEntry type="library" name="JPA 2.0-JPA 2.0" level="project" />
-    <orderEntry type="library" name="org.eclipse.persistence:eclipselink:2.7.6" level="project" />
     <orderEntry type="library" name="sqljdbc42" level="project" />
+    <orderEntry type="library" name="JAX-RS-2.0" level="project" />
+    <orderEntry type="library" name="org.eclipse.persistence:eclipselink:2.7.6" level="project" />
+    <orderEntry type="library" name="WS" level="project" />
+    <orderEntry type="library" name="asm-all-repackaged-2.2.0-b21" level="project" />
+    <orderEntry type="library" name="cglib-2.2.0-b21" level="project" />
+    <orderEntry type="library" name="guava-14.0.1" level="project" />
+    <orderEntry type="library" name="hk2-api-2.2.0-b21" level="project" />
+    <orderEntry type="library" name="hk2-locator-2.2.0-b21" level="project" />
+    <orderEntry type="library" name="hk2-utils-2.2.0-b21" level="project" />
+    <orderEntry type="library" name="javax.annotation-api-1.2" level="project" />
+    <orderEntry type="library" name="javax.inject-2.2.0-b21" level="project" />
+    <orderEntry type="library" name="javax.servlet-api-3.0.1" level="project" />
+    <orderEntry type="library" name="jersey-client" level="project" />
+    <orderEntry type="library" name="osgi-resource-locator-1.0.1" level="project" />
+    <orderEntry type="library" name="org.osgi.core-4.2.0" level="project" />
+    <orderEntry type="library" name="org.eclipse.persistence.jpa.jpql_2.5.2.v20140319-9ad6abd" level="project" />
+    <orderEntry type="library" name="jsr173_1.0_api" level="project" />
+    <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
+    <orderEntry type="library" name="validation-api-1.1.0.Final" level="project" />
+    <orderEntry type="library" name="jaxb1-impl" level="project" />
+    <orderEntry type="library" name="jersey-media-jaxb-2.30" level="project" />
   </component>
 </module>

@@ -25,7 +25,7 @@ public class CategoryCrawler extends PageCrawler {
                 count = count + detailCrawler.getProductListUrl().size();
             });
             System.out.println("Total : " + count + " records");
-            System.out.println("Product avaliable " + ProductCrawler.getProductList().size());
+            System.out.println("ProductWS avaliable " + ProductCrawler.getProductList().size());
         } catch (Exception e) {
             e.printStackTrace();
         }
