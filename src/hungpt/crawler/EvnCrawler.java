@@ -1,6 +1,16 @@
 package hungpt.crawler;
 
+import hungpt.constant.EntityName;
 import hungpt.constant.GlobalURL;
+import hungpt.entities.PriceListEntity;
+import hungpt.jaxb.dienmayabc.product.Product;
+import hungpt.jaxb.evn.price.Price;
+import hungpt.jaxb.evn.price.Prices;
+import hungpt.repositories.MainRepository;
+import hungpt.utils.JAXBHepler;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 public class EvnCrawler extends PageCrawler {
 
@@ -13,7 +23,11 @@ public class EvnCrawler extends PageCrawler {
     @Override
     public void run() {
         try {
-            System.out.println(this.crawl());
+            Prices prices = (Prices) JAXBHepler.unmarshall(Prices.class, this.crawl(), this.getRealPath() + GlobalURL.SCHEMA_EVN_PRICE);
+            prices.getPrice().forEach(price -> {
+
+                MainRepository.getEntityByName(EntityName.PRICE_LIST_ENTITY).create(new PriceListEntity(price.getLevel(),price.getFrom(),price.getTo(), price.getRate(),"đ/kWh"));
+            });
         } catch (Exception e){
             e.printStackTrace();
         }

@@ -15,7 +15,6 @@
     <servlet>
         <servlet-name>CrawlServlet</servlet-name>
         <servlet-class>hungpt.servlet.CrawlServlet</servlet-class>
-        <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>CrawlServlet</servlet-name>

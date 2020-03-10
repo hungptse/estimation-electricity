@@ -5,13 +5,7 @@ public class GlobalURL {
 
     public static final String XSL_EVN = "WEB-INF/evn/evn.xsl";
     public static final String OUTPUT_EVN = "WEB-INF/evn/evn-output.xml";
-
-    public static final String XSL_ECO = "WEB-INF/eco-mart/eco.xsl";
-    public static final String OUTPUT_ECO = "WEB-INF/eco-mart/eco-output.xml";
-    public static final String SCHEMA_ECO = "WEB-INF/schema/eco-mart.xsd";
-
-    public static final String XSL_DETAIL_ECO = "WEB-INF/eco-mart/eco-detail.xsl";
-
+    public static final String SCHEMA_EVN_PRICE = "WEB-INF/schema/evn.xsd";
 
     public static final String XSL_ABC_CATEGORY = "WEB-INF/dienmayabc/category.xsl";
     public static final String SCHEMA_ABC_CATEGORY = "WEB-INF/schema/category.xsd";

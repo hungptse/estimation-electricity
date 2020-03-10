@@ -161,7 +161,7 @@ public class CrawlHelper {
                         state = State.TAG_INNER;
                         attributes.put(attName.toString(), attValue.toString());
                     } else {
-                        attValue.append(el);
+                        if (el != 0x8) attValue.append(el);
                     }
                     break;
                 case ATT_VALUE_NQ:

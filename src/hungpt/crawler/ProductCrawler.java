@@ -30,10 +30,11 @@ public class ProductCrawler extends PageCrawler implements Runnable {
     @Override
     public void run() {
         try{
-            Product product = (Product) JAXBHepler.unmarshall(Product.class, this.crawl(), this.getRealPath() + GlobalURL.SCHEMA_ABC_CATEGORY);
+            Product product = (Product) JAXBHepler.unmarshall(Product.class, this.crawl(), this.getRealPath() + GlobalURL.SCHEMA_ABC_PRODUCT);
             double validWattage = Math.round(StringHelper.getValidWattage(product.getWattage()));
+            String hashValue = product.getName() + product.getCode();
+            ProductEntity productEntity = new ProductEntity(product.getName(),product.getCode(),BigDecimal.valueOf(validWattage),HashHepler.hashMD5(hashValue.replaceAll(" ","")),this.getUrl(),product.getImage());
 
-            ProductEntity productEntity = new ProductEntity(product.getName(),product.getCode(),BigDecimal.valueOf(validWattage),HashHepler.hashMD5(product.toString()),this.getUrl(),product.getImage());
             productEntity.setUnit("W");
             productEntity.setCreatedAt(new Timestamp(System.currentTimeMillis()));
             productEntity.setUpdatedAt(new Timestamp(System.currentTimeMillis()));

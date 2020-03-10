@@ -3,6 +3,7 @@
     <persistence-unit name="EstimationPU" transaction-type="RESOURCE_LOCAL">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <class>hungpt.entities.ProductEntity</class>
+        <class>hungpt.entities.PriceListEntity</class>
 
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
@@ -10,6 +11,9 @@
             <property name="javax.persistence.jdbc.user" value="sa"/>
             <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
             <property name="javax.persistence.jdbc.password" value="1qaZ2wsX"/>
+            <property name="eclipselink.jdbc.url"
+                      value="jdbc:sqlserver://localhost:1434;database=EstimationElectricity"/>
+            <property name="eclipselink.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
         </properties>
     </persistence-unit>
 </persistence>

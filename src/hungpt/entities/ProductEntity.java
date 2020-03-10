@@ -177,9 +177,4 @@ public class ProductEntity implements Serializable {
                 Objects.equals(isPrivateProduct, that.isPrivateProduct);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, code, wattage);
-    }
-
 }
