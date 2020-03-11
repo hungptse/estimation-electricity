@@ -35,9 +35,6 @@ public class ProductCrawler extends PageCrawler implements Runnable{
             Product product = (Product) JAXBHepler.unmarshall(Product.class, this.crawl(), this.getRealPath() + GlobalURL.SCHEMA_ABC_PRODUCT);
             double validWattage = Math.round(StringHelper.getValidWattage(product.getWattage()));
             ProductEntity productEntity = new ProductEntity(product.getName(), product.getCode(), BigDecimal.valueOf(validWattage), this.getUrl(), product.getImage());
-            productEntity.setUnit("W");
-            productEntity.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-            productEntity.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
             productEntity.setPrivateProduct(false);
             productEntity.setCateId(this.cateId);
             this.productList.add(productEntity);

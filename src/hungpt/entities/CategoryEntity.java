@@ -5,6 +5,7 @@ import hungpt.utils.HashHepler;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
@@ -15,6 +16,9 @@ public class CategoryEntity implements Serializable {
     private String cateName;
     private String cateLink;
     private String hash;
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
+
 
     public CategoryEntity() {
     }
@@ -23,6 +27,8 @@ public class CategoryEntity implements Serializable {
         this.cateName = cateName;
         this.cateLink = cateLink;
         this.hash = HashHepler.hashMD5(cateName);
+        this.createdAt = new Timestamp(System.currentTimeMillis());
+        this.updatedAt = new Timestamp(System.currentTimeMillis());
     }
 
     @Id
@@ -81,4 +87,26 @@ public class CategoryEntity implements Serializable {
     public void setHash(String hash) {
         this.hash = hash;
     }
+
+
+    @Basic
+    @Column(name = "CreatedAt", nullable = true)
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    @Basic
+    @Column(name = "UpdatedAt", nullable = true)
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Timestamp updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
 }

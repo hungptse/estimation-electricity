@@ -39,7 +39,9 @@ public class ProductEntity implements Serializable {
         this.url = url;
         this.imageLink = imageLink;
         this.hash = HashHepler.hashMD5(name.replaceAll(" ","") + code.replaceAll(" ",""));
-
+        this.createdAt = new Timestamp(System.currentTimeMillis());
+        this.updatedAt = new Timestamp(System.currentTimeMillis());
+        this.unit = "W";
     }
 
     @Id
