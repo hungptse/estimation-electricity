@@ -13,12 +13,12 @@ import java.util.stream.Collectors;
 
 public class CategoryDetailCrawler extends PageCrawler {
     private List<String> productListUrl = new ArrayList();
-    private String name;
+    private int cateId;
 
-    public CategoryDetailCrawler(String url, String realPath, String name) {
+    public CategoryDetailCrawler(String url, String realPath, int cateId) {
         super(url, realPath);
         this.setXslPath(this.getRealPath() + GlobalURL.XSL_ABC_PRODUCT_MAXPAGE);
-        this.name = name;
+        this.cateId = cateId;
     }
 
     public List<String> getProductListUrl() {
@@ -42,7 +42,7 @@ public class CategoryDetailCrawler extends PageCrawler {
             }
             productListUrl.forEach(url -> {
                 if (!url.equals("")){
-                    ProductCrawler productCrawler = new ProductCrawler(url, getRealPath(), this.name);
+                    ProductCrawler productCrawler = new ProductCrawler(url, getRealPath(), this.cateId);
                     productCrawler.start();
                 }
             });

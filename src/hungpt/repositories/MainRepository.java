@@ -1,6 +1,7 @@
 package hungpt.repositories;
 
 import hungpt.constant.EntityName;
+import hungpt.entities.CategoryEntity;
 import hungpt.entities.PriceListEntity;
 import hungpt.entities.ProductEntity;
 
@@ -16,6 +17,7 @@ public class MainRepository {
     static {
         entites.put(EntityName.PRODUCT_ENTITY, new BaseRepository<ProductEntity,Integer>(ProductEntity.class));
         entites.put(EntityName.PRICE_LIST_ENTITY, new BaseRepository<PriceListEntity,Integer>(PriceListEntity.class));
+        entites.put(EntityName.CATEGORY_ENTITY, new BaseRepository<CategoryEntity,Integer>(CategoryEntity.class));
 
     }
 

@@ -4,13 +4,14 @@ import hungpt.utils.HashHepler;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
 @Table(name = "PriceList", schema = "dbo", catalog = "EstimationElectricity")
 @XmlRootElement
-public class PriceListEntity {
+public class PriceListEntity implements Serializable {
     private int priceListId;
     private int level;
     private int fromValue;
@@ -28,7 +29,7 @@ public class PriceListEntity {
         this.toValue = toValue;
         this.rate = rate;
         this.unit = unit;
-        this.hash = HashHepler.hashMD5(level+rate);
+        this.hash = HashHepler.hashMD5(level + "|" + rate );
     }
 
     @Id

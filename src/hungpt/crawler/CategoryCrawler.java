@@ -1,8 +1,10 @@
 package hungpt.crawler;
 
+import hungpt.constant.EntityName;
 import hungpt.constant.GlobalURL;
+import hungpt.entities.CategoryEntity;
 import hungpt.jaxb.dienmayabc.category.Categories;
-import hungpt.jaxb.dienmayabc.category.Category;
+import hungpt.repositories.MainRepository;
 import hungpt.utils.JAXBHepler;
 
 public class CategoryCrawler extends PageCrawler {
@@ -21,8 +23,11 @@ public class CategoryCrawler extends PageCrawler {
         try {
             Categories categories = (Categories) JAXBHepler.unmarshall(Categories.class, this.crawl(), this.getRealPath() + GlobalURL.SCHEMA_ABC_CATEGORY);
             categories.getCategory().stream().forEach(category -> {
-                CategoryDetailCrawler detailCrawler = new CategoryDetailCrawler(category.getUrl(),this.getRealPath(),category.getName());
+                CategoryEntity categoryEntity = new CategoryEntity(category.getName(),category.getUrl());
+                categoryEntity = (CategoryEntity) MainRepository.getEntityByName(EntityName.CATEGORY_ENTITY).create(categoryEntity);
+                CategoryDetailCrawler detailCrawler = new CategoryDetailCrawler(category.getUrl(),this.getRealPath(),categoryEntity.getCateId());
                 detailCrawler.run();
+
                 count = count + detailCrawler.getProductListUrl().size();
             });
             System.out.println("Total : " + count + " records");

@@ -17,14 +17,14 @@ import java.util.List;
 
 public class ProductCrawler extends PageCrawler implements Runnable{
     private Thread thread;
-    private String cateName;
+    private int cateId;
     private static final String HOST_ABC = "https://dienmayabc.com/";
 
-    public ProductCrawler(String url, String realPath, String cateName) {
+    public ProductCrawler(String url, String realPath, int cateId) {
         super(url, realPath);
         this.setUrl(HOST_ABC + url);
         this.setXslPath(realPath + GlobalURL.XSL_ABC_PRODUCT_DETAIL);
-        this.cateName = cateName;
+        this.cateId = cateId;
     }
 
     private static List<ProductEntity> productList = new ArrayList<>();
@@ -39,7 +39,7 @@ public class ProductCrawler extends PageCrawler implements Runnable{
             productEntity.setCreatedAt(new Timestamp(System.currentTimeMillis()));
             productEntity.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
             productEntity.setPrivateProduct(false);
-//            productEntity.setCateId(this.cateName);
+            productEntity.setCateId(this.cateId);
             this.productList.add(productEntity);
             MainRepository.getEntityByName(EntityName.PRODUCT_ENTITY).create(productEntity);
         } catch (Exception e) {
