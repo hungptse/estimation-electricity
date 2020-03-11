@@ -6,10 +6,10 @@ import java.security.NoSuchAlgorithmException;
 
 public class HashHepler {
 
-    public static String hashMD5(String data) {
+    public static String hashMD5(Object data) {
         try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] messageDigest = md.digest(data.getBytes());
+            MessageDigest md = MessageDigest.getInstance("SHA-1");
+            byte[] messageDigest = md.digest(data.toString().getBytes());
             BigInteger no = new BigInteger(1, messageDigest);
 
             String hashtext = no.toString(16);

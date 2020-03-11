@@ -3,6 +3,8 @@ package hungpt.utils;
 import hungpt.constant.EntityCharacter;
 import hungpt.constant.State;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -19,6 +21,12 @@ public class CrawlHelper {
 
     public static String getWellformHTML(String html) {
         return wellFormHtml(refineHtml(html));
+    }
+
+
+    protected void sourceToFile(ByteArrayOutputStream byteArrayOutputStream, String outputPath) throws Exception {
+        FileOutputStream fileOutputStream = new FileOutputStream(outputPath);
+        byteArrayOutputStream.writeTo(fileOutputStream);
     }
 
 

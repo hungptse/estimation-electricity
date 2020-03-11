@@ -5,6 +5,7 @@ import hungpt.constant.EntityName;
 import hungpt.constant.TimeConst;
 import hungpt.crawler.CategoryCrawler;
 import hungpt.crawler.EvnCrawler;
+import hungpt.crawler.ProductCrawler;
 import hungpt.entities.ProductEntity;
 import hungpt.job.TaskTimer;
 import hungpt.repositories.MainRepository;
@@ -25,7 +26,7 @@ public class CrawlServlet extends HttpServlet {
         TaskTimer evnCrawler = new TaskTimer("EVN", new EvnCrawler("https://www.evn.com.vn/c3/evn-va-khach-hang/Bieu-gia-ban-le-dien-9-79.aspx", realPath));
         TaskTimer abcCrawler = new TaskTimer("DIENMAYABC.COM", new CategoryCrawler("https://dienmayabc.com/", realPath));
         Timer timer = new Timer();
-//        timer.scheduleAtFixedRate(abcCrawler, 1000, TimeConst.HOUR_IN_MILLISECOND);
-        timer.scheduleAtFixedRate(evnCrawler, 0, TimeConst.HOUR_IN_MILLISECOND);
+        timer.scheduleAtFixedRate(abcCrawler, 1000, TimeConst.HOUR_IN_MILLISECOND);
+//        timer.scheduleAtFixedRate(evnCrawler, 0, TimeConst.HOUR_IN_MILLISECOND);
     }
 }

@@ -11,6 +11,7 @@ public class CategoryCrawler extends PageCrawler {
 
     public CategoryCrawler(String url, String realPath) {
         super(url, realPath);
+
         this.setXslPath(this.getRealPath() + GlobalURL.XSL_ABC_CATEGORY);
     }
 

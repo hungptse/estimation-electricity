@@ -15,41 +15,40 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ProductCrawler extends PageCrawler implements Runnable {
+public class ProductCrawler extends PageCrawler implements Runnable{
     private Thread thread;
     private String cateName;
     private static final String HOST_ABC = "https://dienmayabc.com/";
+
     public ProductCrawler(String url, String realPath, String cateName) {
         super(url, realPath);
-        this.setUrl(HOST_ABC +  url);
+        this.setUrl(HOST_ABC + url);
         this.setXslPath(realPath + GlobalURL.XSL_ABC_PRODUCT_DETAIL);
         this.cateName = cateName;
     }
 
-    private static List<Product> productList = new ArrayList<>();
+    private static List<ProductEntity> productList = new ArrayList<>();
+
     @Override
     public void run() {
-        try{
+        try {
             Product product = (Product) JAXBHepler.unmarshall(Product.class, this.crawl(), this.getRealPath() + GlobalURL.SCHEMA_ABC_PRODUCT);
             double validWattage = Math.round(StringHelper.getValidWattage(product.getWattage()));
-            String hashValue = product.getName() + product.getCode();
-            ProductEntity productEntity = new ProductEntity(product.getName(),product.getCode(),BigDecimal.valueOf(validWattage),HashHepler.hashMD5(hashValue.replaceAll(" ","")),this.getUrl(),product.getImage());
-
+            ProductEntity productEntity = new ProductEntity(product.getName(), product.getCode(), BigDecimal.valueOf(validWattage), this.getUrl(), product.getImage());
             productEntity.setUnit("W");
             productEntity.setCreatedAt(new Timestamp(System.currentTimeMillis()));
             productEntity.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
             productEntity.setPrivateProduct(false);
 //            productEntity.setCateId(this.cateName);
-            if (validWattage != 0){
-                this.productList.add(product);
-            }
+            this.productList.add(productEntity);
             MainRepository.getEntityByName(EntityName.PRODUCT_ENTITY).create(productEntity);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
-    public static List<Product> getProductList() {
+    public static List<ProductEntity> getProductList() {
         return productList;
     }
 

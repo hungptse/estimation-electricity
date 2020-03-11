@@ -4,7 +4,6 @@ public class GlobalURL {
     public static final String PERSISTENT_UNIT = "EstimationPU";
 
     public static final String XSL_EVN = "WEB-INF/evn/evn.xsl";
-    public static final String OUTPUT_EVN = "WEB-INF/evn/evn-output.xml";
     public static final String SCHEMA_EVN_PRICE = "WEB-INF/schema/evn.xsd";
 
     public static final String XSL_ABC_CATEGORY = "WEB-INF/dienmayabc/category.xsl";

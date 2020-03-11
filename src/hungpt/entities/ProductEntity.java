@@ -1,5 +1,8 @@
 package hungpt.entities;
 
+import hungpt.utils.HashHepler;
+import org.eclipse.persistence.annotations.UuidGenerator;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
@@ -10,6 +13,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "Product", schema = "dbo", catalog = "EstimationElectricity")
 @XmlRootElement
+@UuidGenerator(name="EMP_ID_GEN")
 public class ProductEntity implements Serializable {
     private int productId;
     private String name;
@@ -28,13 +32,14 @@ public class ProductEntity implements Serializable {
 
     }
 
-    public ProductEntity(String name, String code, BigDecimal wattage, String hash, String url, String imageLink) {
+    public ProductEntity(String name, String code, BigDecimal wattage, String url, String imageLink) {
         this.name = name;
         this.code = code;
         this.wattage = wattage;
-        this.hash = hash;
         this.url = url;
         this.imageLink = imageLink;
+        this.hash = HashHepler.hashMD5(name.replaceAll(" ","") + code.replaceAll(" ",""));
+
     }
 
     @Id
@@ -89,7 +94,7 @@ public class ProductEntity implements Serializable {
     }
 
     @Basic
-    @Column(name = "Hash", nullable = true, length = 50)
+    @Column(name = "Hash", length = 500)
     public String getHash() {
         return hash;
     }

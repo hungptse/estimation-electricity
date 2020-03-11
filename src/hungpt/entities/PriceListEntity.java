@@ -1,5 +1,7 @@
 package hungpt.entities;
 
+import hungpt.utils.HashHepler;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.math.BigDecimal;
@@ -15,6 +17,7 @@ public class PriceListEntity {
     private int toValue;
     private double rate;
     private String unit;
+    private String hash;
 
     public PriceListEntity() {
     }
@@ -25,6 +28,7 @@ public class PriceListEntity {
         this.toValue = toValue;
         this.rate = rate;
         this.unit = unit;
+        this.hash = HashHepler.hashMD5(level+rate);
     }
 
     @Id
@@ -87,6 +91,17 @@ public class PriceListEntity {
     public void setUnit(String unit) {
         this.unit = unit;
     }
+
+    @Basic
+    @Column(name = "Hash", length = 500)
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
+    }
+
 
     @Override
     public boolean equals(Object o) {

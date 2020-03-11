@@ -1,14 +1,19 @@
 package hungpt.repositories;
 
+import com.sun.istack.Nullable;
 import hungpt.utils.JPAHelper;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class BaseRepository<T,PK extends Serializable> implements IBaseRepository<T, PK> {
+public class BaseRepository<T, PK extends Serializable> implements IBaseRepository<T, PK> {
 
     protected EntityManager em;
     protected final Class<T> classType;
@@ -20,19 +25,36 @@ public class BaseRepository<T,PK extends Serializable> implements IBaseRepositor
 
     @Override
     public T findById(PK primaryKey) {
-        return em.find(classType,primaryKey);
+        return em.find(classType, primaryKey);
     }
 
     @Override
     public T find(String query, Map<String, Object> parameters) {
-        return null;
+        if (query == null) {
+            return null;
+        }
+        T result = null;
+        try {
+            Query sql =  em.createNamedQuery(query);
+            if (parameters != null && !parameters.isEmpty()) {
+                for (Map.Entry<String, Object> entry : parameters.entrySet()) {
+                    sql.setParameter(entry.getKey(), entry.getValue());
+                }
+            }
+            if (sql.getMaxResults() != 0){
+                 result = (T) sql.getResultList();
+            }
+        } catch (Exception e) {
+            Logger.getLogger(BaseRepository.class.getName()).log(Level.SEVERE,null,e);
+        }
+        return result;
     }
 
     @Override
     public List<T> findMany(String query, Map<String, Object> parameters) {
         try {
-           return em.createQuery("SELECT t FROM " + this.classType.getName() + " t").getResultList();
-        } catch (Exception e){
+            return em.createQuery("SELECT t FROM " + this.classType.getName() + " t").getResultList();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -59,4 +81,5 @@ public class BaseRepository<T,PK extends Serializable> implements IBaseRepositor
     public T update(T entity) {
         return null;
     }
+
 }

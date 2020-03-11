@@ -10,10 +10,9 @@ import javax.xml.transform.stream.StreamSource;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
-public class PageCrawler {
+public abstract class PageCrawler {
     private String url;
     private String xslPath;
-    private String outputPath;
     private String realPath;
     public void setUrl(String url) {
         this.url = url;
@@ -31,31 +30,15 @@ public class PageCrawler {
         return realPath;
     }
 
-    public void setRealPath(String realPath) {
-        this.realPath = realPath;
-    }
 
     public void setXslPath(String xslPath) {
         this.xslPath = xslPath;
-        this.realPath = realPath;
     }
 
-    public String getOutputPath() {
-        return outputPath;
-    }
-
-    public void setOutputPath(String outputPath) {
-        this.outputPath = outputPath;
-    }
 
     public PageCrawler(String url, String realPath) {
         this.url = url;
         this.realPath = realPath;
-    }
-
-    protected void sourceToFile() throws Exception {
-        FileOutputStream fileOutputStream = new FileOutputStream(this.outputPath);
-        this.crawl().writeTo(fileOutputStream);
     }
 
     protected ByteArrayOutputStream crawl() throws Exception {
@@ -78,7 +61,5 @@ public class PageCrawler {
         return os;
     }
 
-    public void run(){
-        System.out.println("Method not implementation");
-    }
+    public abstract void run();
 }
