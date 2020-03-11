@@ -30,6 +30,7 @@ public class BaseRepository<T, PK extends Serializable> implements IBaseReposito
 
     @Override
     public T find(String query, Map<String, Object> parameters) {
+
         if (query == null) {
             return null;
         }
@@ -51,9 +52,9 @@ public class BaseRepository<T, PK extends Serializable> implements IBaseReposito
     }
 
     @Override
-    public List<T> findMany(String query, Map<String, Object> parameters) {
+    public List<T> findMany(String query, int page, int size) {
         try {
-            return em.createQuery("SELECT t FROM " + this.classType.getName() + " t").getResultList();
+            return em.createNamedQuery(query).setMaxResults(size).setFirstResult(page * size).getResultList();
         } catch (Exception e) {
             e.printStackTrace();
         }

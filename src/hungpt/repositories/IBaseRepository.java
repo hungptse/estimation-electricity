@@ -11,7 +11,7 @@ public interface IBaseRepository<T, PK extends Serializable> {
 
     T find(String query, Map<String, Object> parameters);
 
-    List<T> findMany(String query, Map<String, Object> parameters);
+    List<T> findMany(String query, int page, int size);
 
     T create(T entity);
 

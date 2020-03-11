@@ -13,7 +13,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "Product", schema = "dbo", catalog = "EstimationElectricity")
 @XmlRootElement
-@UuidGenerator(name="EMP_ID_GEN")
+@NamedQueries({@NamedQuery(name = "Product.findPageAndSize" , query = "SELECT p FROM ProductEntity p ORDER BY p.productId")})
 public class ProductEntity implements Serializable {
     private int productId;
     private String name;

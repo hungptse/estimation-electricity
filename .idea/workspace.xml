@@ -7,12 +7,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="433d4251-6c0f-4849-8718-b89cd61edaf4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/web/resourses/js/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/ws/ApplicationConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/ws/ApplicationConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/web.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/entities/ProductEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/entities/ProductEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/repositories/BaseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/repositories/BaseRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/repositories/IBaseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/repositories/IBaseRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/ws/ProductWS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/ws/ProductWS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/resourses/js/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/resourses/js/index.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,7 +31,23 @@
     <option name="HIDDEN_KINDS">
       <set />
     </option>
-    <expand />
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="Microsoft SQL Server - EstimationElectricity@localhost" type="feb32156:DbDataSourceImpl" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="Microsoft SQL Server - EstimationElectricity@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="EstimationElectricity: database" type="ccb7ac2a:MsImplModel$Database" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="Microsoft SQL Server - EstimationElectricity@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="EstimationElectricity: database" type="ccb7ac2a:MsImplModel$Database" />
+        <item name="dbo: schema" type="2865ee2e:MsImplModel$Schema" />
+      </path>
+    </expand>
     <select />
   </component>
   <component name="FileTemplateManagerImpl">
