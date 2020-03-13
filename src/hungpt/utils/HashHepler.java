@@ -8,7 +8,7 @@ public class HashHepler {
 
     public static String hashMD5(Object data) {
         try {
-            MessageDigest md = MessageDigest.getInstance("SHA-1");
+            MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] messageDigest = md.digest(data.toString().getBytes());
             BigInteger no = new BigInteger(1, messageDigest);
 

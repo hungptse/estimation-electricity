@@ -27,6 +27,6 @@ public class CrawlServlet extends HttpServlet {
         TaskTimer abcCrawler = new TaskTimer("DIENMAYABC.COM", new CategoryCrawler("https://dienmayabc.com/", realPath));
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(abcCrawler, 1000, TimeConst.HOUR_IN_MILLISECOND);
-//        timer.scheduleAtFixedRate(evnCrawler, 0, TimeConst.HOUR_IN_MILLISECOND);
+        timer.scheduleAtFixedRate(evnCrawler, 0, TimeConst.HOUR_IN_MILLISECOND);
     }
 }

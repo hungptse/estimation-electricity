@@ -20,7 +20,7 @@
         <setting name="provider-name" value="EclipseLink" />
         <datasource-mapping>
           <factory-entry name="Entities" value="dea51dbd-ab92-41ee-9a40-9d57a96ef54e" />
-          <factory-entry name="EstimationPU" value="dea51dbd-ab92-41ee-9a40-9d57a96ef54e" />
+          <factory-entry name="EstimationPU" value="4810abda-8da6-4151-a764-2220efe721c5" />
         </datasource-mapping>
         <naming-strategy-map>
           <unit-entry name="Entities" />

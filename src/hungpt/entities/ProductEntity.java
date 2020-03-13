@@ -56,7 +56,7 @@ public class ProductEntity implements Serializable {
     }
 
     @Basic
-    @Column(name = "Name", nullable = true, length = 500)
+    @Column(name = "Name", nullable = false, length = 500)
     public String getName() {
         return name;
     }
@@ -66,7 +66,7 @@ public class ProductEntity implements Serializable {
     }
 
     @Basic
-    @Column(name = "Code", nullable = true, length = 50)
+    @Column(name = "Code", nullable = false, length = 50)
     public String getCode() {
         return code;
     }
