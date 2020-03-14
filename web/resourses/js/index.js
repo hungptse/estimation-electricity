@@ -4,19 +4,29 @@ function initUI() {
         "size": 100,
         "page": 1
     }).then(function (res) {
-        createSearch(res, root, "Name", function () {
+        createSearch(res, root, "Name or Code", function () {
             // @ts-ignore
             var value = document.getElementById("txtSearch").value;
-            console.log(value);
+            getXHR("webservice/product/findLikeByNameOrCode", {
+                "search": value
+            }).then(function (res) {
+                createTable(res, root, "Product Table", {
+                    "Name": 5,
+                    "Code": 1,
+                    "Wattage (W)": 11,
+                    "Image": 4
+                }, 10);
+            });
         });
         createTable(res, root, "Product Table", {
             "Name": 5,
             "Code": 1,
-            "Wattage (W)": 11
-        });
+            "Wattage (W)": 11,
+            "Image": 4
+        }, 10);
     });
 }
-function createSearch(doc, root, title, callBackSearch) {
+function createSearch(doc, root, title, onkeyup) {
     var divTag = document.createElement("div");
     var titleTag = document.createElement("span");
     titleTag.innerText = title + " ";
@@ -26,7 +36,7 @@ function createSearch(doc, root, title, callBackSearch) {
     var searchBtn = document.createElement("input");
     searchBtn.type = "submit";
     searchBtn.value = "Search";
-    inputTag.onkeydown = callBackSearch;
+    inputTag.onkeyup = onkeyup;
     divTag.appendChild(titleTag);
     divTag.appendChild(inputTag);
     divTag.appendChild(searchBtn);
@@ -41,8 +51,29 @@ function objectToQueryParam(obj) {
     });
     return result.slice(0, result.length - 1);
 }
-function createTable(doc, root, title, columns) {
+function button(name, onclick) {
+    var btn = document.createElement("button");
+    btn.innerText = name;
+    btn.onclick = onclick;
+    btn.style.marginLeft = "3px";
+    btn.style.marginRight = "3px";
+    return btn;
+}
+function removeChildById(tagId) {
+    var tag = document.getElementById(tagId);
+    if (tag) {
+        document.getElementById(tagId).parentNode.removeChild(tag);
+    }
+}
+function createTable(doc, root, title, columns, ITEM_MAX_PAGE) {
+    removeChildById("table-data");
+    removeChildById("notification");
+    var divTag = document.createElement("div");
+    divTag.style.width = "100%";
+    divTag.style.alignContent = "right";
+    divTag.id = "table-data";
     var table = document.createElement("table");
+    table.style.width = "100%";
     var rootNode = doc.childNodes.item(0);
     table.style.border = "1px solid black";
     table.border = "1";
@@ -52,26 +83,83 @@ function createTable(doc, root, title, columns) {
     Object.keys(columns).forEach(function (key, index) {
         row.insertCell(index + 1).innerText = key;
     });
+    var page = 1;
+    var tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
+    renderTableBody(table, tableData, columns);
+    var maxPage = rootNode.childNodes.length % 10 == 0 ? rootNode.childNodes.length / ITEM_MAX_PAGE : Math.floor((rootNode.childNodes.length / ITEM_MAX_PAGE)) + 1;
+    var text = document.createElement("code");
+    var pagingSection = document.createElement("div");
+    pagingSection.style.textAlign = "right";
+    pagingSection.style.marginTop = "10px";
+    pagingSection.appendChild(button("First", function () {
+        page = 1;
+        text.innerText = page + "/" + maxPage;
+        tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
+        renderTableBody(table, tableData, columns);
+    }));
+    pagingSection.appendChild(button("Pre", function () {
+        if (page > 1) {
+            page--;
+        }
+        text.innerText = page + "/" + maxPage;
+        tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
+        renderTableBody(table, tableData, columns);
+    }));
+    text.innerText = page + "/" + maxPage;
+    pagingSection.appendChild(text);
+    pagingSection.appendChild(button("Next", function () {
+        if (page < maxPage) {
+            page++;
+        }
+        text.innerText = page + "/" + maxPage;
+        tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
+        renderTableBody(table, tableData, columns);
+    }));
+    pagingSection.appendChild(button("Last", function () {
+        page = maxPage;
+        text.innerText = page + "/" + maxPage;
+        tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
+        renderTableBody(table, tableData, columns);
+    }));
+    divTag.appendChild(table);
+    divTag.appendChild(pagingSection);
+    // table.appendChild(pagingSection);
+    if (rootNode.hasChildNodes()) {
+        root.appendChild(divTag);
+    }
+    else {
+        var text_1 = document.createElement("h3");
+        text_1.id = "notification";
+        text_1.innerText = "No data found";
+        root.appendChild(text_1);
+    }
+}
+function getPagingData(page, ITEM_MAX_PAGE, rootNode) {
+    var tableData = [];
+    var start = (page - 1) * ITEM_MAX_PAGE;
+    for (var i = start; i < start + ITEM_MAX_PAGE; i++) {
+        if (rootNode.childNodes.item(i)) {
+            tableData.push(rootNode.childNodes.item(i));
+        }
+    }
+    return tableData;
+}
+function renderTableBody(table, tableData, columns) {
+    removeChildById("table-body");
+    var body = table.createTBody();
+    body.id = "table-body";
     var _loop_1 = function (i) {
-        var child = rootNode.childNodes.item(i);
-        var row_1 = table.createTBody().insertRow();
+        var child = tableData[i];
+        var row = body.insertRow(i);
         if (child.hasChildNodes()) {
-            row_1.insertCell(0).innerText = i + 1 + "";
+            row.insertCell(0).innerText = i + 1 + "";
             Object.keys(columns).forEach(function (key, index) {
-                row_1.insertCell(index + 1).innerText = child.childNodes.item(columns[key]).textContent;
+                row.insertCell(index + 1).innerText = child.childNodes.item(columns[key]).textContent;
             });
         }
     };
-    for (var i = 0; i < rootNode.childNodes.length; i++) {
+    for (var i = 0; i < tableData.length; i++) {
         _loop_1(i);
-    }
-    if (rootNode.hasChildNodes()) {
-        root.appendChild(table);
-    }
-    else {
-        var text = document.createElement("h3");
-        text.innerText = "No data found";
-        root.appendChild(text);
     }
 }
 function getXHR(url, data) {

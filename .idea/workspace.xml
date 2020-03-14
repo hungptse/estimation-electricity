@@ -7,14 +7,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="433d4251-6c0f-4849-8718-b89cd61edaf4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/web/resourses/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hungpt/services/ProductService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EstimationElectricity.iml" beforeDir="false" afterPath="$PROJECT_DIR$/EstimationElectricity.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hungpt/entities/ProductEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/entities/ProductEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/servlet/CrawlServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/servlet/CrawlServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/utils/HashHepler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/utils/HashHepler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/resourses/js/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/resourses/js/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/repositories/BaseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/repositories/BaseRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/repositories/IBaseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/repositories/IBaseRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/ws/ProductWS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/ws/ProductWS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/resourses/js/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/resourses/js/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/resourses/js/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/resourses/js/index.ts" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -62,8 +62,8 @@
         <option value="Enum" />
         <option value="HTTP Request" />
         <option value="JavaScript File" />
-        <option value="Class" />
         <option value="package.json" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -225,7 +225,7 @@
       <workItem from="1583818579863" duration="10406000" />
       <workItem from="1584008715007" duration="9191000" />
       <workItem from="1584083755268" duration="1317000" />
-      <workItem from="1584128587075" duration="4721000" />
+      <workItem from="1584128587075" duration="16214000" />
     </task>
     <servers />
   </component>

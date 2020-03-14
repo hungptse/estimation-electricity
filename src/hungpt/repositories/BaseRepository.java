@@ -52,9 +52,28 @@ public class BaseRepository<T, PK extends Serializable> implements IBaseReposito
     }
 
     @Override
-    public List<T> findMany(String query, int page, int size) {
+    public List<T> findManyPaging(String query, int page, int size) {
         try {
             return em.createNamedQuery(query).setMaxResults(size).setFirstResult(page * size).getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    @Override
+    public List<T> findMany(String query, Map<String, Object> parameters) {
+        try {
+            Query sql =  em.createNamedQuery(query);
+            if (parameters != null && !parameters.isEmpty()) {
+                for (Map.Entry<String, Object> entry : parameters.entrySet()) {
+                    sql.setParameter(entry.getKey(), entry.getValue());
+                }
+            }
+            if (sql.getMaxResults() != 0){
+                return sql.getResultList();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

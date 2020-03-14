@@ -13,7 +13,9 @@ import java.util.Objects;
 @Entity
 @Table(name = "Product", schema = "dbo", catalog = "EstimationElectricity")
 @XmlRootElement
-@NamedQueries({@NamedQuery(name = "Product.findPageAndSize" , query = "SELECT p FROM ProductEntity p ORDER BY p.productId")})
+@NamedQueries({@NamedQuery(name = "Product.findPageAndSize" , query = "SELECT p FROM ProductEntity p ORDER BY p.productId"),
+    @NamedQuery(name = "Product.searchNameOrCode", query = "SELECT p FROM ProductEntity p WHERE p.name LIKE :search OR p.code LIKE :search")
+})
 public class ProductEntity implements Serializable {
     private int productId;
     private String name;

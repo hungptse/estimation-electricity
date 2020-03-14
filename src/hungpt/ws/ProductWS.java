@@ -6,6 +6,7 @@ import hungpt.entities.PriceListEntity;
 import hungpt.entities.ProductEntity;
 import hungpt.jaxb.dienmayabc.product.Product;
 import hungpt.repositories.MainRepository;
+import hungpt.services.ProductService;
 import hungpt.utils.ElectricityHelper;
 
 import java.util.HashMap;
@@ -21,18 +22,20 @@ import javax.ws.rs.core.MediaType;
 @Path("/product")
 public class ProductWS {
 
+    private ProductService service = new ProductService();
+
     @GET()
     @Produces({MediaType.APPLICATION_XML})
     public List<ProductEntity> findAll(@QueryParam("page") int page, @QueryParam("size") int size) {
-        List<ProductEntity> all = (List<ProductEntity>) MainRepository.getEntityByName(EntityName.PRODUCT_ENTITY).findMany("Product.findPageAndSize", page, size);
-        return all;
+        return service.getAllProductPaging(page,size);
     }
 
     @GET()
-    @Path("/test")
-    public List<ProductEntity> test() {
-//        System.out.println(ElectricityHelper.calculateByLevel(all, 1000));
-
-        return null;
+    @Path("/findLikeByNameOrCode")
+    @Produces({MediaType.APPLICATION_XML})
+    public List<ProductEntity> findLikeByName(@QueryParam("search") String search) {
+        return service.findLikeByNameOrCode("%" + search + "%");
     }
+
+
 }
