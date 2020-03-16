@@ -14,7 +14,7 @@ public class ProductRepository extends BaseRepository<ProductEntity, Integer> {
         super(ProductEntity.class);
    }
 
-   public ProductEntity findProductByHash(String hash){
+   public ProductEntity getProductByHash(String hash){
        Query query = em.createNamedQuery("Product.findByHash");
        query.setParameter("hash",hash);
        try {
