@@ -2,33 +2,31 @@ package hungpt.crawler;
 
 import hungpt.constant.EntityName;
 import hungpt.constant.GlobalURL;
+import hungpt.entities.CategoryEntity;
 import hungpt.entities.ProductEntity;
 import hungpt.repositories.MainRepository;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CategoryDetailCrawler extends PageCrawler {
     private List<String> productListUrl = new ArrayList();
-    private int cateId;
+    private CategoryEntity categoryEntity;
 
-    public CategoryDetailCrawler(String url, String realPath, int cateId) {
+    public CategoryDetailCrawler(String url, String realPath, CategoryEntity categoryEntity) {
         super(url, realPath);
         this.setXslPath(this.getRealPath() + GlobalURL.XSL_ABC_PRODUCT_MAXPAGE);
-        this.cateId = cateId;
-    }
-
-    public List<String> getProductListUrl() {
-        return productListUrl;
+        this.categoryEntity = categoryEntity;
     }
 
 
     @Override
     public void run() {
         try {
+            int beforeCrawl = categoryEntity.getProductEntityList().size();
             int maxPage = 1;
             if (!this.crawl().toString().equals("")) {
                 maxPage = Integer.parseInt(this.crawl().toString());
@@ -41,14 +39,20 @@ public class CategoryDetailCrawler extends PageCrawler {
                 productListUrl.addAll(Arrays.asList(listUrl.split("/")));
             }
             productListUrl.forEach(url -> {
-                if (!url.equals("")){
-                    ProductCrawler productCrawler = new ProductCrawler(url, getRealPath(), this.cateId);
-                    productCrawler.start();
+                if (!url.equals("")) {
+                    ProductCrawler productCrawler = new ProductCrawler(url, getRealPath());
+                    productCrawler.run();
+                    if (productCrawler.getProductEntity() != null) {
+                        if (!categoryEntity.getProductEntityList().stream().anyMatch(p -> p.getHash().equals(productCrawler.getProductEntity().getHash()))) {
+                            categoryEntity.addProduct(productCrawler.getProductEntity());
+                        }
+                    }
                 }
             });
-            System.out.println(this.getUrl() + " " + maxPage + " pages. Has " + productListUrl.size() + " records");
+            System.out.println(this.getUrl() + " " + maxPage + " pages. Has " + (categoryEntity.getProductEntityList().size() - beforeCrawl) + " new records");
+            MainRepository.getEntityByName(EntityName.CATEGORY_ENTITY).create(categoryEntity);
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger.getLogger(CategoryDetailCrawler.class.getName()).log(Level.SEVERE, e.getMessage(), e);
         }
     }
 }

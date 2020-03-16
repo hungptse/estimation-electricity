@@ -6,11 +6,16 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "Category", schema = "dbo", catalog = "EstimationElectricity")
 @XmlRootElement
+@NamedQueries({
+        @NamedQuery(name = "Category.findByHash",query = "SELECT c FROM CategoryEntity c WHERE c.hash = :hash")
+})
 public class CategoryEntity implements Serializable {
     private int cateId;
     private String cateName;
@@ -18,7 +23,7 @@ public class CategoryEntity implements Serializable {
     private String hash;
     private Timestamp createdAt;
     private Timestamp updatedAt;
-
+    private List<ProductEntity> productEntityList = new ArrayList<>();
 
     public CategoryEntity() {
     }
@@ -109,4 +114,17 @@ public class CategoryEntity implements Serializable {
         this.updatedAt = updatedAt;
     }
 
+    @OneToMany(mappedBy = "categoryEntity")
+    public List<ProductEntity> getProductEntityList() {
+        return productEntityList;
+    }
+
+    private void setProductEntityList(List<ProductEntity> productEntityList) {
+        this.productEntityList = productEntityList;
+    }
+
+    public void addProduct(ProductEntity entity){
+        this.productEntityList.add(entity);
+        entity.setCategoryEntity(this);
+    }
 }

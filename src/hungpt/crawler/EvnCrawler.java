@@ -9,6 +9,8 @@ import hungpt.utils.JAXBHepler;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class EvnCrawler extends PageCrawler {
 
@@ -30,7 +32,7 @@ public class EvnCrawler extends PageCrawler {
                 MainRepository.getEntityByName(EntityName.PRICE_LIST_ENTITY).create(priceListEntity);
             });
         } catch (Exception e){
-            e.printStackTrace();
+            Logger.getLogger(EvnCrawler.class.getName()).log(Level.SEVERE,null,e);
         }
     }
 }

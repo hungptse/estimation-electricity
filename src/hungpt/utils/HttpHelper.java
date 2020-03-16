@@ -9,6 +9,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class HttpHelper {
 
     public static String getContent(String href) throws IOException {
@@ -29,6 +32,8 @@ public class HttpHelper {
             while ((line = br.readLine()) != null) {
                 data += line;
             }
+        } catch (IOException e) {
+            Logger.getLogger(HttpHelper.class.getName()).log(Level.SEVERE,null,e);
         } finally {
             if (connection != null) {
                 connection.disconnect();

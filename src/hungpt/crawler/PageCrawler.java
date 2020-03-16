@@ -9,6 +9,8 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class PageCrawler {
     private String url;
@@ -48,8 +50,8 @@ public abstract class PageCrawler {
             try{
                 String content = CrawlHelper.getWellformHTML(HttpHelper.getContent(href));
                 return new StreamSource(new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)));
-            } catch (Exception e){
-                e.printStackTrace();
+            } catch (IOException e){
+                Logger.getLogger(PageCrawler.class.getName()).log(Level.SEVERE,null,e);
             }
             return null;
         });

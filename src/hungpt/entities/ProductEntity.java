@@ -13,34 +13,36 @@ import java.util.Objects;
 @Entity
 @Table(name = "Product", schema = "dbo", catalog = "EstimationElectricity")
 @XmlRootElement
-@NamedQueries({@NamedQuery(name = "Product.findPageAndSize" , query = "SELECT p FROM ProductEntity p ORDER BY p.productId"),
-    @NamedQuery(name = "Product.searchNameOrCode", query = "SELECT p FROM ProductEntity p WHERE p.name LIKE :search OR p.code LIKE :search")
+@NamedQueries({@NamedQuery(name = "Product.findPageAndSize", query = "SELECT p FROM ProductEntity p ORDER BY p.productId"),
+        @NamedQuery(name = "Product.searchNameOrCode", query = "SELECT p FROM ProductEntity p WHERE p.name LIKE :search OR p.code LIKE :search"),
+        @NamedQuery(name = "Product.findByHash", query = "SELECT p FROM ProductEntity p WHERE p.hash = :hash")
 })
 public class ProductEntity implements Serializable {
     private int productId;
     private String name;
     private String code;
-    private BigDecimal wattage;
+    private double wattage;
     private String unit;
     private String hash;
     private String url;
     private String imageLink;
-    private Integer cateId;
+    //    private Integer cateId;
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private Boolean isPrivateProduct;
+    private CategoryEntity categoryEntity;
 
     public ProductEntity() {
 
     }
 
-    public ProductEntity(String name, String code, BigDecimal wattage, String url, String imageLink) {
+    public ProductEntity(String name, String code, double wattage, String url, String imageLink) {
         this.name = name;
         this.code = code;
         this.wattage = wattage;
         this.url = url;
         this.imageLink = imageLink;
-        this.hash = HashHepler.hashMD5(name.replaceAll(" ","") + code.replaceAll(" ",""));
+        this.hash = HashHepler.hashMD5(name.replaceAll(" ", "") + code.replaceAll(" ", ""));
         this.createdAt = new Timestamp(System.currentTimeMillis());
         this.updatedAt = new Timestamp(System.currentTimeMillis());
         this.unit = "W";
@@ -78,12 +80,12 @@ public class ProductEntity implements Serializable {
     }
 
     @Basic
-    @Column(name = "Wattage", nullable = true, precision = 2)
-    public BigDecimal getWattage() {
+    @Column(name = "Wattage", nullable = true)
+    public double getWattage() {
         return wattage;
     }
 
-    public void setWattage(BigDecimal wattage) {
+    public void setWattage(double wattage) {
         this.wattage = wattage;
     }
 
@@ -127,14 +129,25 @@ public class ProductEntity implements Serializable {
         this.imageLink = imageLink;
     }
 
-    @Basic
-    @Column(name = "CateId", nullable = true)
-    public Integer getCateId() {
-        return cateId;
+//    @Basic
+//    @Column(name = "CateId", nullable = true)
+//    public Integer getCateId() {
+//        return cateId;
+//    }
+//
+//    public void setCateId(Integer cateId) {
+//        this.cateId = cateId;
+//    }
+
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "CateId")
+    public CategoryEntity getCategoryEntity() {
+        return categoryEntity;
     }
 
-    public void setCateId(Integer cateId) {
-        this.cateId = cateId;
+    public void setCategoryEntity(CategoryEntity categoryEntity) {
+        this.categoryEntity = categoryEntity;
     }
 
     @Basic
@@ -180,7 +193,6 @@ public class ProductEntity implements Serializable {
                 Objects.equals(hash, that.hash) &&
                 Objects.equals(url, that.url) &&
                 Objects.equals(imageLink, that.imageLink) &&
-                Objects.equals(cateId, that.cateId) &&
                 Objects.equals(createdAt, that.createdAt) &&
                 Objects.equals(updatedAt, that.updatedAt) &&
                 Objects.equals(isPrivateProduct, that.isPrivateProduct);

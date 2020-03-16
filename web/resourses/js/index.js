@@ -1,30 +1,47 @@
 function initUI() {
     var root = document.getElementById("root");
+    var productList = document.createElement("div");
+    root.appendChild(productList);
     getXHR("webservice/product", {
         "size": 100,
         "page": 1
     }).then(function (res) {
-        createSearch(res, root, "Name or Code", function () {
+        createSearch(res, productList, "Name or Code", function () {
             // @ts-ignore
             var value = document.getElementById("txtSearch").value;
             getXHR("webservice/product/findLikeByNameOrCode", {
                 "search": value
             }).then(function (res) {
-                createTable(res, root, "Product Table", {
+                createTable("main-table", res, productList, "Product Table", {
                     "Name": 5,
                     "Code": 1,
                     "Wattage (W)": 11,
-                    "Image": 4
-                }, 10);
+                }, 10, { action: addToList, actionTitle: "Add", isAction: true });
             });
         });
-        createTable(res, root, "Product Table", {
+        createTable("main-table", res, productList, "Product Table", {
             "Name": 5,
             "Code": 1,
             "Wattage (W)": 11,
-            "Image": 4
-        }, 10);
+        }, 10, { action: addToList, actionTitle: "Add", isAction: true });
+        onstorage = function (ev) {
+            console.log(ev);
+        };
+        var addedlist = document.createElement("div");
+        var xmlString = "<productEntities></productEntities>";
+        localStorage.setItem("data", xmlString);
+        root.appendChild(addedlist);
+        createTable("added-list", parseStringToDoc(xmlString), addedlist, "Product Table", {
+            "Name": 5,
+            "Code": 1,
+            "Wattage (W)": 11,
+        }, 10, { action: null, actionTitle: "Add", isAction: false });
     });
+}
+function parseStringToDoc(xmlString) {
+    var parser = new DOMParser();
+    var xmlDoc = parser.parseFromString(xmlString, "text/xml");
+    return xmlDoc;
 }
 function createSearch(doc, root, title, onkeyup) {
     var divTag = document.createElement("div");
@@ -65,13 +82,14 @@ function removeChildById(tagId) {
         document.getElementById(tagId).parentNode.removeChild(tag);
     }
 }
-function createTable(doc, root, title, columns, ITEM_MAX_PAGE) {
-    removeChildById("table-data");
+function createTable(id, doc, root, title, columns, ITEM_MAX_PAGE, _a) {
+    var _b = _a === void 0 ? {} : _a, _c = _b.isAction, isAction = _c === void 0 ? false : _c, _d = _b.actionTitle, actionTitle = _d === void 0 ? "Add" : _d, _e = _b.action, action = _e === void 0 ? null : _e;
+    removeChildById(id);
     removeChildById("notification");
     var divTag = document.createElement("div");
     divTag.style.width = "100%";
     divTag.style.alignContent = "right";
-    divTag.id = "table-data";
+    divTag.id = id;
     var table = document.createElement("table");
     table.style.width = "100%";
     var rootNode = doc.childNodes.item(0);
@@ -83,9 +101,12 @@ function createTable(doc, root, title, columns, ITEM_MAX_PAGE) {
     Object.keys(columns).forEach(function (key, index) {
         row.insertCell(index + 1).innerText = key;
     });
+    if (isAction) {
+        row.insertCell().innerText = "Action";
+    }
     var page = 1;
     var tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-    renderTableBody(table, tableData, columns);
+    renderTableBody("table-body", table, tableData, columns, { isAction: isAction, actionTitle: actionTitle, action: action });
     var maxPage = rootNode.childNodes.length % 10 == 0 ? rootNode.childNodes.length / ITEM_MAX_PAGE : Math.floor((rootNode.childNodes.length / ITEM_MAX_PAGE)) + 1;
     var text = document.createElement("code");
     var pagingSection = document.createElement("div");
@@ -95,7 +116,7 @@ function createTable(doc, root, title, columns, ITEM_MAX_PAGE) {
         page = 1;
         text.innerText = page + "/" + maxPage;
         tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-        renderTableBody(table, tableData, columns);
+        renderTableBody("table-body", table, tableData, columns, { isAction: isAction, actionTitle: actionTitle, action: action });
     }));
     pagingSection.appendChild(button("Pre", function () {
         if (page > 1) {
@@ -103,7 +124,7 @@ function createTable(doc, root, title, columns, ITEM_MAX_PAGE) {
         }
         text.innerText = page + "/" + maxPage;
         tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-        renderTableBody(table, tableData, columns);
+        renderTableBody("table-body", table, tableData, columns, { isAction: isAction, actionTitle: actionTitle, action: action });
     }));
     text.innerText = page + "/" + maxPage;
     pagingSection.appendChild(text);
@@ -113,17 +134,16 @@ function createTable(doc, root, title, columns, ITEM_MAX_PAGE) {
         }
         text.innerText = page + "/" + maxPage;
         tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-        renderTableBody(table, tableData, columns);
+        renderTableBody("table-body", table, tableData, columns, { isAction: isAction, actionTitle: actionTitle, action: action });
     }));
     pagingSection.appendChild(button("Last", function () {
         page = maxPage;
         text.innerText = page + "/" + maxPage;
         tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-        renderTableBody(table, tableData, columns);
+        renderTableBody("table-body", table, tableData, columns, { isAction: isAction, actionTitle: actionTitle, action: action });
     }));
     divTag.appendChild(table);
     divTag.appendChild(pagingSection);
-    // table.appendChild(pagingSection);
     if (rootNode.hasChildNodes()) {
         root.appendChild(divTag);
     }
@@ -144,23 +164,49 @@ function getPagingData(page, ITEM_MAX_PAGE, rootNode) {
     }
     return tableData;
 }
-function renderTableBody(table, tableData, columns) {
-    removeChildById("table-body");
+function renderTableBody(id, table, tableData, columns, _a) {
+    var _b = _a === void 0 ? {} : _a, _c = _b.isAction, isAction = _c === void 0 ? false : _c, _d = _b.actionTitle, actionTitle = _d === void 0 ? "Action" : _d, _e = _b.action, action = _e === void 0 ? null : _e;
+    removeChildById(id);
     var body = table.createTBody();
-    body.id = "table-body";
+    body.id = id;
     var _loop_1 = function (i) {
         var child = tableData[i];
         var row = body.insertRow(i);
         if (child.hasChildNodes()) {
             row.insertCell(0).innerText = i + 1 + "";
             Object.keys(columns).forEach(function (key, index) {
+                var content = child.childNodes.item(columns[key]).textContent;
+                if (!content) {
+                    content = "No available";
+                }
                 row.insertCell(index + 1).innerText = child.childNodes.item(columns[key]).textContent;
             });
+            if (isAction) {
+                var actionBtn = document.createElement("button");
+                actionBtn.innerHTML = actionTitle;
+                // @ts-ignore
+                actionBtn.onclick = function (e) {
+                    e.preventDefault();
+                    action(child);
+                };
+                row.insertCell().appendChild(actionBtn);
+            }
         }
     };
     for (var i = 0; i < tableData.length; i++) {
         _loop_1(i);
     }
+}
+function addToList(value) {
+    var root = document.createElement("div");
+    var xmlDoc = parseStringToDoc(localStorage.getItem("data")).childNodes[0].appendChild(value);
+    createTable("added-list", xmlDoc, root, "List", {
+        "Name": 5,
+        "Code": 1,
+        "Wattage (W)": 11,
+    }, 10);
+    localStorage.setItem("data", xmlDoc);
+    // document.getElementById("root").appendChild(root);
 }
 function getXHR(url, data) {
     var xhr = new XMLHttpRequest();
