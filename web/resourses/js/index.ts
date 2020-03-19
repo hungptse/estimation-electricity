@@ -1,57 +1,101 @@
+const LIST_KEY = {
+    LIST_PRODUCT: "LIST_PRODUCT"
+};
 
+function getListProductDoc() : XMLDocument {
+    const doc = parseStringToDoc(localStorage.getItem(LIST_KEY.LIST_PRODUCT));
+    return doc;
+}
+function nodeListToArray(list : NodeListOf<ChildNode>) : ChildNode[] {
+    const arr = [];
+    if (list.length){
+        for (let i = 0; i < list.length; i++){
+            arr.push(list.item(i));
+        }
+    }
+    return arr;
+}
+
+function arrayToXMLDoc(arr) {
+    let str = "<rootElm>";
+    arr[0].forEach(item => {
+        str += item.outerHTML;
+    });
+    str += "</rootElm>";
+    return parseStringToDoc(str);
+}
 function initUI() {
     const root = document.getElementById("root");
     const productList = document.createElement("div");
+    productList.id = "product-list";
+    const addedList = document.createElement("div");
+    addedList.id = "added-list";
+    root.appendChild(document.createElement("hr"));
     root.appendChild(productList);
+
+
+    const search = createSearch("Name or Code", () => {
+        // @ts-ignore
+        let value = document.getElementById("txtSearch").value;
+        const result = nodeListToArray(getListProductDoc().childNodes).map(node => nodeListToArray(node.childNodes).filter(n => n.childNodes.item(2).textContent.toLowerCase().indexOf(value.toLowerCase()) != -1));
+        if (result[0].length > 0){
+            renderProductTable(arrayToXMLDoc(result));
+        } else {
+            getXHR("webservice/product/findLikeByNameOrCode", {
+                "search": value
+            }).then(res => {
+                renderProductTable(res);
+            })
+        }
+    });
+
+    productList.appendChild(search);
+
     getXHR("webservice/product", {
         "size": 100,
         "page": 1
     }).then(res => {
-        createSearch(res, productList, "Name or Code", () => {
-            // @ts-ignore
-            let value = document.getElementById("txtSearch").value;
-            getXHR("webservice/product/findLikeByNameOrCode", {
-                "search": value
-            }).then(res => {
-                createTable("main-table",res, productList, "Product Table", {
-                    "Name": 5,
-                    "Code": 1,
-                    "Wattage (W)": 11,
-                }, 10, { action: addToList, actionTitle: "Add", isAction: true });
-            })
-        });
-
-        createTable("main-table",res, productList, "Product Table", {
-            "Name": 5,
-            "Code": 1,
-            "Wattage (W)": 11,
-        }, 10, { action: addToList, actionTitle: "Add", isAction: true });
-
-
-        onstorage = function (ev) {
-            console.log(ev)
-        };
-
-        const addedlist = document.createElement("div");
-
-        var xmlString = "<productEntities></productEntities>";
-        localStorage.setItem("data",xmlString);
-
-        root.appendChild(addedlist);
-        createTable("added-list",parseStringToDoc(xmlString), addedlist, "Product Table", {
-            "Name": 5,
-            "Code": 1,
-            "Wattage (W)": 11,
-        }, 10, { action: null, actionTitle: "Add", isAction: false });
+        localStorage.setItem(LIST_KEY.LIST_PRODUCT, parseDocToString(res));
+        renderProductTable(res);
+        //
+        // createTable("main-table",res, productList, "Product Table", {
+        //     "Name": 5,
+        //     "Code": 1,
+        //     "Wattage (W)": 11,
+        // }, 10, { action: addToList, actionTitle: "Add", isAction: true });
     });
+
+    const xmlString = "<productEntities/>";
+    const addedTable = createTable("added-list", parseStringToDoc(xmlString), "Product Table", {
+        "Name": 2,
+        "Code": 0,
+        "Wattage (W)": 5,
+    }, 10, { action: null, actionTitle: "Add", isAction: false });
+    addedList.appendChild(addedTable);
 }
+
+function renderProductTable(xmlDoc: XMLDocument) {
+    const productList = document.getElementById("product-list");
+    removeChildById("main-table");
+    const productTable = createTable("main-table", xmlDoc, "Product Table", {
+        "Name": 2,
+        "Code": 0,
+        "Wattage (W)": 5,
+    }, 10, { action: addToList, actionTitle: "Add", isAction: true });
+    productList.appendChild(productTable);
+}
+
 function parseStringToDoc(xmlString) {
     var parser = new DOMParser();
     var xmlDoc = parser.parseFromString(xmlString, "text/xml");
     return xmlDoc;
 }
 
-function createSearch(doc: Document, root: HTMLElement, title: string, onkeyup) {
+function parseDocToString(xmlDoc: XMLDocument) {
+    return new XMLSerializer().serializeToString(xmlDoc.documentElement);
+}
+
+function createSearch(title: string, onkeyup) {
     const divTag = document.createElement("div");
     const titleTag = document.createElement("span");
     titleTag.innerText = title + " ";
@@ -69,7 +113,7 @@ function createSearch(doc: Document, root: HTMLElement, title: string, onkeyup) 
     divTag.appendChild(titleTag);
     divTag.appendChild(inputTag);
     divTag.appendChild(searchBtn);
-    root.appendChild(divTag);
+    return divTag;
 }
 
 function objectToQueryParam(obj) {
@@ -97,8 +141,8 @@ function removeChildById(tagId: string) {
     }
 }
 
-function createTable(id: string, doc: Document, root: HTMLElement, title: string, columns: Object, ITEM_MAX_PAGE, { isAction = false, actionTitle = "Add", action = null } = {}) {
-    removeChildById(id);
+function createTable(id: string, doc: Document, title: string, columns: Object, ITEM_MAX_PAGE, { isAction = false, actionTitle = "Add", action = null } = {}) {
+    // removeChildById(id);
     removeChildById("notification");
     const divTag = document.createElement("div");
     divTag.style.width = "100%";
@@ -121,7 +165,7 @@ function createTable(id: string, doc: Document, root: HTMLElement, title: string
 
     let page = 1;
     let tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-    renderTableBody("table-body",table, tableData, columns, { isAction, actionTitle, action });
+    renderTableBody("table-body", table, tableData, columns, { isAction, actionTitle, action });
     let maxPage = rootNode.childNodes.length % 10 == 0 ? rootNode.childNodes.length / ITEM_MAX_PAGE : Math.floor((rootNode.childNodes.length / ITEM_MAX_PAGE)) + 1;
     const text = document.createElement("code");
     const pagingSection = document.createElement("div");
@@ -131,7 +175,7 @@ function createTable(id: string, doc: Document, root: HTMLElement, title: string
         page = 1;
         text.innerText = `${page}/${maxPage}`;
         tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-        renderTableBody("table-body",table, tableData, columns, { isAction, actionTitle, action });
+        renderTableBody("table-body", table, tableData, columns, { isAction, actionTitle, action });
     }));
     pagingSection.appendChild(button("Pre", () => {
         if (page > 1) {
@@ -139,7 +183,7 @@ function createTable(id: string, doc: Document, root: HTMLElement, title: string
         }
         text.innerText = `${page}/${maxPage}`;
         tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-        renderTableBody("table-body",table, tableData, columns, { isAction, actionTitle, action });
+        renderTableBody("table-body", table, tableData, columns, { isAction, actionTitle, action });
     }));
 
     text.innerText = `${page}/${maxPage}`;
@@ -150,29 +194,29 @@ function createTable(id: string, doc: Document, root: HTMLElement, title: string
         }
         text.innerText = `${page}/${maxPage}`;
         tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-        renderTableBody("table-body",table, tableData, columns, { isAction, actionTitle, action });
+        renderTableBody("table-body", table, tableData, columns, { isAction, actionTitle, action });
     }));
     pagingSection.appendChild(button("Last", () => {
         page = maxPage;
         text.innerText = `${page}/${maxPage}`;
         tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-        renderTableBody("table-body",table, tableData, columns, { isAction, actionTitle, action });
+        renderTableBody("table-body", table, tableData, columns, { isAction, actionTitle, action });
     }));
 
     divTag.appendChild(table);
     divTag.appendChild(pagingSection);
     if (rootNode.hasChildNodes()) {
-        root.appendChild(divTag);
+        return divTag;
     } else {
         const text = document.createElement("h3");
         text.id = "notification";
         text.innerText = "No data found";
-        root.appendChild(text);
+        return text;
     }
 }
 
-function getPagingData(page, ITEM_MAX_PAGE, rootNode: ChildNode) {
-    let tableData = [];
+function getPagingData(page, ITEM_MAX_PAGE, rootNode: ChildNode): ChildNode[] {
+    let tableData: ChildNode[] = [];
     let start = (page - 1) * ITEM_MAX_PAGE;
     for (let i = start; i < start + ITEM_MAX_PAGE; i++) {
         if (rootNode.childNodes.item(i)) {
@@ -182,7 +226,7 @@ function getPagingData(page, ITEM_MAX_PAGE, rootNode: ChildNode) {
     return tableData;
 }
 
-function renderTableBody(id: string,table: HTMLTableElement, tableData, columns, { isAction = false, actionTitle = "Action", action = null } = {}) {
+function renderTableBody(id: string, table: HTMLTableElement, tableData, columns, { isAction = false, actionTitle = "Action", action = null } = {}) {
     removeChildById(id);
     const body = table.createTBody();
     body.id = id;
@@ -213,16 +257,19 @@ function renderTableBody(id: string,table: HTMLTableElement, tableData, columns,
 }
 
 function addToList(value) {
-    const root = document.createElement("div");
-
+    console.log(value);
+    const root = document.getElementById("added-list");
     const xmlDoc = parseStringToDoc(localStorage.getItem("data")).childNodes[0].appendChild(value);
-
-    createTable("added-list",xmlDoc, root, "List", {
-        "Name": 5,
-        "Code": 1,
-        "Wattage (W)": 11,
+    //
+   const addedList =  createTable("added-list", xmlDoc, "List", {
+       "Name": 2,
+       "Code": 0,
+       "Wattage (W)": 5,
     }, 10);
-    localStorage.setItem("data",xmlDoc);
+    root.appendChild(addedList);
+    renderProductTable(parseStringToDoc(localStorage.getItem(LIST_KEY.LIST_PRODUCT)));
+    initUI();
+    // localStorage.setItem("data",xmlDoc);
     // document.getElementById("root").appendChild(root);
 }
 

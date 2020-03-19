@@ -114,7 +114,7 @@ public class CategoryEntity implements Serializable {
         this.updatedAt = updatedAt;
     }
 
-    @OneToMany(mappedBy = "categoryEntity")
+    @OneToMany(mappedBy = "categoryEntity", fetch = FetchType.LAZY )
     public List<ProductEntity> getProductEntityList() {
         return productEntityList;
     }

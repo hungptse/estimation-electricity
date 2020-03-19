@@ -7,14 +7,15 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
 @Table(name = "Product", schema = "dbo", catalog = "EstimationElectricity")
 @XmlRootElement
-@NamedQueries({@NamedQuery(name = "Product.findPageAndSize", query = "SELECT p FROM ProductEntity p ORDER BY p.productId"),
-        @NamedQuery(name = "Product.searchNameOrCode", query = "SELECT p FROM ProductEntity p WHERE p.name LIKE :search OR p.code LIKE :search"),
+@NamedQueries({@NamedQuery(name = "Product.findPageAndSize", query = "SELECT new hungpt.entities.ProductEntity(p.name, p.code,p.url,p.imageLink,p.wattage)  FROM ProductEntity p ORDER BY p.productId"),
+        @NamedQuery(name = "Product.searchNameOrCode", query = "SELECT new hungpt.entities.ProductEntity(p.name, p.code,p.url,p.imageLink,p.wattage) FROM ProductEntity p WHERE p.name LIKE :search OR p.code LIKE :search"),
         @NamedQuery(name = "Product.findByHash", query = "SELECT p FROM ProductEntity p WHERE p.hash = :hash")
 })
 public class ProductEntity implements Serializable {
@@ -26,14 +27,20 @@ public class ProductEntity implements Serializable {
     private String hash;
     private String url;
     private String imageLink;
-    //    private Integer cateId;
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
+    private Date createdAt;
+    private Date updatedAt;
     private Boolean isPrivateProduct;
     private CategoryEntity categoryEntity;
 
     public ProductEntity() {
 
+    }
+    public ProductEntity(String name, String code, String url, String imageLink, double wattage) {
+        this.name = name;
+        this.code = code;
+        this.wattage = wattage;
+        this.url = url;
+        this.imageLink = imageLink;
     }
 
     public ProductEntity(String name, String code, double wattage, String url, String imageLink) {
@@ -43,8 +50,8 @@ public class ProductEntity implements Serializable {
         this.url = url;
         this.imageLink = imageLink;
         this.hash = HashHepler.hashMD5(name.replaceAll(" ", "") + code.replaceAll(" ", ""));
-        this.createdAt = new Timestamp(System.currentTimeMillis());
-        this.updatedAt = new Timestamp(System.currentTimeMillis());
+        this.createdAt = new Date(System.currentTimeMillis());
+        this.updatedAt = new Date(System.currentTimeMillis());
         this.unit = "W";
     }
 
@@ -129,18 +136,7 @@ public class ProductEntity implements Serializable {
         this.imageLink = imageLink;
     }
 
-//    @Basic
-//    @Column(name = "CateId", nullable = true)
-//    public Integer getCateId() {
-//        return cateId;
-//    }
-//
-//    public void setCateId(Integer cateId) {
-//        this.cateId = cateId;
-//    }
-
-
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "CateId")
     public CategoryEntity getCategoryEntity() {
         return categoryEntity;
@@ -152,21 +148,21 @@ public class ProductEntity implements Serializable {
 
     @Basic
     @Column(name = "CreatedAt", nullable = true)
-    public Timestamp getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
     @Basic
     @Column(name = "UpdatedAt", nullable = true)
-    public Timestamp getUpdatedAt() {
+    public Date getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Timestamp updatedAt) {
+    public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
 

@@ -16,9 +16,7 @@
             <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
             <property name="javax.persistence.jdbc.password" value="1qaZ2wsX"/>
             <property name="esclipselink.cache.shared.default" value="false"/>
-            <property name="eclipselink.jdbc.url"
-                      value="jdbc:sqlserver://localhost:1434;database=EstimationElectricity"/>
-            <property name="eclipselink.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+            <property name="eclipselink.weaving" value="static"/>
         </properties>
     </persistence-unit>
 </persistence>

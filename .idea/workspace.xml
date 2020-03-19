@@ -7,12 +7,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="433d4251-6c0f-4849-8718-b89cd61edaf4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/hungpt/repositories/PriceListRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/crawler/EvnCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/crawler/EvnCrawler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/crawler/ProductCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/crawler/ProductCrawler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/entities/PriceListEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/entities/PriceListEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/META-INF/persistence.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/javaee.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/entities/CategoryEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/entities/CategoryEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/entities/ProductEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/entities/ProductEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hungpt/repositories/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/repositories/ProductRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/utils/JPAHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/utils/JPAHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/resourses/js/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/resourses/js/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/resourses/js/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/resourses/js/index.ts" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -99,7 +103,7 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15089722" />
-    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="project.structure.side.proportion" value="0.115207374" />
     <property name="settings.editor.selected.configurable" value="settings.typescriptcompiler" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
@@ -127,6 +131,9 @@
   <component name="RunManager">
     <configuration name="Tomcat 9.0.30" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.30" ALTERNATIVE_JRE_ENABLED="false">
       <option name="OPEN_IN_BROWSER" value="false" />
+      <option name="UPDATE_ON_FRAME_DEACTIVATION" value="true" />
+      <option name="UPDATE_CLASSES_ON_FRAME_DEACTIVATION" value="true" />
+      <option name="SHOW_DIALOG_ON_UPDATE" value="false" />
       <deployment>
         <artifact name="EstimationElectricity">
           <settings>
@@ -180,7 +187,7 @@
         <STARTUP>
           <option name="USE_DEFAULT" value="true" />
           <option name="SCRIPT" value="" />
-          <option name="VM_PARAMETERS" value="" />
+          <option name="VM_PARAMETERS" value="-javaagent:/WEB-INF/lib/eclipselink-2.7.6.jar" />
           <option name="PROGRAM_PARAMETERS" value="" />
         </STARTUP>
         <SHUTDOWN>
@@ -226,8 +233,21 @@
       <workItem from="1584128587075" duration="22433000" />
       <workItem from="1584254185459" duration="67000" />
       <workItem from="1584254489985" duration="14999000" />
-      <workItem from="1584303897861" duration="9826000" />
+      <workItem from="1584303897861" duration="18234000" />
+      <workItem from="1584429778138" duration="500000" />
+      <workItem from="1584439399757" duration="9482000" />
+      <workItem from="1584515555270" duration="121000" />
+      <workItem from="1584523976439" duration="313000" />
+      <workItem from="1584552436567" duration="9505000" />
     </task>
+    <task id="LOCAL-00001" summary="prevent duplicate unique key">
+      <created>1584366223484</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1584366223484</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -256,6 +276,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <option name="LOCAL_CHANGES_DETAILS_PREVIEW_SHOWN" value="true" />
+    <MESSAGE value="prevent duplicate unique key" />
+    <option name="LAST_COMMIT_MESSAGE" value="prevent duplicate unique key" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

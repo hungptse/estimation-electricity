@@ -5,6 +5,7 @@ import hungpt.entities.ProductEntity;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
+
 public class ProductRepository extends BaseRepository<ProductEntity, Integer> {
     public ProductRepository(Class<ProductEntity> classType) {
         super(classType);

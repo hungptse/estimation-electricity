@@ -1,49 +1,91 @@
+var LIST_KEY = {
+    LIST_PRODUCT: "LIST_PRODUCT"
+};
+function getListProductDoc() {
+    var doc = parseStringToDoc(localStorage.getItem(LIST_KEY.LIST_PRODUCT));
+    return doc;
+}
+function nodeListToArray(list) {
+    var arr = [];
+    if (list.length) {
+        for (var i = 0; i < list.length; i++) {
+            arr.push(list.item(i));
+        }
+    }
+    return arr;
+}
+function arrayToXMLDoc(arr) {
+    var str = "<rootElm>";
+    arr[0].forEach(function (item) {
+        str += item.outerHTML;
+    });
+    str += "</rootElm>";
+    return parseStringToDoc(str);
+}
 function initUI() {
     var root = document.getElementById("root");
     var productList = document.createElement("div");
+    productList.id = "product-list";
+    var addedList = document.createElement("div");
+    addedList.id = "added-list";
+    root.appendChild(document.createElement("hr"));
     root.appendChild(productList);
+    var search = createSearch("Name or Code", function () {
+        // @ts-ignore
+        var value = document.getElementById("txtSearch").value;
+        var result = nodeListToArray(getListProductDoc().childNodes).map(function (node) { return nodeListToArray(node.childNodes).filter(function (n) { return n.childNodes.item(2).textContent.toLowerCase().indexOf(value.toLowerCase()) != -1; }); });
+        if (result[0].length > 0) {
+            renderProductTable(arrayToXMLDoc(result));
+        }
+        else {
+            getXHR("webservice/product/findLikeByNameOrCode", {
+                "search": value
+            }).then(function (res) {
+                renderProductTable(res);
+            });
+        }
+    });
+    productList.appendChild(search);
     getXHR("webservice/product", {
         "size": 100,
         "page": 1
     }).then(function (res) {
-        createSearch(res, productList, "Name or Code", function () {
-            // @ts-ignore
-            var value = document.getElementById("txtSearch").value;
-            getXHR("webservice/product/findLikeByNameOrCode", {
-                "search": value
-            }).then(function (res) {
-                createTable("main-table", res, productList, "Product Table", {
-                    "Name": 5,
-                    "Code": 1,
-                    "Wattage (W)": 11,
-                }, 10, { action: addToList, actionTitle: "Add", isAction: true });
-            });
-        });
-        createTable("main-table", res, productList, "Product Table", {
-            "Name": 5,
-            "Code": 1,
-            "Wattage (W)": 11,
-        }, 10, { action: addToList, actionTitle: "Add", isAction: true });
-        onstorage = function (ev) {
-            console.log(ev);
-        };
-        var addedlist = document.createElement("div");
-        var xmlString = "<productEntities></productEntities>";
-        localStorage.setItem("data", xmlString);
-        root.appendChild(addedlist);
-        createTable("added-list", parseStringToDoc(xmlString), addedlist, "Product Table", {
-            "Name": 5,
-            "Code": 1,
-            "Wattage (W)": 11,
-        }, 10, { action: null, actionTitle: "Add", isAction: false });
+        localStorage.setItem(LIST_KEY.LIST_PRODUCT, parseDocToString(res));
+        renderProductTable(res);
+        //
+        // createTable("main-table",res, productList, "Product Table", {
+        //     "Name": 5,
+        //     "Code": 1,
+        //     "Wattage (W)": 11,
+        // }, 10, { action: addToList, actionTitle: "Add", isAction: true });
     });
+    var xmlString = "<productEntities/>";
+    var addedTable = createTable("added-list", parseStringToDoc(xmlString), "Product Table", {
+        "Name": 2,
+        "Code": 0,
+        "Wattage (W)": 5,
+    }, 10, { action: null, actionTitle: "Add", isAction: false });
+    addedList.appendChild(addedTable);
+}
+function renderProductTable(xmlDoc) {
+    var productList = document.getElementById("product-list");
+    removeChildById("main-table");
+    var productTable = createTable("main-table", xmlDoc, "Product Table", {
+        "Name": 2,
+        "Code": 0,
+        "Wattage (W)": 5,
+    }, 10, { action: addToList, actionTitle: "Add", isAction: true });
+    productList.appendChild(productTable);
 }
 function parseStringToDoc(xmlString) {
     var parser = new DOMParser();
     var xmlDoc = parser.parseFromString(xmlString, "text/xml");
     return xmlDoc;
 }
-function createSearch(doc, root, title, onkeyup) {
+function parseDocToString(xmlDoc) {
+    return new XMLSerializer().serializeToString(xmlDoc.documentElement);
+}
+function createSearch(title, onkeyup) {
     var divTag = document.createElement("div");
     var titleTag = document.createElement("span");
     titleTag.innerText = title + " ";
@@ -57,7 +99,7 @@ function createSearch(doc, root, title, onkeyup) {
     divTag.appendChild(titleTag);
     divTag.appendChild(inputTag);
     divTag.appendChild(searchBtn);
-    root.appendChild(divTag);
+    return divTag;
 }
 function objectToQueryParam(obj) {
     var result = "";
@@ -82,9 +124,9 @@ function removeChildById(tagId) {
         document.getElementById(tagId).parentNode.removeChild(tag);
     }
 }
-function createTable(id, doc, root, title, columns, ITEM_MAX_PAGE, _a) {
+function createTable(id, doc, title, columns, ITEM_MAX_PAGE, _a) {
     var _b = _a === void 0 ? {} : _a, _c = _b.isAction, isAction = _c === void 0 ? false : _c, _d = _b.actionTitle, actionTitle = _d === void 0 ? "Add" : _d, _e = _b.action, action = _e === void 0 ? null : _e;
-    removeChildById(id);
+    // removeChildById(id);
     removeChildById("notification");
     var divTag = document.createElement("div");
     divTag.style.width = "100%";
@@ -145,13 +187,13 @@ function createTable(id, doc, root, title, columns, ITEM_MAX_PAGE, _a) {
     divTag.appendChild(table);
     divTag.appendChild(pagingSection);
     if (rootNode.hasChildNodes()) {
-        root.appendChild(divTag);
+        return divTag;
     }
     else {
         var text_1 = document.createElement("h3");
         text_1.id = "notification";
         text_1.innerText = "No data found";
-        root.appendChild(text_1);
+        return text_1;
     }
 }
 function getPagingData(page, ITEM_MAX_PAGE, rootNode) {
@@ -198,14 +240,19 @@ function renderTableBody(id, table, tableData, columns, _a) {
     }
 }
 function addToList(value) {
-    var root = document.createElement("div");
+    console.log(value);
+    var root = document.getElementById("added-list");
     var xmlDoc = parseStringToDoc(localStorage.getItem("data")).childNodes[0].appendChild(value);
-    createTable("added-list", xmlDoc, root, "List", {
-        "Name": 5,
-        "Code": 1,
-        "Wattage (W)": 11,
+    //
+    var addedList = createTable("added-list", xmlDoc, "List", {
+        "Name": 2,
+        "Code": 0,
+        "Wattage (W)": 5,
     }, 10);
-    localStorage.setItem("data", xmlDoc);
+    root.appendChild(addedList);
+    renderProductTable(parseStringToDoc(localStorage.getItem(LIST_KEY.LIST_PRODUCT)));
+    initUI();
+    // localStorage.setItem("data",xmlDoc);
     // document.getElementById("root").appendChild(root);
 }
 function getXHR(url, data) {
