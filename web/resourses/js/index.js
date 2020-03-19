@@ -1,41 +1,22 @@
 var LIST_KEY = {
-    LIST_PRODUCT: "LIST_PRODUCT"
+    LIST_PRODUCT: "LIST_PRODUCT",
+    LIST_ADD: "LIST_ADD"
 };
-function getListProductDoc() {
-    var doc = parseStringToDoc(localStorage.getItem(LIST_KEY.LIST_PRODUCT));
-    return doc;
-}
-function nodeListToArray(list) {
-    var arr = [];
-    if (list.length) {
-        for (var i = 0; i < list.length; i++) {
-            arr.push(list.item(i));
-        }
-    }
-    return arr;
-}
-function arrayToXMLDoc(arr) {
-    var str = "<rootElm>";
-    arr[0].forEach(function (item) {
-        str += item.outerHTML;
-    });
-    str += "</rootElm>";
-    return parseStringToDoc(str);
-}
 function initUI() {
     var root = document.getElementById("root");
     var productList = document.createElement("div");
     productList.id = "product-list";
     var addedList = document.createElement("div");
     addedList.id = "added-list";
-    root.appendChild(document.createElement("hr"));
     root.appendChild(productList);
+    root.appendChild(document.createElement("hr"));
+    root.appendChild(addedList);
     var search = createSearch("Name or Code", function () {
         // @ts-ignore
         var value = document.getElementById("txtSearch").value;
-        var result = nodeListToArray(getListProductDoc().childNodes).map(function (node) { return nodeListToArray(node.childNodes).filter(function (n) { return n.childNodes.item(2).textContent.toLowerCase().indexOf(value.toLowerCase()) != -1; }); });
+        var result = nodeListToArray(getDocFromStorage(LIST_KEY.LIST_PRODUCT).childNodes).map(function (node) { return nodeListToArray(node.childNodes).filter(function (n) { return n.childNodes.item(2).textContent.toLowerCase().indexOf(value.toLowerCase()) != -1; }); });
         if (result[0].length > 0) {
-            renderProductTable(arrayToXMLDoc(result));
+            renderProductTable(arrayXMLToXMLDoc(result[0], "productEntities"));
         }
         else {
             getXHR("webservice/product/findLikeByNameOrCode", {
@@ -46,26 +27,83 @@ function initUI() {
         }
     });
     productList.appendChild(search);
-    getXHR("webservice/product", {
-        "size": 100,
-        "page": 1
-    }).then(function (res) {
-        localStorage.setItem(LIST_KEY.LIST_PRODUCT, parseDocToString(res));
-        renderProductTable(res);
-        //
-        // createTable("main-table",res, productList, "Product Table", {
-        //     "Name": 5,
-        //     "Code": 1,
-        //     "Wattage (W)": 11,
-        // }, 10, { action: addToList, actionTitle: "Add", isAction: true });
-    });
-    var xmlString = "<productEntities/>";
-    var addedTable = createTable("added-list", parseStringToDoc(xmlString), "Product Table", {
+    if (getDocFromStorage(LIST_KEY.LIST_PRODUCT) == undefined) {
+        getXHR("webservice/product", {
+            "size": 100,
+            "page": 1
+        }).then(function (res) {
+            localStorage.setItem(LIST_KEY.LIST_PRODUCT, parseDocToString(res));
+            renderProductTable(res);
+        });
+    }
+    else {
+        renderProductTable(getDocFromStorage(LIST_KEY.LIST_PRODUCT));
+    }
+    if (getDocFromStorage(LIST_KEY.LIST_ADD) != undefined) {
+        renderAddedList(getDocFromStorage(LIST_KEY.LIST_ADD));
+    }
+}
+function renderAddedList(xmlDoc, isFill, maxPage) {
+    if (isFill === void 0) { isFill = false; }
+    if (maxPage === void 0) { maxPage = 10; }
+    var addedList = document.getElementById("added-list");
+    removeChildById("added-table");
+    var isAction = true;
+    if (isFill) {
+        isAction = false;
+    }
+    var addTable = createTable("added-table", xmlDoc, "Added Table", {
         "Name": 2,
         "Code": 0,
         "Wattage (W)": 5,
-    }, 10, { action: null, actionTitle: "Add", isAction: false });
-    addedList.appendChild(addedTable);
+    }, 10, { action: removeFromList, actionTitle: "Remove", isAction: isAction, isFill: isFill });
+    addedList.appendChild(addTable);
+    var nextStepBtn = button("Next", function () {
+        fillTimePage();
+    });
+    addedList.appendChild(nextStepBtn);
+}
+function fillTimePage() {
+    var root = document.getElementById("root");
+    root.innerHTML = "";
+    var addedList = document.createElement("div");
+    addedList.id = "added-list";
+    root.appendChild(addedList);
+    if (getDocFromStorage(LIST_KEY.LIST_ADD) != undefined) {
+        renderAddedList(getDocFromStorage(LIST_KEY.LIST_ADD), true, 100);
+    }
+    addedList.appendChild(button("Send", function () {
+        sendTableToServer();
+    }));
+}
+function sendTableToServer() {
+    var doc = document.getElementById("added-tabletable-body");
+    var arr = [];
+    doc.childNodes.forEach(function (node) {
+        arr.push({
+            "id": node.childNodes.item(0).textContent,
+            // @ts-ignore
+            "value": node.childNodes.item(4).childNodes.item(0).childNodes.item(0).value,
+            // @ts-ignore
+            "unit": node.childNodes.item(4).childNodes.item(0).childNodes.item(1).value
+        });
+    });
+    postXHR("webservice/estimate", arrayObjectToXML(arr, "products", "product")).then(function (res) {
+    });
+}
+function arrayObjectToXML(arr, root, namedChild) {
+    var str = "<" + root + ">";
+    arr.forEach(function (item) {
+        var tmp = "";
+        tmp += "<" + namedChild + ">";
+        Object.keys(item).forEach(function (obj) {
+            tmp += "<" + obj + ">" + item[obj] + "</" + obj + ">";
+        });
+        tmp += "</" + namedChild + ">";
+        str += tmp;
+    });
+    str += "</" + root + ">";
+    return parseStringToDoc(str);
 }
 function renderProductTable(xmlDoc) {
     var productList = document.getElementById("product-list");
@@ -110,12 +148,13 @@ function objectToQueryParam(obj) {
     });
     return result.slice(0, result.length - 1);
 }
-function button(name, onclick) {
+function button(name, onclick, _a) {
+    var _b = _a === void 0 ? { marginLeft: "3px", marginRight: "3px" } : _a, marginLeft = _b.marginLeft, marginRight = _b.marginRight;
     var btn = document.createElement("button");
     btn.innerText = name;
     btn.onclick = onclick;
-    btn.style.marginLeft = "3px";
-    btn.style.marginRight = "3px";
+    btn.style.marginLeft = marginLeft;
+    btn.style.marginRight = marginRight;
     return btn;
 }
 function removeChildById(tagId) {
@@ -125,7 +164,7 @@ function removeChildById(tagId) {
     }
 }
 function createTable(id, doc, title, columns, ITEM_MAX_PAGE, _a) {
-    var _b = _a === void 0 ? {} : _a, _c = _b.isAction, isAction = _c === void 0 ? false : _c, _d = _b.actionTitle, actionTitle = _d === void 0 ? "Add" : _d, _e = _b.action, action = _e === void 0 ? null : _e;
+    var _b = _a === void 0 ? {} : _a, _c = _b.isAction, isAction = _c === void 0 ? false : _c, _d = _b.actionTitle, actionTitle = _d === void 0 ? "Add" : _d, _e = _b.action, action = _e === void 0 ? null : _e, _f = _b.isFill, isFill = _f === void 0 ? false : _f;
     // removeChildById(id);
     removeChildById("notification");
     var divTag = document.createElement("div");
@@ -148,7 +187,7 @@ function createTable(id, doc, title, columns, ITEM_MAX_PAGE, _a) {
     }
     var page = 1;
     var tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-    renderTableBody("table-body", table, tableData, columns, { isAction: isAction, actionTitle: actionTitle, action: action });
+    renderTableBody(id + "table-body", table, tableData, columns, { isAction: isAction, actionTitle: actionTitle, action: action, isFill: isFill });
     var maxPage = rootNode.childNodes.length % 10 == 0 ? rootNode.childNodes.length / ITEM_MAX_PAGE : Math.floor((rootNode.childNodes.length / ITEM_MAX_PAGE)) + 1;
     var text = document.createElement("code");
     var pagingSection = document.createElement("div");
@@ -158,7 +197,7 @@ function createTable(id, doc, title, columns, ITEM_MAX_PAGE, _a) {
         page = 1;
         text.innerText = page + "/" + maxPage;
         tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-        renderTableBody("table-body", table, tableData, columns, { isAction: isAction, actionTitle: actionTitle, action: action });
+        renderTableBody(id + "table-body", table, tableData, columns, { isAction: isAction, actionTitle: actionTitle, action: action, isFill: isFill });
     }));
     pagingSection.appendChild(button("Pre", function () {
         if (page > 1) {
@@ -166,7 +205,7 @@ function createTable(id, doc, title, columns, ITEM_MAX_PAGE, _a) {
         }
         text.innerText = page + "/" + maxPage;
         tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-        renderTableBody("table-body", table, tableData, columns, { isAction: isAction, actionTitle: actionTitle, action: action });
+        renderTableBody(id + "table-body", table, tableData, columns, { isAction: isAction, actionTitle: actionTitle, action: action, isFill: isFill });
     }));
     text.innerText = page + "/" + maxPage;
     pagingSection.appendChild(text);
@@ -176,13 +215,13 @@ function createTable(id, doc, title, columns, ITEM_MAX_PAGE, _a) {
         }
         text.innerText = page + "/" + maxPage;
         tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-        renderTableBody("table-body", table, tableData, columns, { isAction: isAction, actionTitle: actionTitle, action: action });
+        renderTableBody(id + "table-body", table, tableData, columns, { isAction: isAction, actionTitle: actionTitle, action: action, isFill: isFill });
     }));
     pagingSection.appendChild(button("Last", function () {
         page = maxPage;
         text.innerText = page + "/" + maxPage;
         tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-        renderTableBody("table-body", table, tableData, columns, { isAction: isAction, actionTitle: actionTitle, action: action });
+        renderTableBody(id + "table-body", table, tableData, columns, { isAction: isAction, actionTitle: actionTitle, action: action, isFill: isFill });
     }));
     divTag.appendChild(table);
     divTag.appendChild(pagingSection);
@@ -207,7 +246,7 @@ function getPagingData(page, ITEM_MAX_PAGE, rootNode) {
     return tableData;
 }
 function renderTableBody(id, table, tableData, columns, _a) {
-    var _b = _a === void 0 ? {} : _a, _c = _b.isAction, isAction = _c === void 0 ? false : _c, _d = _b.actionTitle, actionTitle = _d === void 0 ? "Action" : _d, _e = _b.action, action = _e === void 0 ? null : _e;
+    var _b = _a === void 0 ? {} : _a, _c = _b.isAction, isAction = _c === void 0 ? false : _c, _d = _b.actionTitle, actionTitle = _d === void 0 ? "Action" : _d, _e = _b.action, action = _e === void 0 ? null : _e, _f = _b.isFill, isFill = _f === void 0 ? false : _f;
     removeChildById(id);
     var body = table.createTBody();
     body.id = id;
@@ -233,6 +272,25 @@ function renderTableBody(id, table, tableData, columns, _a) {
                 };
                 row.insertCell().appendChild(actionBtn);
             }
+            if (isFill) {
+                var spanInput = document.createElement("span");
+                var textInput = document.createElement("input");
+                textInput.type = "number";
+                spanInput.appendChild(textInput);
+                var unit_1 = document.createElement("select");
+                var obj_1 = {
+                    "phút/ngày": "m/d",
+                    "giờ/ngày": "h/d"
+                };
+                Object.keys(obj_1).forEach(function (value, index) {
+                    var unitOption = document.createElement("option");
+                    unitOption.value = obj_1[value];
+                    unitOption.innerText = value;
+                    unit_1.appendChild(unitOption);
+                });
+                spanInput.appendChild(unit_1);
+                row.insertCell().appendChild(spanInput);
+            }
         }
     };
     for (var i = 0; i < tableData.length; i++) {
@@ -240,20 +298,29 @@ function renderTableBody(id, table, tableData, columns, _a) {
     }
 }
 function addToList(value) {
-    console.log(value);
-    var root = document.getElementById("added-list");
-    var xmlDoc = parseStringToDoc(localStorage.getItem("data")).childNodes[0].appendChild(value);
-    //
-    var addedList = createTable("added-list", xmlDoc, "List", {
-        "Name": 2,
-        "Code": 0,
-        "Wattage (W)": 5,
-    }, 10);
-    root.appendChild(addedList);
-    renderProductTable(parseStringToDoc(localStorage.getItem(LIST_KEY.LIST_PRODUCT)));
-    initUI();
-    // localStorage.setItem("data",xmlDoc);
-    // document.getElementById("root").appendChild(root);
+    var xmlDoc = getDocFromStorage(LIST_KEY.LIST_ADD);
+    if (xmlDoc == undefined) {
+        var arr = [value];
+        setDocToStorage(LIST_KEY.LIST_ADD, arrayXMLToXMLDoc(arr, "productEntities"));
+        renderAddedList(arrayXMLToXMLDoc(arr, "productEntities"));
+    }
+    else {
+        var newArr = nodeListToArray(xmlDoc.childNodes.item(0).childNodes);
+        console.log(newArr.filter(function (item) { return item.childNodes.item(3).textContent == value.childNodes.item(3).textContent; }));
+        if (newArr.filter(function (item) { return item.childNodes.item(3).textContent == value.childNodes.item(3).textContent; }).length == 0) {
+            newArr.push(value);
+        }
+        ;
+        setDocToStorage(LIST_KEY.LIST_ADD, arrayXMLToXMLDoc(newArr, "productEntities"));
+        renderAddedList(arrayXMLToXMLDoc(newArr, "productEntities"));
+    }
+}
+function removeFromList(value) {
+    var xmlDoc = getDocFromStorage(LIST_KEY.LIST_ADD);
+    var newArr = nodeListToArray(xmlDoc.childNodes.item(0).childNodes);
+    newArr = newArr.filter(function (item) { return item.childNodes.item(3).textContent !== value.childNodes.item(3).textContent; });
+    setDocToStorage(LIST_KEY.LIST_ADD, arrayXMLToXMLDoc(newArr, "productEntities"));
+    renderAddedList(arrayXMLToXMLDoc(newArr, "productEntities"));
 }
 function getXHR(url, data) {
     var xhr = new XMLHttpRequest();
@@ -273,12 +340,40 @@ function getXHR(url, data) {
                 }
             }
         };
-        xhr.send(data);
+        xhr.send(null);
     });
+}
+function getDocFromStorage(key) {
+    if (localStorage.getItem(key)) {
+        var doc = parseStringToDoc(localStorage.getItem(key));
+        return doc;
+    }
+    return undefined;
+}
+function setDocToStorage(key, value) {
+    localStorage.setItem(key, parseDocToString(value));
+}
+function nodeListToArray(list) {
+    var arr = [];
+    if (list.length) {
+        for (var i = 0; i < list.length; i++) {
+            arr.push(list.item(i));
+        }
+    }
+    return arr;
+}
+function arrayXMLToXMLDoc(arr, root) {
+    var str = "<" + root + ">";
+    arr.forEach(function (item) {
+        str += item.outerHTML;
+    });
+    str += "</" + root + ">";
+    return parseStringToDoc(str);
 }
 function postXHR(url, data) {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/xml");
     // @ts-ignore
     return new Promise(function (resolve, reject) {
         xhr.onreadystatechange = function () {

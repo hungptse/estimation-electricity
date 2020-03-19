@@ -1,45 +1,23 @@
 const LIST_KEY = {
-    LIST_PRODUCT: "LIST_PRODUCT"
+    LIST_PRODUCT: "LIST_PRODUCT",
+    LIST_ADD: "LIST_ADD"
 };
 
-function getListProductDoc() : XMLDocument {
-    const doc = parseStringToDoc(localStorage.getItem(LIST_KEY.LIST_PRODUCT));
-    return doc;
-}
-function nodeListToArray(list : NodeListOf<ChildNode>) : ChildNode[] {
-    const arr = [];
-    if (list.length){
-        for (let i = 0; i < list.length; i++){
-            arr.push(list.item(i));
-        }
-    }
-    return arr;
-}
-
-function arrayToXMLDoc(arr) {
-    let str = "<rootElm>";
-    arr[0].forEach(item => {
-        str += item.outerHTML;
-    });
-    str += "</rootElm>";
-    return parseStringToDoc(str);
-}
 function initUI() {
     const root = document.getElementById("root");
     const productList = document.createElement("div");
     productList.id = "product-list";
     const addedList = document.createElement("div");
     addedList.id = "added-list";
-    root.appendChild(document.createElement("hr"));
     root.appendChild(productList);
-
-
+    root.appendChild(document.createElement("hr"));
+    root.appendChild(addedList);
     const search = createSearch("Name or Code", () => {
         // @ts-ignore
         let value = document.getElementById("txtSearch").value;
-        const result = nodeListToArray(getListProductDoc().childNodes).map(node => nodeListToArray(node.childNodes).filter(n => n.childNodes.item(2).textContent.toLowerCase().indexOf(value.toLowerCase()) != -1));
-        if (result[0].length > 0){
-            renderProductTable(arrayToXMLDoc(result));
+        const result = nodeListToArray(getDocFromStorage(LIST_KEY.LIST_PRODUCT).childNodes).map(node => nodeListToArray(node.childNodes).filter(n => n.childNodes.item(2).textContent.toLowerCase().indexOf(value.toLowerCase()) != -1));
+        if (result[0].length > 0) {
+            renderProductTable(arrayXMLToXMLDoc(result[0], "productEntities"));
         } else {
             getXHR("webservice/product/findLikeByNameOrCode", {
                 "search": value
@@ -48,30 +26,88 @@ function initUI() {
             })
         }
     });
-
     productList.appendChild(search);
+    if (getDocFromStorage(LIST_KEY.LIST_PRODUCT) == undefined) {
+        getXHR("webservice/product", {
+            "size": 100,
+            "page": 1
+        }).then(res => {
+            localStorage.setItem(LIST_KEY.LIST_PRODUCT, parseDocToString(res));
+            renderProductTable(res);
+        });
+    } else {
+        renderProductTable(getDocFromStorage(LIST_KEY.LIST_PRODUCT));
+    }
+    if (getDocFromStorage(LIST_KEY.LIST_ADD) != undefined) {
+        renderAddedList(getDocFromStorage(LIST_KEY.LIST_ADD));
+    }
 
-    getXHR("webservice/product", {
-        "size": 100,
-        "page": 1
-    }).then(res => {
-        localStorage.setItem(LIST_KEY.LIST_PRODUCT, parseDocToString(res));
-        renderProductTable(res);
-        //
-        // createTable("main-table",res, productList, "Product Table", {
-        //     "Name": 5,
-        //     "Code": 1,
-        //     "Wattage (W)": 11,
-        // }, 10, { action: addToList, actionTitle: "Add", isAction: true });
-    });
+}
 
-    const xmlString = "<productEntities/>";
-    const addedTable = createTable("added-list", parseStringToDoc(xmlString), "Product Table", {
+function renderAddedList(xmlDoc: XMLDocument, isFill = false, maxPage = 10) {
+    const addedList = document.getElementById("added-list");
+    removeChildById("added-table");
+    var isAction = true;
+    if (isFill) {
+        isAction = false;
+    }
+    const addTable = createTable("added-table", xmlDoc, "Added Table", {
         "Name": 2,
         "Code": 0,
         "Wattage (W)": 5,
-    }, 10, { action: null, actionTitle: "Add", isAction: false });
-    addedList.appendChild(addedTable);
+    }, 10, { action: removeFromList, actionTitle: "Remove", isAction: isAction, isFill });
+    addedList.appendChild(addTable);
+
+    const nextStepBtn = button("Next", () => {
+        fillTimePage();
+    });
+    addedList.appendChild(nextStepBtn);
+}
+
+function fillTimePage() {
+    const root = document.getElementById("root");
+    root.innerHTML = "";
+    const addedList = document.createElement("div");
+    addedList.id = "added-list";
+    root.appendChild(addedList);
+    if (getDocFromStorage(LIST_KEY.LIST_ADD) != undefined) {
+        renderAddedList(getDocFromStorage(LIST_KEY.LIST_ADD), true, 100);
+    }
+    addedList.appendChild(button("Send", () => {
+        sendTableToServer();
+    }))
+}
+
+function sendTableToServer() {
+    const doc = document.getElementById("added-tabletable-body");
+    var arr = [];
+    doc.childNodes.forEach(node => {
+        arr.push({
+            "id": node.childNodes.item(0).textContent,
+            // @ts-ignore
+            "value": node.childNodes.item(4).childNodes.item(0).childNodes.item(0).value,
+            // @ts-ignore
+            "unit": node.childNodes.item(4).childNodes.item(0).childNodes.item(1).value
+        })
+    });
+    postXHR("webservice/estimate", arrayObjectToXML(arr, "products", "product")).then(res => {
+
+    });
+}
+
+function arrayObjectToXML(arr, root, namedChild) {
+    let str = `<${root}>`;
+    arr.forEach(item => {
+        let tmp = "";
+        tmp += `<${namedChild}>`;
+        Object.keys(item).forEach(obj => {
+            tmp += `<${obj}>${item[obj]}</${obj}>`;
+        });
+        tmp += `</${namedChild}>`;
+        str += tmp;
+    });
+    str += `</${root}>`;
+    return parseStringToDoc(str);
 }
 
 function renderProductTable(xmlDoc: XMLDocument) {
@@ -125,12 +161,14 @@ function objectToQueryParam(obj) {
     return result.slice(0, result.length - 1);
 }
 
-function button(name: string, onclick) {
+function button(name: string, onclick, {
+    marginLeft, marginRight
+} = { marginLeft: "3px", marginRight: "3px" }) {
     const btn = document.createElement("button");
     btn.innerText = name;
     btn.onclick = onclick;
-    btn.style.marginLeft = "3px";
-    btn.style.marginRight = "3px";
+    btn.style.marginLeft = marginLeft;
+    btn.style.marginRight = marginRight;
     return btn;
 }
 
@@ -141,7 +179,7 @@ function removeChildById(tagId: string) {
     }
 }
 
-function createTable(id: string, doc: Document, title: string, columns: Object, ITEM_MAX_PAGE, { isAction = false, actionTitle = "Add", action = null } = {}) {
+function createTable(id: string, doc: Document, title: string, columns: Object, ITEM_MAX_PAGE, { isAction = false, actionTitle = "Add", action = null, isFill = false } = {}) {
     // removeChildById(id);
     removeChildById("notification");
     const divTag = document.createElement("div");
@@ -165,7 +203,7 @@ function createTable(id: string, doc: Document, title: string, columns: Object, 
 
     let page = 1;
     let tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-    renderTableBody("table-body", table, tableData, columns, { isAction, actionTitle, action });
+    renderTableBody(id + "table-body", table, tableData, columns, { isAction, actionTitle, action, isFill });
     let maxPage = rootNode.childNodes.length % 10 == 0 ? rootNode.childNodes.length / ITEM_MAX_PAGE : Math.floor((rootNode.childNodes.length / ITEM_MAX_PAGE)) + 1;
     const text = document.createElement("code");
     const pagingSection = document.createElement("div");
@@ -175,7 +213,7 @@ function createTable(id: string, doc: Document, title: string, columns: Object, 
         page = 1;
         text.innerText = `${page}/${maxPage}`;
         tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-        renderTableBody("table-body", table, tableData, columns, { isAction, actionTitle, action });
+        renderTableBody(id + "table-body", table, tableData, columns, { isAction, actionTitle, action, isFill });
     }));
     pagingSection.appendChild(button("Pre", () => {
         if (page > 1) {
@@ -183,7 +221,7 @@ function createTable(id: string, doc: Document, title: string, columns: Object, 
         }
         text.innerText = `${page}/${maxPage}`;
         tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-        renderTableBody("table-body", table, tableData, columns, { isAction, actionTitle, action });
+        renderTableBody(id + "table-body", table, tableData, columns, { isAction, actionTitle, action, isFill });
     }));
 
     text.innerText = `${page}/${maxPage}`;
@@ -194,13 +232,13 @@ function createTable(id: string, doc: Document, title: string, columns: Object, 
         }
         text.innerText = `${page}/${maxPage}`;
         tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-        renderTableBody("table-body", table, tableData, columns, { isAction, actionTitle, action });
+        renderTableBody(id + "table-body", table, tableData, columns, { isAction, actionTitle, action, isFill });
     }));
     pagingSection.appendChild(button("Last", () => {
         page = maxPage;
         text.innerText = `${page}/${maxPage}`;
         tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-        renderTableBody("table-body", table, tableData, columns, { isAction, actionTitle, action });
+        renderTableBody(id + "table-body", table, tableData, columns, { isAction, actionTitle, action, isFill });
     }));
 
     divTag.appendChild(table);
@@ -226,7 +264,7 @@ function getPagingData(page, ITEM_MAX_PAGE, rootNode: ChildNode): ChildNode[] {
     return tableData;
 }
 
-function renderTableBody(id: string, table: HTMLTableElement, tableData, columns, { isAction = false, actionTitle = "Action", action = null } = {}) {
+function renderTableBody(id: string, table: HTMLTableElement, tableData, columns, { isAction = false, actionTitle = "Action", action = null, isFill = false } = {}) {
     removeChildById(id);
     const body = table.createTBody();
     body.id = id;
@@ -252,25 +290,53 @@ function renderTableBody(id: string, table: HTMLTableElement, tableData, columns
                 };
                 row.insertCell().appendChild(actionBtn);
             }
+            if (isFill) {
+                const spanInput = document.createElement("span");
+                const textInput = document.createElement("input");
+                textInput.type = "number";
+                spanInput.appendChild(textInput);
+                const unit = document.createElement("select");
+                const obj = {
+                    "phút/ngày": "m/d",
+                    "giờ/ngày": "h/d"
+                };
+                Object.keys(obj).forEach((value, index) => {
+                    let unitOption = document.createElement("option");
+                    unitOption.value = obj[value];
+                    unitOption.innerText = value;
+                    unit.appendChild(unitOption);
+                });
+                spanInput.appendChild(unit);
+                row.insertCell().appendChild(spanInput);
+            }
         }
     }
 }
 
 function addToList(value) {
-    console.log(value);
-    const root = document.getElementById("added-list");
-    const xmlDoc = parseStringToDoc(localStorage.getItem("data")).childNodes[0].appendChild(value);
-    //
-   const addedList =  createTable("added-list", xmlDoc, "List", {
-       "Name": 2,
-       "Code": 0,
-       "Wattage (W)": 5,
-    }, 10);
-    root.appendChild(addedList);
-    renderProductTable(parseStringToDoc(localStorage.getItem(LIST_KEY.LIST_PRODUCT)));
-    initUI();
-    // localStorage.setItem("data",xmlDoc);
-    // document.getElementById("root").appendChild(root);
+    const xmlDoc = getDocFromStorage(LIST_KEY.LIST_ADD);
+    if (xmlDoc == undefined) {
+        const arr = [value];
+        setDocToStorage(LIST_KEY.LIST_ADD, arrayXMLToXMLDoc(arr, "productEntities"));
+        renderAddedList(arrayXMLToXMLDoc(arr, "productEntities"));
+    } else {
+        const newArr = nodeListToArray(xmlDoc.childNodes.item(0).childNodes);
+        console.log(newArr.filter(item => item.childNodes.item(3).textContent == value.childNodes.item(3).textContent))
+        if (newArr.filter(item => item.childNodes.item(3).textContent == value.childNodes.item(3).textContent).length == 0) {
+            newArr.push(value);
+        }
+        ;
+        setDocToStorage(LIST_KEY.LIST_ADD, arrayXMLToXMLDoc(newArr, "productEntities"));
+        renderAddedList(arrayXMLToXMLDoc(newArr, "productEntities"));
+    }
+}
+
+function removeFromList(value) {
+    const xmlDoc = getDocFromStorage(LIST_KEY.LIST_ADD);
+    let newArr = nodeListToArray(xmlDoc.childNodes.item(0).childNodes);
+    newArr = newArr.filter(item => item.childNodes.item(3).textContent !== value.childNodes.item(3).textContent);
+    setDocToStorage(LIST_KEY.LIST_ADD, arrayXMLToXMLDoc(newArr, "productEntities"));
+    renderAddedList(arrayXMLToXMLDoc(newArr, "productEntities"));
 }
 
 function getXHR(url, data) {
@@ -290,13 +356,46 @@ function getXHR(url, data) {
                 }
             }
         };
-        xhr.send(data);
+        xhr.send(null);
     });
+}
+
+
+function getDocFromStorage(key): XMLDocument {
+    if (localStorage.getItem(key)) {
+        const doc = parseStringToDoc(localStorage.getItem(key));
+        return doc;
+    }
+    return undefined;
+}
+
+function setDocToStorage(key, value) {
+    localStorage.setItem(key, parseDocToString(value));
+}
+
+function nodeListToArray(list: NodeListOf<ChildNode>): ChildNode[] {
+    const arr = [];
+    if (list.length) {
+        for (let i = 0; i < list.length; i++) {
+            arr.push(list.item(i));
+        }
+    }
+    return arr;
+}
+
+function arrayXMLToXMLDoc(arr, root) {
+    let str = `<${root}>`;
+    arr.forEach(item => {
+        str += item.outerHTML;
+    });
+    str += `</${root}>`;
+    return parseStringToDoc(str);
 }
 
 function postXHR(url, data) {
     const xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/xml");
     // @ts-ignore
     return new Promise((resolve, reject) => {
         xhr.onreadystatechange = () => {

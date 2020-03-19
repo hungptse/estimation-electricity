@@ -54,7 +54,7 @@ public class BaseRepository<T, PK extends Serializable> implements IBaseReposito
     @Override
     public List<T> findManyPaging(String query, int page, int size) {
         try {
-            return em.createNamedQuery(query).setMaxResults(size).setFirstResult(page * size).getResultList();
+            return em.createNamedQuery(query).setMaxResults(size).setFirstResult((page - 1) * size).getResultList();
         } catch (Exception e) {
             e.printStackTrace();
         }
