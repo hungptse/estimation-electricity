@@ -12,7 +12,8 @@ import java.util.Objects;
 @Table(name = "PriceList", schema = "dbo", catalog = "EstimationElectricity")
 @XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "PriceList.findByHash", query = "SELECT p FROM PriceListEntity p WHERE p.hash = :hash")
+        @NamedQuery(name = "PriceList.findByHash", query = "SELECT p FROM PriceListEntity p WHERE p.hash = :hash"),
+        @NamedQuery(name = "PriceList.findAll",query = "SELECT p FROM PriceListEntity p")
 })
 public class PriceListEntity implements Serializable {
     private int priceListId;

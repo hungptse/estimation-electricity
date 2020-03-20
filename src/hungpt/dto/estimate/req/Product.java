@@ -38,9 +38,9 @@ import javax.xml.bind.annotation.XmlType;
 public class Product {
 
     @XmlElement(required = true)
-    protected BigInteger id;
+    protected int id;
     @XmlElement(required = true)
-    protected BigInteger value;
+    protected double value;
     @XmlElement(required = true)
     protected String unit;
 
@@ -52,7 +52,7 @@ public class Product {
      *     {@link BigInteger }
      *     
      */
-    public BigInteger getId() {
+    public int getId() {
         return id;
     }
 
@@ -64,7 +64,7 @@ public class Product {
      *     {@link BigInteger }
      *     
      */
-    public void setId(BigInteger value) {
+    public void setId(int value) {
         this.id = value;
     }
 
@@ -76,7 +76,7 @@ public class Product {
      *     {@link BigInteger }
      *     
      */
-    public BigInteger getValue() {
+    public double getValue() {
         return value;
     }
 
@@ -88,7 +88,7 @@ public class Product {
      *     {@link BigInteger }
      *     
      */
-    public void setValue(BigInteger value) {
+    public void setValue(double value) {
         this.value = value;
     }
 

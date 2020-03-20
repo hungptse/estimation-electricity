@@ -14,4 +14,7 @@ public class GlobalURL {
     public static final String SCHEMA_ABC_PRODUCT = "WEB-INF/schema/product.xsd";
     public static final String XSL_ABC_PRODUCT_MAXPAGE = "WEB-INF/dienmayabc/findMaxPage.xsl";
     public static final String XSL_ABC_PRODUCT_DETAIL = "WEB-INF/dienmayabc/product.xsl";
+
+    public static final String XSL_REPORT = "WEB-INF/pdf/report.xsl";
+
 }

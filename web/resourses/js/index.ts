@@ -52,6 +52,7 @@ function renderAddedList(xmlDoc: XMLDocument, isFill = false, maxPage = 10) {
         isAction = false;
     }
     const addTable = createTable("added-table", xmlDoc, "Added Table", {
+        "ID": 3,
         "Name": 2,
         "Code": 0,
         "Wattage (W)": 5,
@@ -83,11 +84,11 @@ function sendTableToServer() {
     var arr = [];
     doc.childNodes.forEach(node => {
         arr.push({
-            "id": node.childNodes.item(0).textContent,
+            "id": node.childNodes.item(1).textContent,
             // @ts-ignore
-            "value": node.childNodes.item(4).childNodes.item(0).childNodes.item(0).value,
+            "value": node.childNodes.item(5).childNodes.item(0).childNodes.item(0).value,
             // @ts-ignore
-            "unit": node.childNodes.item(4).childNodes.item(0).childNodes.item(1).value
+            "unit": node.childNodes.item(5).childNodes.item(0).childNodes.item(1).value
         })
     });
     postXHR("webservice/estimate", arrayObjectToXML(arr, "products", "product")).then(res => {

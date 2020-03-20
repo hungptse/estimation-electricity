@@ -28,4 +28,11 @@ public class JAXBHepler {
         unmarshaller.setSchema(schema);
         return unmarshaller.unmarshal(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
     }
+
+    public static ByteArrayOutputStream marshall(Class type,Object object) throws JAXBException {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        Marshaller marshaller = JAXBContext.newInstance(type).createMarshaller();
+        marshaller.marshal(object,byteArrayOutputStream);
+        return byteArrayOutputStream;
+    }
 }
