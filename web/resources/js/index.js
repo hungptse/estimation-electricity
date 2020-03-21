@@ -153,7 +153,7 @@ function fillTimePage() {
         addedTable.appendChild(row);
     });
     addedList.appendChild(addProduct);
-    addedList.appendChild(button("Report", function () {
+    addedList.appendChild(button("Export PDF", function () {
         sendTableToServer();
     }));
 }

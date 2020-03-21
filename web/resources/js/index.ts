@@ -3,8 +3,8 @@ const LIST_KEY = {
     LIST_ADD: "LIST_ADD"
 };
 const NAVIGATION_BAR = {
-    Home : "/",
-    Login : "/login",
+    Home: "/",
+    Login: "/login",
 };
 
 function navigation() {
@@ -65,11 +65,11 @@ function initUI() {
 function navBar() {
     const navBar = document.createElement("div");
     navBar.className = "topnav";
-    Object.keys(NAVIGATION_BAR).forEach(key =>{
+    Object.keys(NAVIGATION_BAR).forEach(key => {
         const aTag = document.createElement("a");
         aTag.innerText = key;
         aTag.href = NAVIGATION_BAR[key];
-        if (Object.keys(NAVIGATION_BAR).indexOf(key) == 0){
+        if (Object.keys(NAVIGATION_BAR).indexOf(key) == 0) {
             aTag.className = "active";
         }
         navBar.appendChild(aTag);
@@ -159,7 +159,7 @@ function fillTimePage() {
         addedTable.appendChild(row);
     });
     addedList.appendChild(addProduct);
-    addedList.appendChild(button("Report", () => {
+    addedList.appendChild(button("Export PDF", () => {
         sendTableToServer();
     }))
 }
@@ -190,7 +190,7 @@ function sendTableToServer() {
         }
     }
     postXHR("webservice/estimate", arrayObjectToXML(arr, "products", "product")).then(res => {
-        if (res != ""){
+        if (res != "") {
             window.open(`resources/pdf-generated/${res}`, '_blank');
         }
     });

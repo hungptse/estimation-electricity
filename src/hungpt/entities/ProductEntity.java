@@ -14,7 +14,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "Product", schema = "dbo", catalog = "EstimationElectricity")
 @XmlRootElement
-@NamedQueries({@NamedQuery(name = "Product.findPageAndSize", query = "SELECT new hungpt.entities.ProductEntity(p.productId,p.name, p.code,p.url,p.imageLink,p.wattage) FROM ProductEntity p ORDER BY p.productId"),
+@NamedQueries({@NamedQuery(name = "Product.findPageAndSize", query = "SELECT new hungpt.entities.ProductEntity(p.productId,p.name, p.code,p.url,p.imageLink,p.wattage) FROM ProductEntity p ORDER BY p.productId "),
         @NamedQuery(name = "Product.searchNameOrCode", query = "SELECT new hungpt.entities.ProductEntity(p.productId,p.name, p.code,p.url,p.imageLink,p.wattage) FROM ProductEntity p WHERE p.name LIKE :search OR p.code LIKE :search"),
         @NamedQuery(name = "Product.findByHash", query = "SELECT p FROM ProductEntity p WHERE p.hash = :hash"),
         @NamedQuery(name = "Product.findByIds",query = "SELECT p FROM ProductEntity p WHERE p.productId IN :lisdId")

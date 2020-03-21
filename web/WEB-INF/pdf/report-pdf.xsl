@@ -19,12 +19,12 @@
                             </fo:block>
                         </fo:block-container>
                         <fo:block-container position="absolute" top="1mm" left="70mm" width="120mm" height="20mm">
-                            <fo:block text-align="right">
+                            <fo:block text-align="right" font-size="10pt">
                                 <fo:basic-link external-destination="url('https://hcmuni.fpt.edu.vn/')" color="blue"
                                                text-decoration="underline">https://hcmuni.fpt.edu.vn/
                                 </fo:basic-link>
                             </fo:block>
-                            <fo:block text-align="right">
+                            <fo:block text-align="right" font-size="10pt">
                                 Report document only for services PRX301 - Spring 2020
                             </fo:block>
                         </fo:block-container>
@@ -38,17 +38,16 @@
                         </fo:block-container>
                         <fo:block>
                             <fo:block-container position="absolute" width="95mm" left="0mm" top="12mm">
-                                <fo:block>[FPT University]</fo:block>
-                                <fo:block>[Lo E2a-7, Duong D1 Khu Cong nghe cao, P.Long Thanh My, Q.9, TP.Ho Chi Minh]
-                                </fo:block>
-                                <fo:block>[https://hcmuni.fpt.edu.vn/]</fo:block>
+                                <fo:block font-size="10pt">Customer: FPT University</fo:block>
+                                <fo:block font-size="10pt">Phone: 67896789001</fo:block>
                             </fo:block-container>
                             <fo:block-container position="absolute" width="95mm" left="95mm" top="12mm"
                                                 text-align="right">
-                                <fo:block>Created Date:
+                                <fo:block font-size="10pt">Created Date:
                                     <xsl:value-of select="products/createdAt"/>
                                 </fo:block>
-                                <!--                                <fo:block>Invoice#: ${wpbAppModel["invoice_no"]?string.computer}</fo:block>-->
+                                <fo:block font-size="10pt">Total Product:
+                                    <xsl:value-of select="count(products/product)"/> </fo:block>
                             </fo:block-container>
                         </fo:block>
                     </fo:block>
