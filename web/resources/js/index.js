@@ -355,10 +355,6 @@ function renderTableBody(id, table, tableData, columns, _a) {
         if (child.hasChildNodes()) {
             row.insertCell(0).innerText = i + 1 + "";
             Object.keys(columns).forEach(function (key, index) {
-                var content = child.childNodes.item(columns[key]).textContent;
-                if (!content) {
-                    content = "No available";
-                }
                 row.insertCell(index + 1).innerText = child.childNodes.item(columns[key]).textContent;
             });
             if (isAction) {

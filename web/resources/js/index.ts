@@ -375,10 +375,6 @@ function renderTableBody(id: string, table: HTMLTableElement, tableData, columns
         if (child.hasChildNodes()) {
             row.insertCell(0).innerText = i + 1 + "";
             Object.keys(columns).forEach((key, index) => {
-                let content = child.childNodes.item(columns[key]).textContent;
-                if (!content) {
-                    content = "No available";
-                }
                 row.insertCell(index + 1).innerText = child.childNodes.item(columns[key]).textContent;
             });
             if (isAction) {
