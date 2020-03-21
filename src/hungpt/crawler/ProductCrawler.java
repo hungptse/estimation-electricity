@@ -29,8 +29,9 @@ public class ProductCrawler extends PageCrawler{
             double validWattage = Math.round(StringHelper.getValidWattage(product.getWattage()));
             ProductEntity productEntity = productRepository.getProductByHash(HashHepler.hashMD5(product.getName().replaceAll(" ", "") + product.getCode().replaceAll(" ", "")));
             if (productEntity == null){
-                productEntity = new ProductEntity(product.getName(),product.getCode(),validWattage,this.getUrl(),product.getImage());
-                productEntity.setPrivateProduct(false);
+                if (validWattage != 0){
+                    productEntity = new ProductEntity(product.getName(),product.getCode(),validWattage,this.getUrl(),product.getImage());
+                }
             }
             this.productEntity = productEntity;
         } catch (Exception e) {

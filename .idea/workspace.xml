@@ -7,52 +7,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="433d4251-6c0f-4849-8718-b89cd61edaf4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/avalon-framework-api-4.3.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/avalon-framework-impl-4.3.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/batik-anim-1.10.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/batik-awt-util-1.10.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/batik-bridge-1.10.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/batik-constants-1.10.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/batik-css-1.10.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/batik-dom-1.10.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/batik-ext-1.10.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/batik-extension-1.10.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/batik-gvt-1.10.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/batik-i18n-1.10.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/batik-parser-1.10.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/batik-script-1.10.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/batik-svg-dom-1.10.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/batik-svggen-1.10.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/batik-transcoder-1.10.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/batik-util-1.10.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/batik-xml-1.10.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/commons-io-1.3.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/commons-logging-1.0.4.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/fontbox-2.0.7.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/fop-2.3.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/serializer-2.7.2.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/xalan-2.7.2.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/xml-apis-1.3.04.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/xml-apis-ext-1.3.04.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/xmlgraphics-commons-2.3.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hungpt/dto/estimate/report/ObjectFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hungpt/dto/estimate/report/Product.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hungpt/dto/estimate/report/Products.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hungpt/services/PriceListService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/WEB-INF/pdf/report.xsl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/WEB-INF/schema/pdf/report.xsd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/resourses/css/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EstimationElectricity.iml" beforeDir="false" afterPath="$PROJECT_DIR$/EstimationElectricity.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/constant/GlobalURL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/constant/GlobalURL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/dto/estimate/req/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/dto/estimate/req/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/entities/PriceListEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/entities/PriceListEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/crawler/ProductCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/crawler/ProductCrawler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/entities/CategoryEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/entities/CategoryEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hungpt/entities/ProductEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/entities/ProductEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/repositories/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/repositories/ProductRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/services/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/services/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/servlet/CrawlServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/servlet/CrawlServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hungpt/utils/ElectricityHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/utils/ElectricityHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/utils/JAXBHepler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/utils/JAXBHepler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/utils/StringHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/utils/StringHelper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hungpt/ws/EstimateWS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/ws/EstimateWS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/WEB-INF/pdf/report.xsl" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/pdf/report.xsl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/resourses/js/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/resourses/js/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/resourses/js/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/resourses/js/index.ts" afterDir="false" />
     </list>
@@ -77,17 +41,6 @@
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
         <item name="EstimationPU/EclipseLink" type="feb32156:DbDataSourceImpl" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="EstimationPU/EclipseLink" type="feb32156:DbDataSourceImpl" />
-        <item name="EstimationElectricity: database" type="ccb7ac2a:MsImplModel$Database" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="EstimationPU/EclipseLink" type="feb32156:DbDataSourceImpl" />
-        <item name="EstimationElectricity: database" type="ccb7ac2a:MsImplModel$Database" />
-        <item name="dbo: schema" type="2865ee2e:MsImplModel$Schema" />
       </path>
     </expand>
     <select />
@@ -170,6 +123,8 @@
   <component name="RunManager">
     <configuration name="Tomcat 9.0.30" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.30" ALTERNATIVE_JRE_ENABLED="false">
       <option name="OPEN_IN_BROWSER" value="false" />
+      <option name="UPDATE_ON_FRAME_DEACTIVATION" value="true" />
+      <option name="UPDATE_CLASSES_ON_FRAME_DEACTIVATION" value="true" />
       <option name="SHOW_DIALOG_ON_UPDATE" value="false" />
       <deployment>
         <artifact name="EstimationElectricity">
@@ -277,7 +232,8 @@
       <workItem from="1584523976439" duration="313000" />
       <workItem from="1584552436567" duration="24859000" />
       <workItem from="1584654259473" duration="16557000" />
-      <workItem from="1584735295968" duration="1320000" />
+      <workItem from="1584735295968" duration="7566000" />
+      <workItem from="1584796252410" duration="9816000" />
     </task>
     <task id="LOCAL-00001" summary="prevent duplicate unique key">
       <created>1584366223484</created>

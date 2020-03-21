@@ -21,7 +21,6 @@ import java.util.Timer;
 
 @WebServlet(name = "CrawlServlet",urlPatterns = "/crawl")
 public class CrawlServlet extends HttpServlet {
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String realPath = this.getServletContext().getRealPath("/");

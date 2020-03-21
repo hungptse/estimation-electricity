@@ -30,7 +30,6 @@ public class ProductEntity implements Serializable {
     private String imageLink;
     private Date createdAt;
     private Date updatedAt;
-    private Boolean isPrivateProduct;
     private CategoryEntity categoryEntity;
 
     public ProductEntity() {
@@ -139,7 +138,7 @@ public class ProductEntity implements Serializable {
         this.imageLink = imageLink;
     }
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "CateId")
     public CategoryEntity getCategoryEntity() {
         return categoryEntity;
@@ -169,16 +168,6 @@ public class ProductEntity implements Serializable {
         this.updatedAt = updatedAt;
     }
 
-    @Basic
-    @Column(name = "isPrivateProduct", nullable = true)
-    public Boolean getPrivateProduct() {
-        return isPrivateProduct;
-    }
-
-    public void setPrivateProduct(Boolean privateProduct) {
-        isPrivateProduct = privateProduct;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -193,8 +182,7 @@ public class ProductEntity implements Serializable {
                 Objects.equals(url, that.url) &&
                 Objects.equals(imageLink, that.imageLink) &&
                 Objects.equals(createdAt, that.createdAt) &&
-                Objects.equals(updatedAt, that.updatedAt) &&
-                Objects.equals(isPrivateProduct, that.isPrivateProduct);
+                Objects.equals(updatedAt, that.updatedAt);
     }
 
 }

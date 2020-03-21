@@ -17,12 +17,15 @@
             </fo:layout-master-set>
             <fo:page-sequence master-reference="x">
                 <fo:static-content flow-name="xsl-region-before">
-                    <fo:block font-size="14pt"
-                              line-height="24pt" background-color="cyan"
-                              space-after.optimum="15pt" text-align="center"
-                              padding-top="3pt">
+                    <fo:block font-size="16pt" font-family="Helvetica" color="blue" font-weight="bold" space-after="5mm">
                         Report Estimate Electricity By Month
                     </fo:block>
+<!--                    <fo:block font-size="14pt"-->
+<!--                              line-height="24pt" background-color="cyan"-->
+<!--                              space-after.optimum="15pt" text-align="center"-->
+<!--                              padding-top="3pt">-->
+<!--                        Report Estimate Electricity By Month-->
+<!--                    </fo:block>-->
                 </fo:static-content>
                 <fo:static-content flow-name="xsl-region-after">
                     <fo:block font-size="18pt"

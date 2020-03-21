@@ -5,28 +5,18 @@ const LIST_KEY = {
 
 function initUI() {
     const root = document.getElementById("root");
+    root.innerHTML = "";
     const productList = document.createElement("div");
     productList.id = "product-list";
     const addedList = document.createElement("div");
     addedList.id = "added-list";
+    root.appendChild(navBar());
+
     root.appendChild(productList);
     root.appendChild(document.createElement("hr"));
     root.appendChild(addedList);
-    const search = createSearch("Name or Code", () => {
-        // @ts-ignore
-        let value = document.getElementById("txtSearch").value;
-        const result = nodeListToArray(getDocFromStorage(LIST_KEY.LIST_PRODUCT).childNodes).map(node => nodeListToArray(node.childNodes).filter(n => n.childNodes.item(2).textContent.toLowerCase().indexOf(value.toLowerCase()) != -1));
-        if (result[0].length > 0) {
-            renderProductTable(arrayXMLToXMLDoc(result[0], "productEntities"));
-        } else {
-            getXHR("webservice/product/findLikeByNameOrCode", {
-                "search": value
-            }).then(res => {
-                renderProductTable(res);
-            })
-        }
-    });
-    productList.appendChild(search);
+
+    // document.getElementById("search-container").appendChild(search);
     if (getDocFromStorage(LIST_KEY.LIST_PRODUCT) == undefined) {
         getXHR("webservice/product", {
             "size": 100,
@@ -44,6 +34,39 @@ function initUI() {
 
 }
 
+function navBar() {
+    const navBar = document.createElement("div");
+    navBar.className = "topnav";
+    const aTag = document.createElement("a");
+    aTag.innerText = "Home";
+    aTag.className = "active";
+    navBar.appendChild(aTag);
+    // navBar.innerHTML = "<div class=\"topnav\">\n" +
+    //     "    <a class=\"active\" href=\"#home\">Home</a>\n" +
+    //     "    <a href=\"#about\">About</a>\n" +
+    //     "    <a href=\"#contact\">Contact</a>\n" +
+    //     "  </div>";
+    const searchContainer = document.createElement("div");
+    searchContainer.className = "search-container";
+    const search = createSearch("Name or Code", () => {
+        // @ts-ignore
+        let value = document.getElementById("txtSearch").value;
+        const result = nodeListToArray(getDocFromStorage(LIST_KEY.LIST_PRODUCT).childNodes).map(node => nodeListToArray(node.childNodes).filter(n => n.childNodes.item(2).textContent.toLowerCase().indexOf(value.toLowerCase()) != -1));
+        if (result[0].length > 0) {
+            renderProductTable(arrayXMLToXMLDoc(result[0], "productEntities"));
+        } else {
+            getXHR("webservice/product/findLikeByNameOrCode", {
+                "search": value
+            }).then(res => {
+                renderProductTable(res);
+            })
+        }
+    });
+    searchContainer.appendChild(search);
+    navBar.appendChild(searchContainer);
+    return navBar;
+}
+
 function renderAddedList(xmlDoc: XMLDocument, isFill = false, maxPage = 10) {
     const addedList = document.getElementById("added-list");
     removeChildById("added-table");
@@ -51,17 +74,24 @@ function renderAddedList(xmlDoc: XMLDocument, isFill = false, maxPage = 10) {
     if (isFill) {
         isAction = false;
     }
-    const addTable = createTable("added-table", xmlDoc, "Added Table", {
+    const addTable = createTable("added-table", xmlDoc, `Added Table - Have ${getDocFromStorage(LIST_KEY.LIST_ADD) ? getDocFromStorage(LIST_KEY.LIST_ADD).childNodes.item(0).childNodes.length : "0"} products`, {
         "ID": 3,
         "Name": 2,
         "Code": 0,
         "Wattage (W)": 5,
-    }, 10, { action: removeFromList, actionTitle: "Remove", isAction: isAction, isFill });
+    }, maxPage, { action: removeFromList, actionTitle: "Remove", isAction: isAction, isFill });
+    removeChildById("clearBtn");
+    addedList.appendChild(button("Clear all",() => {
+        localStorage.removeItem(LIST_KEY.LIST_ADD);
+        const addedTable = document.getElementById("added-table");
+        addedTable.innerHTML = "";
+        removeChildById("clearBtn")
+    },{marginRight : "-1500px",marginLeft : "0px"},"clearBtn"));
     addedList.appendChild(addTable);
-
+    removeChildById("nextPage");
     const nextStepBtn = button("Next", () => {
         fillTimePage();
-    });
+    }, { marginLeft: "1000px", marginRight: "3px" }, "nextPage");
     addedList.appendChild(nextStepBtn);
 }
 
@@ -74,25 +104,59 @@ function fillTimePage() {
     if (getDocFromStorage(LIST_KEY.LIST_ADD) != undefined) {
         renderAddedList(getDocFromStorage(LIST_KEY.LIST_ADD), true, 100);
     }
-    addedList.appendChild(button("Send", () => {
+    const nextStepBtn = document.getElementById("nextPage");
+    nextStepBtn.innerText = "Back";
+    nextStepBtn.onclick = function () {
+        initUI();
+    };
+
+    const addProduct = button("Add my Product",() => {
+        const addedTable = document.getElementById("added-table-table-body");
+        const row = document.createElement("tr");
+        const input = document.createElement("input");
+        input.type = "text";
+        input.style.width = "90%";
+        row.insertCell().innerText = "/";
+        row.insertCell().innerText = "/";
+        row.insertCell().innerHTML = input.outerHTML;
+        row.insertCell().innerHTML =  input.outerHTML;
+        row.insertCell().innerHTML =  input.outerHTML;
+        row.insertCell().innerText = "/";
+        addedTable.appendChild(row);
+    });
+    addedList.appendChild(addProduct);
+    addedList.appendChild(button("Report", () => {
         sendTableToServer();
     }))
 }
 
 function sendTableToServer() {
-    const doc = document.getElementById("added-tabletable-body");
+    const doc = document.getElementById("added-table-table-body");
     var arr = [];
-    doc.childNodes.forEach(node => {
-        arr.push({
-            "id": node.childNodes.item(1).textContent,
-            // @ts-ignore
-            "value": node.childNodes.item(5).childNodes.item(0).childNodes.item(0).value,
-            // @ts-ignore
-            "unit": node.childNodes.item(5).childNodes.item(0).childNodes.item(1).value
-        })
-    });
-    postXHR("webservice/estimate", arrayObjectToXML(arr, "products", "product")).then(res => {
+    for (let i = 0; i < doc.childNodes.length; i++){
+        const node = doc.childNodes.item(i);
+        // @ts-ignore
+        const wattage = node.childNodes.item(5).childNodes.item(0).childNodes.item(0).value;
+        if (wattage){
+            if (wattage < 0 || wattage > 24) {
+                alert("Please fill all value and value from 0.1 to 24.");
+                return false;
+            }
+            arr.push({
+                "id": node.childNodes.item(1).textContent,
+                // @ts-ignore
+                "value": node.childNodes.item(5).childNodes.item(0).childNodes.item(0).value,
+                // @ts-ignore
+                "unit": node.childNodes.item(5).childNodes.item(0).childNodes.item(1).value
+            });
+        } else {
+            alert("Please fill all value and value from 0.1 to 24.");
+            return false;
 
+        }
+    }
+    postXHR("webservice/estimate", arrayObjectToXML(arr, "products", "product")).then(res => {
+        window.open(`resourses/pdf-generated/${res}`,'_blank');
     });
 }
 
@@ -141,15 +205,10 @@ function createSearch(title: string, onkeyup) {
     inputTag.id = "txtSearch";
     inputTag.type = "text";
 
-    const searchBtn = document.createElement("input");
-    searchBtn.type = "submit";
-    searchBtn.value = "Search";
-
     inputTag.onkeyup = onkeyup;
 
     divTag.appendChild(titleTag);
     divTag.appendChild(inputTag);
-    divTag.appendChild(searchBtn);
     return divTag;
 }
 
@@ -164,9 +223,10 @@ function objectToQueryParam(obj) {
 
 function button(name: string, onclick, {
     marginLeft, marginRight
-} = { marginLeft: "3px", marginRight: "3px" }) {
+} = { marginLeft: "3px", marginRight: "3px" }, id = "btn") {
     const btn = document.createElement("button");
     btn.innerText = name;
+    btn.id = id;
     btn.onclick = onclick;
     btn.style.marginLeft = marginLeft;
     btn.style.marginRight = marginRight;
@@ -193,6 +253,7 @@ function createTable(id: string, doc: Document, title: string, columns: Object, 
     table.style.border = "1px solid black";
     table.border = "1";
     table.createCaption().innerText = title;
+
     const row = table.createTHead().insertRow();
     row.insertCell(0).innerText = "No.";
     Object.keys(columns).forEach((key, index) => {
@@ -201,10 +262,13 @@ function createTable(id: string, doc: Document, title: string, columns: Object, 
     if (isAction) {
         row.insertCell().innerText = "Action";
     }
+    if (isFill) {
+        row.insertCell().innerText = "Please fill value";
+    }
 
     let page = 1;
     let tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-    renderTableBody(id + "table-body", table, tableData, columns, { isAction, actionTitle, action, isFill });
+    renderTableBody(id + "-table-body", table, tableData, columns, { isAction, actionTitle, action, isFill });
     let maxPage = rootNode.childNodes.length % 10 == 0 ? rootNode.childNodes.length / ITEM_MAX_PAGE : Math.floor((rootNode.childNodes.length / ITEM_MAX_PAGE)) + 1;
     const text = document.createElement("code");
     const pagingSection = document.createElement("div");
@@ -214,7 +278,7 @@ function createTable(id: string, doc: Document, title: string, columns: Object, 
         page = 1;
         text.innerText = `${page}/${maxPage}`;
         tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-        renderTableBody(id + "table-body", table, tableData, columns, { isAction, actionTitle, action, isFill });
+        renderTableBody(id + "-table-body", table, tableData, columns, { isAction, actionTitle, action, isFill });
     }));
     pagingSection.appendChild(button("Pre", () => {
         if (page > 1) {
@@ -222,7 +286,7 @@ function createTable(id: string, doc: Document, title: string, columns: Object, 
         }
         text.innerText = `${page}/${maxPage}`;
         tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-        renderTableBody(id + "table-body", table, tableData, columns, { isAction, actionTitle, action, isFill });
+        renderTableBody(id + "-table-body", table, tableData, columns, { isAction, actionTitle, action, isFill });
     }));
 
     text.innerText = `${page}/${maxPage}`;
@@ -233,17 +297,19 @@ function createTable(id: string, doc: Document, title: string, columns: Object, 
         }
         text.innerText = `${page}/${maxPage}`;
         tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-        renderTableBody(id + "table-body", table, tableData, columns, { isAction, actionTitle, action, isFill });
+        renderTableBody(id + "-table-body", table, tableData, columns, { isAction, actionTitle, action, isFill });
     }));
     pagingSection.appendChild(button("Last", () => {
         page = maxPage;
         text.innerText = `${page}/${maxPage}`;
         tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-        renderTableBody(id + "table-body", table, tableData, columns, { isAction, actionTitle, action, isFill });
+        renderTableBody(id + "-table-body", table, tableData, columns, { isAction, actionTitle, action, isFill });
     }));
 
     divTag.appendChild(table);
-    divTag.appendChild(pagingSection);
+    if (!isFill) {
+        divTag.appendChild(pagingSection);
+    }
     if (rootNode.hasChildNodes()) {
         return divTag;
     } else {
@@ -295,10 +361,13 @@ function renderTableBody(id: string, table: HTMLTableElement, tableData, columns
                 const spanInput = document.createElement("span");
                 const textInput = document.createElement("input");
                 textInput.type = "number";
+                textInput.max = "24";
+                textInput.min = "0.1";
+                textInput.value = "24";
                 spanInput.appendChild(textInput);
                 const unit = document.createElement("select");
                 const obj = {
-                    "phút/ngày": "m/d",
+                    // "phút/ngày": "m/d",
                     "giờ/ngày": "h/d"
                 };
                 Object.keys(obj).forEach((value, index) => {
@@ -322,11 +391,10 @@ function addToList(value) {
         renderAddedList(arrayXMLToXMLDoc(arr, "productEntities"));
     } else {
         const newArr = nodeListToArray(xmlDoc.childNodes.item(0).childNodes);
-        console.log(newArr.filter(item => item.childNodes.item(3).textContent == value.childNodes.item(3).textContent))
+        console.log(newArr.filter(item => item.childNodes.item(3).textContent == value.childNodes.item(3).textContent));
         if (newArr.filter(item => item.childNodes.item(3).textContent == value.childNodes.item(3).textContent).length == 0) {
             newArr.push(value);
         }
-        ;
         setDocToStorage(LIST_KEY.LIST_ADD, arrayXMLToXMLDoc(newArr, "productEntities"));
         renderAddedList(arrayXMLToXMLDoc(newArr, "productEntities"));
     }
@@ -404,7 +472,11 @@ function postXHR(url, data) {
                 if (xhr.status >= 300) {
                     reject("Error, status code = " + xhr.status)
                 } else {
-                    resolve(xhr.responseXML);
+                    if (xhr.responseXML){
+                        resolve(xhr.responseXML);
+                    } else {
+                        resolve(xhr.responseText);
+                    }
                 }
             }
         };

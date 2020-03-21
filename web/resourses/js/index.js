@@ -4,29 +4,16 @@ var LIST_KEY = {
 };
 function initUI() {
     var root = document.getElementById("root");
+    root.innerHTML = "";
     var productList = document.createElement("div");
     productList.id = "product-list";
     var addedList = document.createElement("div");
     addedList.id = "added-list";
+    root.appendChild(navBar());
     root.appendChild(productList);
     root.appendChild(document.createElement("hr"));
     root.appendChild(addedList);
-    var search = createSearch("Name or Code", function () {
-        // @ts-ignore
-        var value = document.getElementById("txtSearch").value;
-        var result = nodeListToArray(getDocFromStorage(LIST_KEY.LIST_PRODUCT).childNodes).map(function (node) { return nodeListToArray(node.childNodes).filter(function (n) { return n.childNodes.item(2).textContent.toLowerCase().indexOf(value.toLowerCase()) != -1; }); });
-        if (result[0].length > 0) {
-            renderProductTable(arrayXMLToXMLDoc(result[0], "productEntities"));
-        }
-        else {
-            getXHR("webservice/product/findLikeByNameOrCode", {
-                "search": value
-            }).then(function (res) {
-                renderProductTable(res);
-            });
-        }
-    });
-    productList.appendChild(search);
+    // document.getElementById("search-container").appendChild(search);
     if (getDocFromStorage(LIST_KEY.LIST_PRODUCT) == undefined) {
         getXHR("webservice/product", {
             "size": 100,
@@ -43,6 +30,39 @@ function initUI() {
         renderAddedList(getDocFromStorage(LIST_KEY.LIST_ADD));
     }
 }
+function navBar() {
+    var navBar = document.createElement("div");
+    navBar.className = "topnav";
+    var aTag = document.createElement("a");
+    aTag.innerText = "Home";
+    aTag.className = "active";
+    navBar.appendChild(aTag);
+    // navBar.innerHTML = "<div class=\"topnav\">\n" +
+    //     "    <a class=\"active\" href=\"#home\">Home</a>\n" +
+    //     "    <a href=\"#about\">About</a>\n" +
+    //     "    <a href=\"#contact\">Contact</a>\n" +
+    //     "  </div>";
+    var searchContainer = document.createElement("div");
+    searchContainer.className = "search-container";
+    var search = createSearch("Name or Code", function () {
+        // @ts-ignore
+        var value = document.getElementById("txtSearch").value;
+        var result = nodeListToArray(getDocFromStorage(LIST_KEY.LIST_PRODUCT).childNodes).map(function (node) { return nodeListToArray(node.childNodes).filter(function (n) { return n.childNodes.item(2).textContent.toLowerCase().indexOf(value.toLowerCase()) != -1; }); });
+        if (result[0].length > 0) {
+            renderProductTable(arrayXMLToXMLDoc(result[0], "productEntities"));
+        }
+        else {
+            getXHR("webservice/product/findLikeByNameOrCode", {
+                "search": value
+            }).then(function (res) {
+                renderProductTable(res);
+            });
+        }
+    });
+    searchContainer.appendChild(search);
+    navBar.appendChild(searchContainer);
+    return navBar;
+}
 function renderAddedList(xmlDoc, isFill, maxPage) {
     if (isFill === void 0) { isFill = false; }
     if (maxPage === void 0) { maxPage = 10; }
@@ -52,16 +72,24 @@ function renderAddedList(xmlDoc, isFill, maxPage) {
     if (isFill) {
         isAction = false;
     }
-    var addTable = createTable("added-table", xmlDoc, "Added Table", {
+    var addTable = createTable("added-table", xmlDoc, "Added Table - Have " + (getDocFromStorage(LIST_KEY.LIST_ADD) ? getDocFromStorage(LIST_KEY.LIST_ADD).childNodes.item(0).childNodes.length : "0") + " products", {
         "ID": 3,
         "Name": 2,
         "Code": 0,
         "Wattage (W)": 5,
-    }, 10, { action: removeFromList, actionTitle: "Remove", isAction: isAction, isFill: isFill });
+    }, maxPage, { action: removeFromList, actionTitle: "Remove", isAction: isAction, isFill: isFill });
+    removeChildById("clearBtn");
+    addedList.appendChild(button("Clear all", function () {
+        localStorage.removeItem(LIST_KEY.LIST_ADD);
+        var addedTable = document.getElementById("added-table");
+        addedTable.innerHTML = "";
+        removeChildById("clearBtn");
+    }, { marginRight: "-1500px", marginLeft: "0px" }, "clearBtn"));
     addedList.appendChild(addTable);
+    removeChildById("nextPage");
     var nextStepBtn = button("Next", function () {
         fillTimePage();
-    });
+    }, { marginLeft: "1000px", marginRight: "3px" }, "nextPage");
     addedList.appendChild(nextStepBtn);
 }
 function fillTimePage() {
@@ -73,23 +101,57 @@ function fillTimePage() {
     if (getDocFromStorage(LIST_KEY.LIST_ADD) != undefined) {
         renderAddedList(getDocFromStorage(LIST_KEY.LIST_ADD), true, 100);
     }
-    addedList.appendChild(button("Send", function () {
+    var nextStepBtn = document.getElementById("nextPage");
+    nextStepBtn.innerText = "Back";
+    nextStepBtn.onclick = function () {
+        initUI();
+    };
+    var addProduct = button("Add my Product", function () {
+        var addedTable = document.getElementById("added-table-table-body");
+        var row = document.createElement("tr");
+        var input = document.createElement("input");
+        input.type = "text";
+        input.style.width = "90%";
+        row.insertCell().innerText = "/";
+        row.insertCell().innerText = "/";
+        row.insertCell().innerHTML = input.outerHTML;
+        row.insertCell().innerHTML = input.outerHTML;
+        row.insertCell().innerHTML = input.outerHTML;
+        row.insertCell().innerText = "/";
+        addedTable.appendChild(row);
+    });
+    addedList.appendChild(addProduct);
+    addedList.appendChild(button("Report", function () {
         sendTableToServer();
     }));
 }
 function sendTableToServer() {
-    var doc = document.getElementById("added-tabletable-body");
+    var doc = document.getElementById("added-table-table-body");
     var arr = [];
-    doc.childNodes.forEach(function (node) {
-        arr.push({
-            "id": node.childNodes.item(1).textContent,
-            // @ts-ignore
-            "value": node.childNodes.item(5).childNodes.item(0).childNodes.item(0).value,
-            // @ts-ignore
-            "unit": node.childNodes.item(5).childNodes.item(0).childNodes.item(1).value
-        });
-    });
+    for (var i = 0; i < doc.childNodes.length; i++) {
+        var node = doc.childNodes.item(i);
+        // @ts-ignore
+        var wattage = node.childNodes.item(5).childNodes.item(0).childNodes.item(0).value;
+        if (wattage) {
+            if (wattage < 0 || wattage > 24) {
+                alert("Please fill all value and value from 0.1 to 24.");
+                return false;
+            }
+            arr.push({
+                "id": node.childNodes.item(1).textContent,
+                // @ts-ignore
+                "value": node.childNodes.item(5).childNodes.item(0).childNodes.item(0).value,
+                // @ts-ignore
+                "unit": node.childNodes.item(5).childNodes.item(0).childNodes.item(1).value
+            });
+        }
+        else {
+            alert("Please fill all value and value from 0.1 to 24.");
+            return false;
+        }
+    }
     postXHR("webservice/estimate", arrayObjectToXML(arr, "products", "product")).then(function (res) {
+        window.open("resourses/pdf-generated/" + res, '_blank');
     });
 }
 function arrayObjectToXML(arr, root, namedChild) {
@@ -131,13 +193,9 @@ function createSearch(title, onkeyup) {
     var inputTag = document.createElement("input");
     inputTag.id = "txtSearch";
     inputTag.type = "text";
-    var searchBtn = document.createElement("input");
-    searchBtn.type = "submit";
-    searchBtn.value = "Search";
     inputTag.onkeyup = onkeyup;
     divTag.appendChild(titleTag);
     divTag.appendChild(inputTag);
-    divTag.appendChild(searchBtn);
     return divTag;
 }
 function objectToQueryParam(obj) {
@@ -149,10 +207,12 @@ function objectToQueryParam(obj) {
     });
     return result.slice(0, result.length - 1);
 }
-function button(name, onclick, _a) {
+function button(name, onclick, _a, id) {
     var _b = _a === void 0 ? { marginLeft: "3px", marginRight: "3px" } : _a, marginLeft = _b.marginLeft, marginRight = _b.marginRight;
+    if (id === void 0) { id = "btn"; }
     var btn = document.createElement("button");
     btn.innerText = name;
+    btn.id = id;
     btn.onclick = onclick;
     btn.style.marginLeft = marginLeft;
     btn.style.marginRight = marginRight;
@@ -186,9 +246,12 @@ function createTable(id, doc, title, columns, ITEM_MAX_PAGE, _a) {
     if (isAction) {
         row.insertCell().innerText = "Action";
     }
+    if (isFill) {
+        row.insertCell().innerText = "Please fill value";
+    }
     var page = 1;
     var tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-    renderTableBody(id + "table-body", table, tableData, columns, { isAction: isAction, actionTitle: actionTitle, action: action, isFill: isFill });
+    renderTableBody(id + "-table-body", table, tableData, columns, { isAction: isAction, actionTitle: actionTitle, action: action, isFill: isFill });
     var maxPage = rootNode.childNodes.length % 10 == 0 ? rootNode.childNodes.length / ITEM_MAX_PAGE : Math.floor((rootNode.childNodes.length / ITEM_MAX_PAGE)) + 1;
     var text = document.createElement("code");
     var pagingSection = document.createElement("div");
@@ -198,7 +261,7 @@ function createTable(id, doc, title, columns, ITEM_MAX_PAGE, _a) {
         page = 1;
         text.innerText = page + "/" + maxPage;
         tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-        renderTableBody(id + "table-body", table, tableData, columns, { isAction: isAction, actionTitle: actionTitle, action: action, isFill: isFill });
+        renderTableBody(id + "-table-body", table, tableData, columns, { isAction: isAction, actionTitle: actionTitle, action: action, isFill: isFill });
     }));
     pagingSection.appendChild(button("Pre", function () {
         if (page > 1) {
@@ -206,7 +269,7 @@ function createTable(id, doc, title, columns, ITEM_MAX_PAGE, _a) {
         }
         text.innerText = page + "/" + maxPage;
         tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-        renderTableBody(id + "table-body", table, tableData, columns, { isAction: isAction, actionTitle: actionTitle, action: action, isFill: isFill });
+        renderTableBody(id + "-table-body", table, tableData, columns, { isAction: isAction, actionTitle: actionTitle, action: action, isFill: isFill });
     }));
     text.innerText = page + "/" + maxPage;
     pagingSection.appendChild(text);
@@ -216,16 +279,18 @@ function createTable(id, doc, title, columns, ITEM_MAX_PAGE, _a) {
         }
         text.innerText = page + "/" + maxPage;
         tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-        renderTableBody(id + "table-body", table, tableData, columns, { isAction: isAction, actionTitle: actionTitle, action: action, isFill: isFill });
+        renderTableBody(id + "-table-body", table, tableData, columns, { isAction: isAction, actionTitle: actionTitle, action: action, isFill: isFill });
     }));
     pagingSection.appendChild(button("Last", function () {
         page = maxPage;
         text.innerText = page + "/" + maxPage;
         tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
-        renderTableBody(id + "table-body", table, tableData, columns, { isAction: isAction, actionTitle: actionTitle, action: action, isFill: isFill });
+        renderTableBody(id + "-table-body", table, tableData, columns, { isAction: isAction, actionTitle: actionTitle, action: action, isFill: isFill });
     }));
     divTag.appendChild(table);
-    divTag.appendChild(pagingSection);
+    if (!isFill) {
+        divTag.appendChild(pagingSection);
+    }
     if (rootNode.hasChildNodes()) {
         return divTag;
     }
@@ -277,10 +342,13 @@ function renderTableBody(id, table, tableData, columns, _a) {
                 var spanInput = document.createElement("span");
                 var textInput = document.createElement("input");
                 textInput.type = "number";
+                textInput.max = "24";
+                textInput.min = "0.1";
+                textInput.value = "24";
                 spanInput.appendChild(textInput);
                 var unit_1 = document.createElement("select");
                 var obj_1 = {
-                    "phút/ngày": "m/d",
+                    // "phút/ngày": "m/d",
                     "giờ/ngày": "h/d"
                 };
                 Object.keys(obj_1).forEach(function (value, index) {
@@ -311,7 +379,6 @@ function addToList(value) {
         if (newArr.filter(function (item) { return item.childNodes.item(3).textContent == value.childNodes.item(3).textContent; }).length == 0) {
             newArr.push(value);
         }
-        ;
         setDocToStorage(LIST_KEY.LIST_ADD, arrayXMLToXMLDoc(newArr, "productEntities"));
         renderAddedList(arrayXMLToXMLDoc(newArr, "productEntities"));
     }
@@ -383,7 +450,12 @@ function postXHR(url, data) {
                     reject("Error, status code = " + xhr.status);
                 }
                 else {
-                    resolve(xhr.responseXML);
+                    if (xhr.responseXML) {
+                        resolve(xhr.responseXML);
+                    }
+                    else {
+                        resolve(xhr.responseText);
+                    }
                 }
             }
         };
