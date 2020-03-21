@@ -2,6 +2,38 @@ const LIST_KEY = {
     LIST_PRODUCT: "LIST_PRODUCT",
     LIST_ADD: "LIST_ADD"
 };
+const NAVIGATION_BAR = {
+    Home : "/",
+    Login : "/login",
+};
+
+
+function notFound() {
+
+}
+
+function navigation() {
+    switch (window.location.pathname) {
+        case NAVIGATION_BAR.Home :
+            initUI();
+            break;
+        case NAVIGATION_BAR.Login:
+            loginPage();
+            break;
+        case "/fill-time":
+            fillTimePage();
+            break;
+        default:
+            window.location.href = "/";
+            break;
+    }
+}
+
+function loginPage() {
+    const root = document.getElementById("root");
+    root.innerHTML = "";
+    root.appendChild(navBar());
+}
 
 function initUI() {
     const root = document.getElementById("root");
@@ -37,15 +69,15 @@ function initUI() {
 function navBar() {
     const navBar = document.createElement("div");
     navBar.className = "topnav";
-    const aTag = document.createElement("a");
-    aTag.innerText = "Home";
-    aTag.className = "active";
-    navBar.appendChild(aTag);
-    // navBar.innerHTML = "<div class=\"topnav\">\n" +
-    //     "    <a class=\"active\" href=\"#home\">Home</a>\n" +
-    //     "    <a href=\"#about\">About</a>\n" +
-    //     "    <a href=\"#contact\">Contact</a>\n" +
-    //     "  </div>";
+    Object.keys(NAVIGATION_BAR).forEach(key =>{
+        const aTag = document.createElement("a");
+        aTag.innerText = key;
+        aTag.href = NAVIGATION_BAR[key];
+        if (Object.keys(NAVIGATION_BAR).indexOf(key) == 0){
+            aTag.className = "active";
+        }
+        navBar.appendChild(aTag);
+    });
     const searchContainer = document.createElement("div");
     searchContainer.className = "search-container";
     const search = createSearch("Name or Code", () => {
@@ -63,7 +95,9 @@ function navBar() {
         }
     });
     searchContainer.appendChild(search);
-    navBar.appendChild(searchContainer);
+    if (window.location.pathname == '/') {
+        navBar.appendChild(searchContainer);
+    }
     return navBar;
 }
 
@@ -81,23 +115,27 @@ function renderAddedList(xmlDoc: XMLDocument, isFill = false, maxPage = 10) {
         "Wattage (W)": 5,
     }, maxPage, { action: removeFromList, actionTitle: "Remove", isAction: isAction, isFill });
     removeChildById("clearBtn");
-    addedList.appendChild(button("Clear all",() => {
+    addedList.appendChild(button("Clear all", () => {
         localStorage.removeItem(LIST_KEY.LIST_ADD);
         const addedTable = document.getElementById("added-table");
         addedTable.innerHTML = "";
         removeChildById("clearBtn")
-    },{marginRight : "-1500px",marginLeft : "0px"},"clearBtn"));
+    }, "clearBtn"));
     addedList.appendChild(addTable);
     removeChildById("nextPage");
     const nextStepBtn = button("Next", () => {
-        fillTimePage();
-    }, { marginLeft: "1000px", marginRight: "3px" }, "nextPage");
-    addedList.appendChild(nextStepBtn);
+        window.location.href = "/fill-time";
+    }, "nextPage");
+    const containerBtn = document.createElement("div");
+    containerBtn.className = "btn-container";
+    containerBtn.appendChild(nextStepBtn);
+    addedList.appendChild(containerBtn);
 }
 
 function fillTimePage() {
     const root = document.getElementById("root");
     root.innerHTML = "";
+    root.appendChild(navBar());
     const addedList = document.createElement("div");
     addedList.id = "added-list";
     root.appendChild(addedList);
@@ -107,10 +145,10 @@ function fillTimePage() {
     const nextStepBtn = document.getElementById("nextPage");
     nextStepBtn.innerText = "Back";
     nextStepBtn.onclick = function () {
-        initUI();
+        window.location.href = "/";
     };
 
-    const addProduct = button("Add my Product",() => {
+    const addProduct = button("Add my Product", () => {
         const addedTable = document.getElementById("added-table-table-body");
         const row = document.createElement("tr");
         const input = document.createElement("input");
@@ -119,8 +157,8 @@ function fillTimePage() {
         row.insertCell().innerText = "/";
         row.insertCell().innerText = "/";
         row.insertCell().innerHTML = input.outerHTML;
-        row.insertCell().innerHTML =  input.outerHTML;
-        row.insertCell().innerHTML =  input.outerHTML;
+        row.insertCell().innerHTML = input.outerHTML;
+        row.insertCell().innerHTML = input.outerHTML;
         row.insertCell().innerText = "/";
         addedTable.appendChild(row);
     });
@@ -133,11 +171,11 @@ function fillTimePage() {
 function sendTableToServer() {
     const doc = document.getElementById("added-table-table-body");
     var arr = [];
-    for (let i = 0; i < doc.childNodes.length; i++){
+    for (let i = 0; i < doc.childNodes.length; i++) {
         const node = doc.childNodes.item(i);
         // @ts-ignore
         const wattage = node.childNodes.item(5).childNodes.item(0).childNodes.item(0).value;
-        if (wattage){
+        if (wattage) {
             if (wattage < 0 || wattage > 24) {
                 alert("Please fill all value and value from 0.1 to 24.");
                 return false;
@@ -156,7 +194,7 @@ function sendTableToServer() {
         }
     }
     postXHR("webservice/estimate", arrayObjectToXML(arr, "products", "product")).then(res => {
-        window.open(`resourses/pdf-generated/${res}`,'_blank');
+        window.open(`resourses/pdf-generated/${res}`, '_blank');
     });
 }
 
@@ -221,15 +259,13 @@ function objectToQueryParam(obj) {
     return result.slice(0, result.length - 1);
 }
 
-function button(name: string, onclick, {
-    marginLeft, marginRight
-} = { marginLeft: "3px", marginRight: "3px" }, id = "btn") {
+function button(name: string, onclick, id = "btn") {
     const btn = document.createElement("button");
     btn.innerText = name;
     btn.id = id;
     btn.onclick = onclick;
-    btn.style.marginLeft = marginLeft;
-    btn.style.marginRight = marginRight;
+    btn.style.marginLeft = "3px";
+    btn.style.marginRight = "3px";
     return btn;
 }
 
@@ -472,7 +508,7 @@ function postXHR(url, data) {
                 if (xhr.status >= 300) {
                     reject("Error, status code = " + xhr.status)
                 } else {
-                    if (xhr.responseXML){
+                    if (xhr.responseXML) {
                         resolve(xhr.responseXML);
                     } else {
                         resolve(xhr.responseText);

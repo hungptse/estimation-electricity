@@ -2,6 +2,33 @@ var LIST_KEY = {
     LIST_PRODUCT: "LIST_PRODUCT",
     LIST_ADD: "LIST_ADD"
 };
+var NAVIGATION_BAR = {
+    Home: "/",
+    Login: "/login",
+};
+function notFound() {
+}
+function navigation() {
+    switch (window.location.pathname) {
+        case NAVIGATION_BAR.Home:
+            initUI();
+            break;
+        case NAVIGATION_BAR.Login:
+            loginPage();
+            break;
+        case "/fill-time":
+            fillTimePage();
+            break;
+        default:
+            window.location.href = "/";
+            break;
+    }
+}
+function loginPage() {
+    var root = document.getElementById("root");
+    root.innerHTML = "";
+    root.appendChild(navBar());
+}
 function initUI() {
     var root = document.getElementById("root");
     root.innerHTML = "";
@@ -33,15 +60,15 @@ function initUI() {
 function navBar() {
     var navBar = document.createElement("div");
     navBar.className = "topnav";
-    var aTag = document.createElement("a");
-    aTag.innerText = "Home";
-    aTag.className = "active";
-    navBar.appendChild(aTag);
-    // navBar.innerHTML = "<div class=\"topnav\">\n" +
-    //     "    <a class=\"active\" href=\"#home\">Home</a>\n" +
-    //     "    <a href=\"#about\">About</a>\n" +
-    //     "    <a href=\"#contact\">Contact</a>\n" +
-    //     "  </div>";
+    Object.keys(NAVIGATION_BAR).forEach(function (key) {
+        var aTag = document.createElement("a");
+        aTag.innerText = key;
+        aTag.href = NAVIGATION_BAR[key];
+        if (Object.keys(NAVIGATION_BAR).indexOf(key) == 0) {
+            aTag.className = "active";
+        }
+        navBar.appendChild(aTag);
+    });
     var searchContainer = document.createElement("div");
     searchContainer.className = "search-container";
     var search = createSearch("Name or Code", function () {
@@ -60,7 +87,9 @@ function navBar() {
         }
     });
     searchContainer.appendChild(search);
-    navBar.appendChild(searchContainer);
+    if (window.location.pathname == '/') {
+        navBar.appendChild(searchContainer);
+    }
     return navBar;
 }
 function renderAddedList(xmlDoc, isFill, maxPage) {
@@ -84,17 +113,21 @@ function renderAddedList(xmlDoc, isFill, maxPage) {
         var addedTable = document.getElementById("added-table");
         addedTable.innerHTML = "";
         removeChildById("clearBtn");
-    }, { marginRight: "-1500px", marginLeft: "0px" }, "clearBtn"));
+    }, "clearBtn"));
     addedList.appendChild(addTable);
     removeChildById("nextPage");
     var nextStepBtn = button("Next", function () {
-        fillTimePage();
-    }, { marginLeft: "1000px", marginRight: "3px" }, "nextPage");
-    addedList.appendChild(nextStepBtn);
+        window.location.href = "/fill-time";
+    }, "nextPage");
+    var containerBtn = document.createElement("div");
+    containerBtn.className = "btn-container";
+    containerBtn.appendChild(nextStepBtn);
+    addedList.appendChild(containerBtn);
 }
 function fillTimePage() {
     var root = document.getElementById("root");
     root.innerHTML = "";
+    root.appendChild(navBar());
     var addedList = document.createElement("div");
     addedList.id = "added-list";
     root.appendChild(addedList);
@@ -104,7 +137,7 @@ function fillTimePage() {
     var nextStepBtn = document.getElementById("nextPage");
     nextStepBtn.innerText = "Back";
     nextStepBtn.onclick = function () {
-        initUI();
+        window.location.href = "/";
     };
     var addProduct = button("Add my Product", function () {
         var addedTable = document.getElementById("added-table-table-body");
@@ -207,15 +240,14 @@ function objectToQueryParam(obj) {
     });
     return result.slice(0, result.length - 1);
 }
-function button(name, onclick, _a, id) {
-    var _b = _a === void 0 ? { marginLeft: "3px", marginRight: "3px" } : _a, marginLeft = _b.marginLeft, marginRight = _b.marginRight;
+function button(name, onclick, id) {
     if (id === void 0) { id = "btn"; }
     var btn = document.createElement("button");
     btn.innerText = name;
     btn.id = id;
     btn.onclick = onclick;
-    btn.style.marginLeft = marginLeft;
-    btn.style.marginRight = marginRight;
+    btn.style.marginLeft = "3px";
+    btn.style.marginRight = "3px";
     return btn;
 }
 function removeChildById(tagId) {
