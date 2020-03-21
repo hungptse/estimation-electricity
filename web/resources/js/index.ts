@@ -303,7 +303,7 @@ function createTable(id: string, doc: Document, title: string, columns: Object, 
     let page = 1;
     let tableData = getPagingData(page, ITEM_MAX_PAGE, rootNode);
     renderTableBody(id + "-table-body", table, tableData, columns, { isAction, actionTitle, action, isFill });
-    let maxPage = rootNode.childNodes.length % 10 == 0 ? rootNode.childNodes.length / ITEM_MAX_PAGE : Math.floor((rootNode.childNodes.length / ITEM_MAX_PAGE)) + 1;
+    let maxPage = rootNode.childNodes.length % ITEM_MAX_PAGE == 0 ? rootNode.childNodes.length / ITEM_MAX_PAGE : Math.floor((rootNode.childNodes.length / ITEM_MAX_PAGE)) + 1;
     const text = document.createElement("code");
     const pagingSection = document.createElement("div");
     pagingSection.style.textAlign = "right";

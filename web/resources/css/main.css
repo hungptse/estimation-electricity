@@ -83,6 +83,12 @@ table thead td {
     background-color: #191818 !important;
     color: white;
 }
+table > thead > tr > td:last-child {
+    width: 8% !important;;
+}
+tbody > tr > td:last-child {
+    text-align: center;
+}
 .btn-container {
     margin-top: 1%;
     width: 100%;
