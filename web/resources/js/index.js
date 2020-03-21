@@ -42,7 +42,7 @@ function initUI() {
     // document.getElementById("search-container").appendChild(search);
     if (getDocFromStorage(LIST_KEY.LIST_PRODUCT) == undefined) {
         getXHR("webservice/product", {
-            "size": 100,
+            "size": 200,
             "page": 1
         }).then(function (res) {
             localStorage.setItem(LIST_KEY.LIST_PRODUCT, parseDocToString(res));
@@ -70,7 +70,7 @@ function navBar() {
     });
     var searchContainer = document.createElement("div");
     searchContainer.className = "search-container";
-    var search = createSearch("Name or Code", function () {
+    var search = createSearch("Name: ", function () {
         // @ts-ignore
         var value = document.getElementById("txtSearch").value;
         var result = nodeListToArray(getDocFromStorage(LIST_KEY.LIST_PRODUCT).childNodes).map(function (node) { return nodeListToArray(node.childNodes).filter(function (n) { return n.childNodes.item(2).textContent.toLowerCase().indexOf(value.toLowerCase()) != -1; }); });

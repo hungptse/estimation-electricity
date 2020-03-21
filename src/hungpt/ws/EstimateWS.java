@@ -16,11 +16,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.io.ByteArrayOutputStream;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Path("/estimate")
@@ -53,7 +50,7 @@ public class EstimateWS {
             productsReport.setTotal(ElectricityHelper.calculateByLevel(priceListService.findAllPriceList(), total));
             ByteArrayOutputStream outputStream = JAXBHepler.marshall(ProductsReport.class, productsReport);
             String fileNameGenerate = "report-" + createdAt.getTime() + ".pdf";
-            fileNameGenerate = ElectricityHelper.xmlToPDF(StringHelper.deAccent(outputStream.toString()),
+            fileNameGenerate = ElectricityHelper.xmlToPDF(StringHelper.unAccent(outputStream.toString()),
                     currentPath.split("WEB-INF/classes")[0], fileNameGenerate);
             if (fileNameGenerate != null) {
                 return fileNameGenerate;

@@ -47,7 +47,7 @@ function initUI() {
     // document.getElementById("search-container").appendChild(search);
     if (getDocFromStorage(LIST_KEY.LIST_PRODUCT) == undefined) {
         getXHR("webservice/product", {
-            "size": 100,
+            "size": 200,
             "page": 1
         }).then(res => {
             localStorage.setItem(LIST_KEY.LIST_PRODUCT, parseDocToString(res));
@@ -76,7 +76,7 @@ function navBar() {
     });
     const searchContainer = document.createElement("div");
     searchContainer.className = "search-container";
-    const search = createSearch("Name or Code", () => {
+    const search = createSearch("Name: ", () => {
         // @ts-ignore
         let value = document.getElementById("txtSearch").value;
         const result = nodeListToArray(getDocFromStorage(LIST_KEY.LIST_PRODUCT).childNodes).map(node => nodeListToArray(node.childNodes).filter(n => n.childNodes.item(2).textContent.toLowerCase().indexOf(value.toLowerCase()) != -1));
