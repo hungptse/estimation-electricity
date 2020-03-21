@@ -34,11 +34,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Products }
+     * Create an instance of {@link ProductsReport }
      * 
      */
-    public Products createProducts() {
-        return new Products();
+    public ProductsReport createProducts() {
+        return new ProductsReport();
     }
 
     /**
@@ -50,12 +50,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Products }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link ProductsReport }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "", name = "products")
-    public JAXBElement<Products> createProducts(Products value) {
-        return new JAXBElement<Products>(_Products_QNAME, Products.class, null, value);
+    public JAXBElement<ProductsReport> createProducts(ProductsReport value) {
+        return new JAXBElement<ProductsReport>(_Products_QNAME, ProductsReport.class, null, value);
     }
 
 }

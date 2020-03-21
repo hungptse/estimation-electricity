@@ -6,9 +6,8 @@ var NAVIGATION_BAR = {
     Home: "/",
     Login: "/login",
 };
-function notFound() {
-}
 function navigation() {
+    console.log(window.location.pathname);
     switch (window.location.pathname) {
         case NAVIGATION_BAR.Home:
             initUI();
@@ -184,7 +183,9 @@ function sendTableToServer() {
         }
     }
     postXHR("webservice/estimate", arrayObjectToXML(arr, "products", "product")).then(function (res) {
-        window.open("resourses/pdf-generated/" + res, '_blank');
+        if (res != "") {
+            window.open("resources/pdf-generated/" + res, '_blank');
+        }
     });
 }
 function arrayObjectToXML(arr, root, namedChild) {

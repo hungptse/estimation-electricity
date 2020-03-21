@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.*;
 
 /**
  * <p>Java class for products complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="products">
  *   &lt;complexContent>
@@ -22,40 +22,60 @@ import javax.xml.bind.annotation.*;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "products", propOrder = {
-    "product"
+        "createdAt",
+        "total",
+        "product"
 })
 @XmlRootElement(name = "products")
-public class Products {
+public class ProductsReport {
+
+    @XmlElement(required = true)
+    protected double total;
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    @XmlElement(required = true)
+    protected String createdAt;
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
 
     @XmlElement(required = true)
     protected List<Product> product;
 
     /**
      * Gets the value of the product property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the product property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getProduct().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Product }
-     * 
-     * 
      */
     public List<Product> getProduct() {
         if (product == null) {
