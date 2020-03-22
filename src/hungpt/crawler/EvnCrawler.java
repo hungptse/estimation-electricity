@@ -1,16 +1,12 @@
 package hungpt.crawler;
 
-import hungpt.constant.EntityName;
 import hungpt.constant.GlobalURL;
 import hungpt.entities.PriceListEntity;
 import hungpt.jaxb.evn.price.Prices;
-import hungpt.repositories.MainRepository;
 import hungpt.repositories.PriceListRepository;
 import hungpt.utils.HashHepler;
 import hungpt.utils.JAXBHepler;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,7 +29,7 @@ public class EvnCrawler extends PageCrawler {
                 }
                 if (priceListRepository.getPriceListByHash(HashHepler.hashMD5(price.getLevel() + "|" + price.getRate())) == null){
                     PriceListEntity priceListEntity = new PriceListEntity(price.getLevel(),price.getFrom(),price.getTo(), price.getRate(),"đ/kWh");
-                    MainRepository.getEntityByName(EntityName.PRICE_LIST_ENTITY).create(priceListEntity);
+                    priceListRepository.create(priceListEntity);
                 }
             });
         } catch (Exception e){

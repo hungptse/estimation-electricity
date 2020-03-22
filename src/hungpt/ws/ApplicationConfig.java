@@ -13,6 +13,7 @@ public class ApplicationConfig extends Application {
         Set<Class<?>> resources = new java.util.HashSet<>();
         resources.add(ProductWS.class);
         resources.add(EstimateWS.class);
+        resources.add(AccountWS.class);
         return resources;
     }
 }

@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -14,18 +15,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class BaseRepository<T, PK extends Serializable> implements IBaseRepository<T, PK> {
-
     protected EntityManager em;
-    protected final Class<T> classType;
 
-    public BaseRepository(Class<T> classType) {
+    public BaseRepository() {
         this.em = JPAHelper.getEntityManager();
-        this.classType = classType;
-    }
-
-    @Override
-    public T findById(PK primaryKey) {
-        return em.find(classType, primaryKey);
     }
 
     @Override

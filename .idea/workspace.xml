@@ -7,21 +7,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="433d4251-6c0f-4849-8718-b89cd61edaf4" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/hungpt/entities/AccountEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hungpt/repositories/AccountRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hungpt/services/AccountService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hungpt/services/CategoryService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hungpt/ws/AccountWS.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/dto/estimate/report/ObjectFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/dto/estimate/report/ObjectFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/dto/estimate/report/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/dto/estimate/report/ProductReport.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/dto/estimate/report/ProductsReport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/dto/estimate/report/ProductsReport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/META-INF/persistence.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/constant/EntityName.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/crawler/CategoryCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/crawler/CategoryCrawler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/crawler/CategoryDetailCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/crawler/CategoryDetailCrawler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/crawler/EvnCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/crawler/EvnCrawler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hungpt/dto/estimate/req/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/dto/estimate/req/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/dto/estimate/req/Products.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/dto/estimate/req/Products.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/jaxb/dienmayabc/product/ObjectFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/jaxb/dienmayabc/product/ObjectFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/jaxb/dienmayabc/product/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/jaxb/dienmayabc/product/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/entities/CategoryEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/entities/CategoryEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/entities/ProductEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/entities/ProductEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/repositories/BaseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/repositories/BaseRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/repositories/CategoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/repositories/CategoryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/repositories/IBaseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/repositories/IBaseRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/repositories/MainRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/repositories/PriceListRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/repositories/PriceListRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hungpt/repositories/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/repositories/ProductRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/services/PriceListService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/services/PriceListService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hungpt/services/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/services/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/servlet/CrawlServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/servlet/CrawlServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/utils/StringHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/utils/StringHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/ws/ApplicationConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/ws/ApplicationConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hungpt/ws/EstimateWS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/ws/EstimateWS.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hungpt/ws/ProductWS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/ws/ProductWS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/WEB-INF/pdf/report-pdf.xsl" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/pdf/report-pdf.xsl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/favicon.ico" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/web/resources/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/resources/css/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/resources/js/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/resources/js/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/resources/js/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/resources/js/index.ts" afterDir="false" />
@@ -48,6 +59,17 @@
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
         <item name="EstimationPU/EclipseLink" type="feb32156:DbDataSourceImpl" />
       </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="EstimationPU/EclipseLink" type="feb32156:DbDataSourceImpl" />
+        <item name="EstimationElectricity: database" type="ccb7ac2a:MsImplModel$Database" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="EstimationPU/EclipseLink" type="feb32156:DbDataSourceImpl" />
+        <item name="EstimationElectricity: database" type="ccb7ac2a:MsImplModel$Database" />
+        <item name="dbo: schema" type="2865ee2e:MsImplModel$Schema" />
+      </path>
     </expand>
     <select />
   </component>
@@ -61,9 +83,9 @@
         <option value="HTTP Request" />
         <option value="JavaScript File" />
         <option value="package.json" />
-        <option value="Class" />
         <option value="HTML File" />
         <option value="XSLT Stylesheet" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -92,7 +114,7 @@
     <property name="DatabaseDriversLRU" value="sqlserver.ms" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="Downloaded.Files.Path.Enabled" value="true" />
-    <property name="JPA.DatabaseSchemaImportDialog" value="dea51dbd-ab92-41ee-9a40-9d57a96ef54e" />
+    <property name="JPA.DatabaseSchemaImportDialog" value="4810abda-8da6-4151-a764-2220efe721c5" />
     <property name="Repository.Attach.Annotations" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
@@ -244,7 +266,7 @@
       <workItem from="1584735295968" duration="7566000" />
       <workItem from="1584796252410" duration="28650000" />
       <workItem from="1584879443015" duration="5319000" />
-      <workItem from="1584893032819" duration="2305000" />
+      <workItem from="1584893032819" duration="13615000" />
     </task>
     <task id="LOCAL-00001" summary="prevent duplicate unique key">
       <created>1584366223484</created>

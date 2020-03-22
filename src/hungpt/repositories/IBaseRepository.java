@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 public interface IBaseRepository<T, PK extends Serializable> {
-    T findById(PK primaryKey);
 
     T find(String query, Map<String, Object> parameters);
 

@@ -5,6 +5,7 @@
         <class>hungpt.entities.ProductEntity</class>
         <class>hungpt.entities.PriceListEntity</class>
         <class>hungpt.entities.CategoryEntity</class>
+        <class>hungpt.entities.AccountEntity</class>
 
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
@@ -17,6 +18,9 @@
             <property name="javax.persistence.jdbc.password" value="1qaZ2wsX"/>
             <property name="esclipselink.cache.shared.default" value="false"/>
             <property name="eclipselink.weaving" value="static"/>
+            <property name="eclipselink.jdbc.url"
+                      value="jdbc:sqlserver://localhost:1434;database=EstimationElectricity"/>
+            <property name="eclipselink.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
         </properties>
     </persistence-unit>
 </persistence>

@@ -1,11 +1,15 @@
 var LIST_KEY = {
     LIST_PRODUCT: "LIST_PRODUCT",
-    LIST_ADD: "LIST_ADD"
+    LIST_ADD: "LIST_ADD",
+    ADMIN_FULLNAME: "ADMIN_FULLNAME"
 };
 var NAVIGATION_BAR = {
     Home: "/",
     Login: "/login",
 };
+function backToHome() {
+    window.location.href = "/";
+}
 function navigation() {
     console.log(window.location.pathname);
     switch (window.location.pathname) {
@@ -18,15 +22,78 @@ function navigation() {
         case "/fill-time":
             fillTimePage();
             break;
+        case "/admin":
+            if (localStorage.getItem(LIST_KEY.ADMIN_FULLNAME)) {
+                adminPage();
+            }
+            else {
+                backToHome();
+            }
+            break;
+        case "/logout":
+            localStorage.removeItem(LIST_KEY.ADMIN_FULLNAME);
+            backToHome();
+            break;
         default:
-            window.location.href = "/";
+            backToHome();
             break;
     }
+}
+function adminPage() {
+    var root = document.getElementById("root");
+    root.innerHTML = "";
+    root.appendChild(navBar());
 }
 function loginPage() {
     var root = document.getElementById("root");
     root.innerHTML = "";
     root.appendChild(navBar());
+    root.appendChild(loginForm());
+}
+function loginForm() {
+    var container = document.createElement("div");
+    container.className = "container";
+    var wrapLogin = document.createElement("form");
+    wrapLogin.className = "wrap-login";
+    wrapLogin.onsubmit = function (e) {
+        e.preventDefault();
+        return false;
+    };
+    var title = document.createElement("div");
+    title.className = "title";
+    title.innerText = "Account Login";
+    var username = document.createElement("input");
+    username.placeholder = "Username";
+    username.type = "text";
+    username.required = true;
+    var password = document.createElement("input");
+    password.placeholder = "Password";
+    password.type = "password";
+    password.required = true;
+    wrapLogin.appendChild(title);
+    wrapLogin.appendChild(document.createElement("br"));
+    wrapLogin.appendChild(username);
+    wrapLogin.appendChild(document.createElement("br"));
+    wrapLogin.appendChild(password);
+    wrapLogin.appendChild(document.createElement("br"));
+    wrapLogin.appendChild(button("SIGN IN", function () {
+        if (wrapLogin.checkValidity()) {
+            postXHR('webservice/account/checkLogin', null, {
+                username: username.value,
+                password: password.value
+            }).then(function (res) {
+                if (res) {
+                    localStorage.setItem(LIST_KEY.ADMIN_FULLNAME, res.childNodes.item(0).childNodes.item(0).textContent);
+                    window.location.href = '/admin';
+                }
+                else {
+                    alert("Incorrect username or password");
+                }
+            }, "sign-in");
+        }
+    }));
+    container.appendChild(wrapLogin);
+    return container;
 }
 function homePage() {
     var root = document.getElementById("root");
@@ -66,6 +133,12 @@ function navBar() {
         if (Object.keys(NAVIGATION_BAR).indexOf(key) == 0) {
             aTag.className = "active";
         }
+        if (NAVIGATION_BAR[key] == NAVIGATION_BAR.Login) {
+            if (localStorage.getItem(LIST_KEY.ADMIN_FULLNAME)) {
+                aTag.innerText = "Welcome, " + localStorage.getItem(LIST_KEY.ADMIN_FULLNAME);
+                aTag.href = "/admin";
+            }
+        }
         navBar.appendChild(aTag);
     });
     var searchContainer = document.createElement("div");
@@ -88,6 +161,12 @@ function navBar() {
     searchContainer.appendChild(search);
     if (window.location.pathname == '/') {
         navBar.appendChild(searchContainer);
+    }
+    if (localStorage.getItem(LIST_KEY.ADMIN_FULLNAME)) {
+        var aTag = document.createElement("a");
+        aTag.innerText = "Logout";
+        aTag.href = "/logout";
+        navBar.appendChild(aTag);
     }
     return navBar;
 }
@@ -133,10 +212,12 @@ function fillTimePage() {
     if (getDocFromStorage(LIST_KEY.LIST_ADD) != undefined) {
         renderAddedList(getDocFromStorage(LIST_KEY.LIST_ADD), true, 100);
     }
+    var rightContainer = document.createElement("div");
+    rightContainer.id = "right-container";
     var nextStepBtn = document.getElementById("nextPage");
     nextStepBtn.innerText = "Back";
     nextStepBtn.onclick = function () {
-        window.location.href = "/";
+        backToHome();
     };
     var addProduct = button("Add my Product", function () {
         var addedTable = document.getElementById("added-table-table-body");
@@ -144,18 +225,29 @@ function fillTimePage() {
         var input = document.createElement("input");
         input.type = "text";
         input.style.width = "90%";
-        row.insertCell().innerText = "/";
-        row.insertCell().innerText = "/";
+        input.className = "input-value";
+        row.insertCell().innerText = "Auto";
+        row.insertCell().innerText = "Auto";
         row.insertCell().innerHTML = input.outerHTML;
         row.insertCell().innerHTML = input.outerHTML;
+        input.type = "number";
+        input.min = "1";
+        input.defaultValue = "100";
         row.insertCell().innerHTML = input.outerHTML;
-        row.insertCell().innerText = "/";
+        input.style.width = "";
+        input.type = "number";
+        input.max = "24";
+        input.min = "0.1";
+        input.defaultValue = "24";
+        row.insertCell().innerHTML = input.outerHTML;
         addedTable.appendChild(row);
     });
-    addedList.appendChild(addProduct);
-    addedList.appendChild(button("Export PDF", function () {
+    rightContainer.appendChild(nextStepBtn);
+    rightContainer.appendChild(addProduct);
+    rightContainer.appendChild(button("Export PDF", function () {
         sendTableToServer();
     }));
+    addedList.appendChild(rightContainer);
 }
 function sendTableToServer() {
     var doc = document.getElementById("added-table-table-body");
@@ -163,17 +255,32 @@ function sendTableToServer() {
     for (var i = 0; i < doc.childNodes.length; i++) {
         var node = doc.childNodes.item(i);
         // @ts-ignore
-        var wattage = node.childNodes.item(5).childNodes.item(0).childNodes.item(0).value;
+        var wattage = node.childNodes.item(5).childNodes.item(0).value;
         if (wattage) {
             if (wattage < 0 || wattage > 24) {
                 alert("Please fill all value and value from 0.1 to 24.");
                 return false;
             }
-            arr.push({
-                "id": node.childNodes.item(1).textContent,
-                // @ts-ignore
-                "value": node.childNodes.item(5).childNodes.item(0).childNodes.item(0).value,
-            });
+            if (node.childNodes.item(1).textContent == "Auto") {
+                arr.push({
+                    "id": 0,
+                    // @ts-ignore
+                    "value": node.childNodes.item(5).childNodes.item(0).value,
+                    // @ts-ignore
+                    "name": node.childNodes.item(2).childNodes.item(0).value,
+                    // @ts-ignore
+                    "code": node.childNodes.item(3).childNodes.item(0).value,
+                    // @ts-ignore
+                    "wattage": node.childNodes.item(4).childNodes.item(0).value
+                });
+            }
+            else {
+                arr.push({
+                    "id": node.childNodes.item(1).textContent,
+                    // @ts-ignore
+                    "value": node.childNodes.item(5).childNodes.item(0).value,
+                });
+            }
         }
         else {
             alert("Please fill all value and value from 0.1 to 24.");
@@ -182,7 +289,9 @@ function sendTableToServer() {
     }
     postXHR("webservice/estimate", arrayObjectToXML(arr, "products", "product")).then(function (res) {
         if (res != "") {
+            localStorage.removeItem(LIST_KEY.LIST_ADD);
             window.open("resources/pdf-generated/" + res, '_blank');
+            backToHome();
         }
     });
 }
@@ -366,15 +475,13 @@ function renderTableBody(id, table, tableData, columns, _a) {
                 row.insertCell().appendChild(actionBtn);
             }
             if (isFill) {
-                var spanInput = document.createElement("span");
                 var textInput = document.createElement("input");
                 textInput.type = "number";
                 textInput.max = "24";
                 textInput.min = "0.1";
                 textInput.value = "24";
                 textInput.className = "input-value";
-                spanInput.appendChild(textInput);
-                row.insertCell().appendChild(spanInput);
+                row.insertCell().appendChild(textInput);
             }
         }
     };
@@ -454,8 +561,12 @@ function arrayXMLToXMLDoc(arr, root) {
     str += "</" + root + ">";
     return parseStringToDoc(str);
 }
-function postXHR(url, data) {
+function postXHR(url, data, query) {
+    if (query === void 0) { query = {}; }
     var xhr = new XMLHttpRequest();
+    if (Object.keys(query).length !== 0) {
+        url += "?" + objectToQueryParam(query);
+    }
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/xml");
     // @ts-ignore

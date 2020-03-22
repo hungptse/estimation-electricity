@@ -7,13 +7,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 public class CategoryRepository extends BaseRepository<CategoryEntity, Integer> {
-    public CategoryRepository(Class<CategoryEntity> classType) {
-        super(classType);
-    }
-
-    public CategoryRepository() {
-        super(CategoryEntity.class);
-    }
 
     public CategoryEntity getCategoryByHash(String hash){
         Query query = em.createNamedQuery("Category.findByHash");

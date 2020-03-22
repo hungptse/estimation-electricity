@@ -57,6 +57,16 @@ public class ProductEntity implements Serializable {
         this.unit = "W";
     }
 
+    public ProductEntity(String name, String code, double wattage) {
+        this.name = name;
+        this.code = code;
+        this.wattage = wattage;
+        this.hash = HashHepler.hashMD5(name.replaceAll(" ", "") + code.replaceAll(" ", "") + new java.util.Date().getTime());
+        this.createdAt = new Date(System.currentTimeMillis());
+        this.updatedAt = new Date(System.currentTimeMillis());
+        this.unit = "W";
+    }
+
     @Id
     @Column(name = "ProductId", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)

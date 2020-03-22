@@ -1,10 +1,8 @@
 package hungpt.crawler;
 
-import hungpt.constant.EntityName;
 import hungpt.constant.GlobalURL;
 import hungpt.entities.CategoryEntity;
-import hungpt.entities.ProductEntity;
-import hungpt.repositories.MainRepository;
+import hungpt.repositories.CategoryRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,13 +13,12 @@ import java.util.logging.Logger;
 public class CategoryDetailCrawler extends PageCrawler {
     private List<String> productListUrl = new ArrayList();
     private CategoryEntity categoryEntity;
-
+    private static CategoryRepository categoryRepository = new CategoryRepository();
     public CategoryDetailCrawler(String url, String realPath, CategoryEntity categoryEntity) {
         super(url, realPath);
         this.setXslPath(this.getRealPath() + GlobalURL.XSL_ABC_PRODUCT_MAXPAGE);
         this.categoryEntity = categoryEntity;
     }
-
 
     @Override
     public void run() {
@@ -50,7 +47,7 @@ public class CategoryDetailCrawler extends PageCrawler {
                 }
             });
             System.out.println(this.getUrl() + " " + maxPage + " pages. Has " + (categoryEntity.getProductEntityList().size() - beforeCrawl) + " new records");
-            MainRepository.getEntityByName(EntityName.CATEGORY_ENTITY).create(categoryEntity);
+            categoryRepository.create(categoryEntity);
         } catch (Exception e) {
             Logger.getLogger(CategoryDetailCrawler.class.getName()).log(Level.SEVERE, e.getMessage(), e);
         }

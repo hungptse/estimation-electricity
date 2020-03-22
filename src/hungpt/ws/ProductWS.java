@@ -19,7 +19,7 @@ public class ProductWS {
     @GET()
     @Produces({MediaType.APPLICATION_XML})
     public List<ProductEntity> findAll(@QueryParam("page") int page, @QueryParam("size") int size) {
-        return service.getAllProductPaging(page,size);
+        return service.findProductPaging(page,size);
     }
 
     @GET()

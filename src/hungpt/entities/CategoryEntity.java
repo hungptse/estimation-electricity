@@ -28,6 +28,14 @@ public class CategoryEntity implements Serializable {
     public CategoryEntity() {
     }
 
+    public CategoryEntity(String cateName) {
+        this.cateName = cateName;
+        this.cateLink = "";
+        this.hash = HashHepler.hashMD5(cateName);
+        this.createdAt = new Timestamp(System.currentTimeMillis());
+        this.updatedAt = new Timestamp(System.currentTimeMillis());
+    }
+
     public CategoryEntity(String cateName, String cateLink) {
         this.cateName = cateName;
         this.cateLink = cateLink;

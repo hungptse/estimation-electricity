@@ -8,14 +8,6 @@ import java.util.List;
 
 
 public class ProductRepository extends BaseRepository<ProductEntity, Integer> {
-    public ProductRepository(Class<ProductEntity> classType) {
-        super(classType);
-    }
-
-   public ProductRepository(){
-        super(ProductEntity.class);
-   }
-
    public ProductEntity getProductByHash(String hash){
        Query query = em.createNamedQuery("Product.findByHash");
        query.setParameter("hash",hash);
