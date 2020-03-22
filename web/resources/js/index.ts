@@ -45,6 +45,18 @@ function adminPage() {
     const root = document.getElementById("root");
     root.innerHTML = "";
     root.appendChild(navBar());
+
+    const divTag = document.createElement("div");
+    divTag.style.width = "100%";
+    divTag.style.height = "800px";
+    const leftDiv = document.createElement("div");
+    leftDiv.id = "left-div";
+    const rightDiv = document.createElement("div");
+    rightDiv.id = "right-div";
+
+    divTag.appendChild(leftDiv);
+    divTag.appendChild(rightDiv);
+    root.appendChild(divTag);
 }
 
 function loginPage() {

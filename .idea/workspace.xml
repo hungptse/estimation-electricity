@@ -7,32 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="433d4251-6c0f-4849-8718-b89cd61edaf4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/hungpt/entities/AccountEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hungpt/repositories/AccountRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hungpt/services/AccountService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hungpt/services/CategoryService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hungpt/ws/AccountWS.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/META-INF/persistence.xml" beforeDir="false" afterPath="$PROJECT_DIR$/META-INF/persistence.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/constant/EntityName.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/crawler/CategoryCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/crawler/CategoryCrawler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/crawler/CategoryDetailCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/crawler/CategoryDetailCrawler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/crawler/EvnCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/crawler/EvnCrawler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/dto/estimate/req/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/dto/estimate/req/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/entities/CategoryEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/entities/CategoryEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/entities/ProductEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/entities/ProductEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/repositories/BaseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/repositories/BaseRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/repositories/CategoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/repositories/CategoryRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/repositories/IBaseRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/repositories/IBaseRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/repositories/MainRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/repositories/PriceListRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/repositories/PriceListRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/repositories/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/repositories/ProductRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/services/PriceListService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/services/PriceListService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/services/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/services/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/ws/ApplicationConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/ws/ApplicationConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/ws/EstimateWS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/ws/EstimateWS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/ws/ProductWS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/ws/ProductWS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/WEB-INF/pdf/report-pdf.xsl" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/pdf/report-pdf.xsl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/resources/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/resources/css/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/resources/js/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/resources/js/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/resources/js/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/resources/js/index.ts" afterDir="false" />
@@ -266,7 +242,7 @@
       <workItem from="1584735295968" duration="7566000" />
       <workItem from="1584796252410" duration="28650000" />
       <workItem from="1584879443015" duration="5319000" />
-      <workItem from="1584893032819" duration="13615000" />
+      <workItem from="1584893032819" duration="14942000" />
     </task>
     <task id="LOCAL-00001" summary="prevent duplicate unique key">
       <created>1584366223484</created>

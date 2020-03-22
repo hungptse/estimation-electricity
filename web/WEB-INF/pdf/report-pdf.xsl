@@ -47,7 +47,8 @@
                                     <xsl:value-of select="products/createdAt"/>
                                 </fo:block>
                                 <fo:block font-size="10pt">Total Product:
-                                    <xsl:value-of select="count(products/product)"/> </fo:block>
+                                    <xsl:value-of select="count(products/product)"/>
+                                </fo:block>
                             </fo:block-container>
                         </fo:block>
                     </fo:block>
@@ -92,7 +93,8 @@
                                             </fo:table-cell>
                                             <fo:table-cell padding="2mm">
                                                 <fo:block>
-                                                    <xsl:value-of select="translate(name,'áàâäéèêëíìîïóòôöúùûüđĐ','aaaaeeeeiiiioooouuuudD')"/>
+                                                    <xsl:value-of
+                                                            select="translate(name,'áàâäéèêëíìîïóòôöúùûüđĐ','aaaaeeeeiiiioooouuuudD')"/>
                                                 </fo:block>
                                             </fo:table-cell>
                                             <fo:table-cell padding="2mm">
@@ -114,20 +116,65 @@
                     <fo:block>
                         <fo:leader leader-pattern="rule" leader-length="100%" rule-style="solid" rule-thickness="1pt"
                                    border-color="#FFA500"/>
-                        <fo:block-container height="10mm" width="190mm" left="150mm">
-                            <fo:block text-align="left" font-size="11pt" font-weight="bold">Total electric used ~:
-                                <xsl:value-of select="format-number(products/totalE, '### kWh')"/>
-                            </fo:block>
-                            <fo:block text-align="left" font-size="11pt" font-weight="bold">Price electric used ~:
-                                <xsl:value-of select="format-number(products/total, '###,### VND')"/>
-                            </fo:block>
-                            <fo:block text-align="left" font-size="11pt" font-weight="bold">VAT(10%):
-                                <xsl:value-of select="format-number(products/total div 10, '###,### VND')"/>
-                            </fo:block>
-                            <fo:block text-align="left" font-size="11pt" font-weight="bold">Estimate Total:
-                                <xsl:value-of select="format-number(number(products/total) + number(products/total div 10), '###,### VND')"/>
-                            </fo:block>
-                        </fo:block-container>
+                        <fo:table table-layout="fixed" width="100%" border-width="medium" border-style="dashed">
+                            <fo:table-column column-width="140mm"/>
+                            <fo:table-column column-width="50mm"/>
+                            <fo:table-body>
+                                <fo:table-row>
+                                    <fo:table-cell padding="2mm">
+                                        <fo:block text-align="left" font-size="11pt" font-weight="bold">
+                                            Total electric used:
+                                        </fo:block>
+                                    </fo:table-cell>
+                                    <fo:table-cell padding="2mm" border-width="0.5pt" border-style="dashed">
+                                        <fo:block text-align="right" font-size="11pt" font-weight="bold">
+                                            <xsl:value-of select="format-number(products/totalE, '### kWh')"/>
+                                        </fo:block>
+                                    </fo:table-cell>
+                                </fo:table-row>
+                                <fo:table-row>
+                                    <fo:table-cell padding="2mm">
+                                        <fo:block text-align="left" font-size="11pt" font-weight="bold">
+                                            Price electric used:
+                                        </fo:block>
+                                    </fo:table-cell>
+                                    <fo:table-cell padding="2mm" border-width="0.5pt" border-style="dashed">
+                                        <fo:block text-align="right" font-size="11pt" font-weight="bold">
+                                            <xsl:value-of select="format-number(products/total, '###,### VND')"/>
+                                        </fo:block>
+                                    </fo:table-cell>
+                                </fo:table-row>
+
+                                <fo:table-row>
+                                    <fo:table-cell padding="2mm">
+                                        <fo:block text-align="left" font-size="11pt" font-weight="bold">
+                                            VAT(10%):
+                                        </fo:block>
+                                    </fo:table-cell>
+                                    <fo:table-cell padding="2mm" border-width="0.5pt" border-style="dashed">
+                                        <fo:block text-align="right" font-size="11pt" font-weight="bold">
+                                            <xsl:value-of select="format-number(products/total div 10, '###,### VND')"/>
+                                        </fo:block>
+                                    </fo:table-cell>
+                                </fo:table-row>
+                                <fo:table-row>
+                                    <fo:table-cell padding="2mm" border-width="0.5pt" border-style="dashed">
+                                        <fo:block text-align="left" font-size="11pt" font-weight="bold">
+                                            Estimate Total:
+                                        </fo:block>
+                                    </fo:table-cell>
+                                    <fo:table-cell padding="2mm" border-width="0.5pt" border-style="dashed">
+                                        <fo:block text-align="right" font-size="11pt" font-weight="bold">
+                                            <xsl:value-of
+                                                    select="format-number(number(products/total) + number(products/total div 10), '###,### VND')"/>
+                                        </fo:block>
+                                    </fo:table-cell>
+                                </fo:table-row>
+                            </fo:table-body>
+                        </fo:table>
+<!--                        <fo:block-container height="10mm" width="190mm" left="150mm">-->
+
+<!--                        </fo:block-container>-->
                     </fo:block>
                 </fo:flow>
             </fo:page-sequence>
