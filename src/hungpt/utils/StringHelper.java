@@ -7,10 +7,10 @@ import java.util.regex.Pattern;
 
 public class StringHelper {
 
-    public static String unAccent(String src) {
-        return Normalizer
-                .normalize(src, Normalizer.Form.NFD)
-                .replaceAll("[^\\p{ASCII}]", "");
+    public static String unAccent(String str) {
+        String decomposed = Normalizer.normalize(str, Normalizer.Form.NFD);
+        String removed = decomposed.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+        return removed;
     }
 
     public static boolean isNameCharacter(char c) {

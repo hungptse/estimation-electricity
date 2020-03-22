@@ -9,12 +9,12 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for product complex type.
+ * <p>Java class for productReport complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="product">
+ * &lt;complexType name="productReport">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
@@ -33,7 +33,6 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "product", propOrder = {
     "id",
     "value",
-    "unit"
 })
 public class Product {
 
@@ -41,8 +40,6 @@ public class Product {
     protected int id;
     @XmlElement(required = true)
     protected double value;
-    @XmlElement(required = true)
-    protected String unit;
 
     /**
      * Gets the value of the id property.
@@ -90,30 +87,6 @@ public class Product {
      */
     public void setValue(double value) {
         this.value = value;
-    }
-
-    /**
-     * Gets the value of the unit property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getUnit() {
-        return unit;
-    }
-
-    /**
-     * Sets the value of the unit property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setUnit(String value) {
-        this.unit = value;
     }
 
 }

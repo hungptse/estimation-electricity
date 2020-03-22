@@ -5,12 +5,12 @@ import javax.xml.bind.annotation.*;
 
 
 /**
- * <p>Java class for product complex type.
+ * <p>Java class for productReport complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="product">
+ * &lt;complexType name="productReport">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>

@@ -8,12 +8,12 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for product complex type.
+ * <p>Java class for productReport complex type.
  *
  * <p>The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
- * &lt;complexType name="product">
+ * &lt;complexType name="productReport">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlType;
         "time",
         "total"
 })
-public class Product {
+public class ProductReport {
 
     @XmlElement(required = true)
     protected String code;
@@ -121,7 +121,7 @@ public class Product {
         this.total = total;
     }
 
-    public Product(String code, String name, double wattage, double time){
+    public ProductReport(String code, String name, double wattage, double time){
         this.code = code;
         this.name = name;
         this.wattage = wattage;
@@ -129,6 +129,6 @@ public class Product {
         this.total = wattage * time;
     }
 
-    public Product() {
+    public ProductReport() {
     }
 }

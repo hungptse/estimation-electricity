@@ -97,3 +97,7 @@ tbody > tr > td:last-child {
     align-items: center;
     justify-content: center;
 }
+.input-value{
+    padding: 5px;
+    font-size: 12px;
+}

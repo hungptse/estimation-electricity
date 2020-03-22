@@ -42,11 +42,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Product }
+     * Create an instance of {@link ProductReport }
      * 
      */
-    public Product createProduct() {
-        return new Product();
+    public ProductReport createProduct() {
+        return new ProductReport();
     }
 
     /**

@@ -1,17 +1,9 @@
 package hungpt.ws;
 
-import com.sun.net.httpserver.HttpServer;
-import hungpt.constant.EntityName;
-import hungpt.entities.PriceListEntity;
 import hungpt.entities.ProductEntity;
-import hungpt.jaxb.dienmayabc.product.Product;
-import hungpt.repositories.MainRepository;
 import hungpt.services.ProductService;
-import hungpt.utils.ElectricityHelper;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Produces;

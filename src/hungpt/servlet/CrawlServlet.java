@@ -1,15 +1,9 @@
 package hungpt.servlet;
 
-import com.sun.net.httpserver.HttpServer;
-import hungpt.constant.EntityName;
 import hungpt.constant.TimeConst;
 import hungpt.crawler.CategoryCrawler;
 import hungpt.crawler.EvnCrawler;
-import hungpt.crawler.ProductCrawler;
-import hungpt.entities.ProductEntity;
 import hungpt.job.TaskTimer;
-import hungpt.repositories.MainRepository;
-import hungpt.ws.ApplicationConfig;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

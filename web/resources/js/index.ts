@@ -11,7 +11,7 @@ function navigation() {
     console.log(window.location.pathname)
     switch (window.location.pathname) {
         case NAVIGATION_BAR.Home :
-            initUI();
+            homePage();
             break;
         case NAVIGATION_BAR.Login:
             loginPage();
@@ -31,7 +31,7 @@ function loginPage() {
     root.appendChild(navBar());
 }
 
-function initUI() {
+function homePage() {
     const root = document.getElementById("root");
     root.innerHTML = "";
     const productList = document.createElement("div");
@@ -180,8 +180,6 @@ function sendTableToServer() {
                 "id": node.childNodes.item(1).textContent,
                 // @ts-ignore
                 "value": node.childNodes.item(5).childNodes.item(0).childNodes.item(0).value,
-                // @ts-ignore
-                "unit": node.childNodes.item(5).childNodes.item(0).childNodes.item(1).value
             });
         } else {
             alert("Please fill all value and value from 0.1 to 24.");
@@ -297,7 +295,7 @@ function createTable(id: string, doc: Document, title: string, columns: Object, 
         row.insertCell().innerText = "Action";
     }
     if (isFill) {
-        row.insertCell().innerText = "Please fill value";
+        row.insertCell().innerText = "Value (hour/day)";
     }
 
     let page = 1;
@@ -394,19 +392,8 @@ function renderTableBody(id: string, table: HTMLTableElement, tableData, columns
                 textInput.max = "24";
                 textInput.min = "0.1";
                 textInput.value = "24";
+                textInput.className = "input-value";
                 spanInput.appendChild(textInput);
-                const unit = document.createElement("select");
-                const obj = {
-                    // "phút/ngày": "m/d",
-                    "giờ/ngày": "h/d"
-                };
-                Object.keys(obj).forEach((value, index) => {
-                    let unitOption = document.createElement("option");
-                    unitOption.value = obj[value];
-                    unitOption.innerText = value;
-                    unit.appendChild(unitOption);
-                });
-                spanInput.appendChild(unit);
                 row.insertCell().appendChild(spanInput);
             }
         }

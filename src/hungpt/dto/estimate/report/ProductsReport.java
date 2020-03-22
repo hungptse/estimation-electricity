@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.*;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="product" type="{}product" maxOccurs="unbounded"/>
+ *         &lt;element name="productReport" type="{}productReport" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.*;
 @XmlType(name = "products", propOrder = {
         "createdAt",
         "total",
+        "totalE",
         "product"
 })
 @XmlRootElement(name = "products")
@@ -44,6 +45,17 @@ public class ProductsReport {
     }
 
     @XmlElement(required = true)
+    protected double totalE;
+
+    public double getTotalE() {
+        return totalE;
+    }
+
+    public void setTotalE(double totalE) {
+        this.totalE = totalE;
+    }
+
+    @XmlElement(required = true)
     protected String createdAt;
 
     public String getCreatedAt() {
@@ -55,31 +67,31 @@ public class ProductsReport {
     }
 
     @XmlElement(required = true)
-    protected List<Product> product;
+    protected List<ProductReport> product;
 
     /**
-     * Gets the value of the product property.
+     * Gets the value of the productReport property.
      *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the product property.
+     * This is why there is not a <CODE>set</CODE> method for the productReport property.
      *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getProduct().add(newItem);
+     *    getProductReport().add(newItem);
      * </pre>
      *
      *
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Product }
+     * {@link ProductReport }
      */
-    public List<Product> getProduct() {
+    public List<ProductReport> getProductReport() {
         if (product == null) {
-            product = new ArrayList<Product>();
+            product = new ArrayList<ProductReport>();
         }
         return this.product;
     }

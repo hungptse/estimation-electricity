@@ -1,5 +1,6 @@
 package hungpt.ws;
 
+import hungpt.dto.estimate.report.ProductReport;
 import hungpt.dto.estimate.report.ProductsReport;
 import hungpt.dto.estimate.req.Product;
 import hungpt.dto.estimate.req.Products;
@@ -16,6 +17,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.io.ByteArrayOutputStream;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,23 +35,22 @@ public class EstimateWS {
         List<Integer> ids = request.getProduct().stream().map(Product::getId).collect(Collectors.toList());
         List<ProductEntity> productEntityList = productService.findProductByListId(ids);
         ProductsReport productsReport = new ProductsReport();
-        double total = 0;
+        double totalE = 0;
         for (Product product : request.getProduct()) {
             ProductEntity entity =
                     productEntityList.stream().filter(p -> p.getProductId() == product.getId()).findFirst().get();
-            hungpt.dto.estimate.report.Product report = new hungpt.dto.estimate.report.Product(entity.getCode(),
-                    entity.getName(), entity.getWattage(), product.getValue());
-            productsReport.getProduct().add(report);
-            total += report.getTotal();
+            ProductReport report = new ProductReport(entity.getCode(), entity.getName(), entity.getWattage(), product.getValue());
+            productsReport.getProductReport().add(report);
+            totalE += report.getTotal();
         }
-        ;
         try {
             String currentPath = this.getClass().getClassLoader().getResource(".").getPath();
             Date createdAt = new Date();
             productsReport.setCreatedAt(createdAt.toLocaleString());
-            productsReport.setTotal(ElectricityHelper.calculateByLevel(priceListService.findAllPriceList(), total));
+            productsReport.setTotalE(totalE / 1000);
+            productsReport.setTotal(ElectricityHelper.calculateByLevel(priceListService.findAllPriceList(), totalE));
             ByteArrayOutputStream outputStream = JAXBHepler.marshall(ProductsReport.class, productsReport);
-            String fileNameGenerate = "report-" + createdAt.getTime() + ".pdf";
+            String fileNameGenerate = "RP-" + createdAt.getTime() + ".pdf";
             fileNameGenerate = ElectricityHelper.xmlToPDF(StringHelper.unAccent(outputStream.toString()),
                     currentPath.split("WEB-INF/classes")[0], fileNameGenerate);
             if (fileNameGenerate != null) {

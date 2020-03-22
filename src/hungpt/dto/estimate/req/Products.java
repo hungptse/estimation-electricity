@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.*;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="product" type="{}product" maxOccurs="unbounded"/>
+ *         &lt;element name="productReport" type="{}productReport" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,18 +36,18 @@ public class Products {
     protected List<Product> product;
 
     /**
-     * Gets the value of the product property.
+     * Gets the value of the productReport property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the product property.
+     * This is why there is not a <CODE>set</CODE> method for the productReport property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getProduct().add(newItem);
+     *    getProductReport().add(newItem);
      * </pre>
      * 
      * 
