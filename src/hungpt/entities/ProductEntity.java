@@ -65,6 +65,8 @@ public class ProductEntity implements Serializable {
         this.createdAt = new Date(System.currentTimeMillis());
         this.updatedAt = new Date(System.currentTimeMillis());
         this.unit = "W";
+        this.imageLink = "imageLink";
+        this.url = "url";
     }
 
     @Id

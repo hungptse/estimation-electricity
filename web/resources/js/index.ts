@@ -54,6 +54,10 @@ function adminPage() {
     const rightDiv = document.createElement("div");
     rightDiv.id = "right-div";
 
+    getXHR("webservice/crawl-log",{}).then(res => {
+
+    });
+
     divTag.appendChild(leftDiv);
     divTag.appendChild(rightDiv);
     root.appendChild(divTag);
