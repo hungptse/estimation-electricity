@@ -50,8 +50,11 @@ function adminPage() {
     leftDiv.id = "left-div";
     var rightDiv = document.createElement("div");
     rightDiv.id = "right-div";
-    getXHR("webservice/crawl-log", {}).then(function (res) {
-    });
+    leftDiv.appendChild(button("Crawl Data", function () {
+        getXHR("crawl", {}).then(function (res) {
+            alert("Crawler running");
+        });
+    }));
     divTag.appendChild(leftDiv);
     divTag.appendChild(rightDiv);
     root.appendChild(divTag);

@@ -167,7 +167,7 @@ tbody > tr > td:last-child {
     width: 50%;
     float: left;
     height: 100%;
-    background-color: #282828;
+    /*background-color: #282828;*/
     z-index: 1010101010
 }
 #right-div{
@@ -175,6 +175,6 @@ tbody > tr > td:last-child {
     width: 50%;
     float: left;
     height: 100%;
-    background-color: #0080ff;
+    /*background-color: #0080ff;*/
     z-index: 1010101010
 }

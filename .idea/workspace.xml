@@ -8,7 +8,8 @@
   <component name="ChangeListManager">
     <list default="true" id="433d4251-6c0f-4849-8718-b89cd61edaf4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hungpt/entities/ProductEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/entities/ProductEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hungpt/ws/EstimateWS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hungpt/ws/EstimateWS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/resources/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/resources/css/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/resources/js/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/resources/js/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/resources/js/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/web/resources/js/index.ts" afterDir="false" />
     </list>
@@ -241,7 +242,7 @@
       <workItem from="1584735295968" duration="7566000" />
       <workItem from="1584796252410" duration="28650000" />
       <workItem from="1584879443015" duration="5319000" />
-      <workItem from="1584893032819" duration="17564000" />
+      <workItem from="1584893032819" duration="22381000" />
     </task>
     <task id="LOCAL-00001" summary="prevent duplicate unique key">
       <created>1584366223484</created>

@@ -63,8 +63,8 @@ public class EstimateWS {
             String currentPath = this.getClass().getClassLoader().getResource(".").getPath();
             Date createdAt = new Date();
             productsReport.setCreatedAt(createdAt.toLocaleString());
-            productsReport.setTotalE(totalE / 1000);
-            productsReport.setTotal(ElectricityHelper.calculateByLevel(priceListService.findAllPriceList(), totalE));
+            productsReport.setTotalE((totalE / 1000) * 30);
+            productsReport.setTotal(ElectricityHelper.calculateByLevel(priceListService.findAllPriceList(), totalE * 30));
             ByteArrayOutputStream outputStream = JAXBHepler.marshall(ProductsReport.class, productsReport);
             String fileNameGenerate = "RP-" + createdAt.getTime() + ".pdf";
             fileNameGenerate = ElectricityHelper.xmlToPDF(StringHelper.unAccent(outputStream.toString()),
